@@ -75,6 +75,7 @@ public class AccPaymentDetails extends Fragment {
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        getActivity().setTitle("Payment Details");
 
         fab=(FloatingActionButton)getActivity().findViewById(R.id.fab) ;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());

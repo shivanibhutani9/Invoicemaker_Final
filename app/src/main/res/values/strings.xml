@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">Invoicemaker</string>
+    <string name="app_name">IndiInvo</string>
 
     <string name="title_activity_splash">splash</string>
-    <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <string name="title_activity_navigation_drawer">NavigationDrawer</string>

@@ -70,7 +70,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
             }
         });
-         invoice=(EditText)findViewById(R.id.invoiceid);
+        invoice=(EditText)findViewById(R.id.invoiceid);
         rv= (RecyclerView)findViewById(R.id.itemlist);
         pd  =new ProgressDialog(InvoiceGenerate.this);
         adapter=new listadapt(InvoiceGenerate.this,items);
@@ -88,7 +88,7 @@ public class InvoiceGenerate extends AppCompatActivity {
         });
 
          ClientDetails =(TextView)findViewById(R.id.client_details);
-        ClientDetails.setOnClickListener(new View.OnClickListener() {
+         ClientDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getApplicationContext(),ClientDetails.class);

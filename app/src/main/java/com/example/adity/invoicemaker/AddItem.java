@@ -27,10 +27,6 @@ public class AddItem extends AppCompatActivity {
         quant=(EditText)findViewById(R.id.quant);
         amt=(TextView)findViewById(R.id.amt);
 
-
-
-
-
         Button save=(Button)findViewById(R.id.save);
         save.setOnClickListener(new View.OnClickListener() {
             @Override

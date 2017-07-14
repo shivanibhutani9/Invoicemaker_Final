@@ -15,7 +15,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".signup" />
-        <activity android:name=".give_details" />
         <activity
             android:name=".splash"
             android:configChanges="orientation|keyboardHidden|screenSize"
