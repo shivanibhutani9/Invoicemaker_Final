@@ -41,7 +41,8 @@
             android:name=".InvoiceGen"
             android:label="Invoice" />
 
-        <activity android:name=".InvoiceGenerate" />
+        <activity android:name=".InvoiceGenerate"
+            android:label="Invoice"/>
         <activity android:name=".ClientDetails" />
         <activity android:name=".typesofinvoice"
             android:theme="@style/AppTheme.NoActionBar"

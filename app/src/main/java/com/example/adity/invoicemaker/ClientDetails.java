@@ -43,17 +43,17 @@ public class ClientDetails extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                mp=new HashMap<>();
-                pd.setMessage("Please Wait...");
-                pd.show();
-
-
                 Name=name.getText().toString();
                 Phone=phone.getText().toString();
                 Email=email.getText().toString();
                 Address=addline.getText().toString()+"\n"+addline2.getText().toString()+"\n"+addline3.getText().toString();
                 pan_no=PAN_NO.getText().toString();
                 gstin=GSTIN.getText().toString();
+                mp=new HashMap<>();
+                pd.setMessage("Please Wait...");
+                pd.show();
+
+
 
 
 
@@ -62,7 +62,6 @@ public class ClientDetails extends AppCompatActivity {
                 mp.put("Address",Address);
                 mp.put("Pan no",pan_no);
                 mp.put("Gstin",gstin);
-
 
 
                 if(getIntent().getExtras().getString("Type").equals("Vendor")) {

@@ -58,14 +58,13 @@ public class InvoiceGenerate extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invoice_gen);
         dateString=(TextView)findViewById(R.id.textdate);
-         bank_details=(TextView)findViewById(R.id.bank);
+        bank_details=(TextView)findViewById(R.id.bank);
         image=(ImageView)findViewById(R.id.SEAL);
         bank_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getApplicationContext(),BankDetails.class);
                 intent.putExtra("Type","VENDOR");
-
                 startActivityForResult(intent,1);
 
             }
@@ -177,9 +176,6 @@ public class InvoiceGenerate extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
-        if (requestCode == 1)
-
-        {
             if (resultCode == 1) {
                 bank = data.getStringExtra("bank_name");
                 ifsccode = data.getStringExtra("ifsc_code");
@@ -230,15 +226,12 @@ public class InvoiceGenerate extends AppCompatActivity {
                 ClientDetails.setText(Name);
 
             }
-        } else if (requestCode == ADD_SEAL) {
-
-
-
+            if (requestCode == ADD_SEAL) {
 
             try {
                 switch (resultCode) {
 
-                    case  Activity.RESULT_OK:
+                        case Activity.RESULT_OK:
                             Picasso.with(this).load(data.getData()).into(image);
                             break;
                         case  Activity.RESULT_CANCELED:
