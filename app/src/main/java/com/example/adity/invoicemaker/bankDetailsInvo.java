@@ -18,6 +18,7 @@ public class bankDetailsInvo extends AppCompatActivity {
         setContentView(R.layout.activity_bank_details_invo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Fragment fragment=new AccPaymentDetails();
         getSupportFragmentManager().beginTransaction().replace(R.id.accpayment,fragment).commit();

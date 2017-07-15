@@ -20,13 +20,12 @@ public class AddItem extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
-
         descrip=(EditText)findViewById(R.id.description);
         HSN=(EditText)findViewById(R.id.HSNcode);
         cost=(EditText)findViewById(R.id.cost);
         quant=(EditText)findViewById(R.id.quant);
         amt=(TextView)findViewById(R.id.amt);
-
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Button save=(Button)findViewById(R.id.save);
         save.setOnClickListener(new View.OnClickListener() {
             @Override

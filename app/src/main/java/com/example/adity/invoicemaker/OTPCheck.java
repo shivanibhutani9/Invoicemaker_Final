@@ -189,7 +189,12 @@ String sms="";
                         }
                     });
 
-                } else {
+                }else if(Details1.equals("OTP Expired")){
+                    new SendOTP().execute();
+                    Toast.makeText(OTPCheck.this, Details1+"\nOTP RESENT!", Toast.LENGTH_SHORT).show();
+
+                }
+                else {
                     Toast.makeText(OTPCheck.this, "Not Matched", Toast.LENGTH_SHORT).show();
                 }
             }

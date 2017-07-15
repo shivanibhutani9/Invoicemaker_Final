@@ -86,6 +86,7 @@ public class AccPaymentDetails extends Fragment implements onItemTouchListener{
 
         rv.setAdapter(adapter);
 
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

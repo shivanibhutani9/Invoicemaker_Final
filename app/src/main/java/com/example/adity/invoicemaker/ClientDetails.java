@@ -26,7 +26,7 @@ public class ClientDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_details);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         pd=new ProgressDialog(ClientDetails.this);
 
         name=(EditText)findViewById(R.id.clientname);

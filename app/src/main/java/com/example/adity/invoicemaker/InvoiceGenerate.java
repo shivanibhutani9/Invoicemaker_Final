@@ -107,7 +107,7 @@ public class InvoiceGenerate extends AppCompatActivity {
         items=new ArrayList<>();
         adapter=new listadapt(InvoiceGenerate.this,items);
 
-
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         bank_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

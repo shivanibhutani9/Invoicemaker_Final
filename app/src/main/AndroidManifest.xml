@@ -8,9 +8,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
@@ -32,10 +32,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".BankDetails"
-            android:label="Details" />
+            android:label="Bank Details"
+            />
         <activity
             android:name=".AddItem"
-            android:label="Add Item" />
+            android:label="Add Item"
+            android:parentActivityName=".InvoiceGenerate"/>
 
         <activty
             android:name=".InvoiceGen"
@@ -43,16 +45,25 @@
 
         <activity
             android:name=".InvoiceGenerate"
-            android:label="Invoice" />
-        <activity android:name=".ClientDetails" />
+            android:label="Invoice"
+            android:parentActivityName=".typesofinvoice"/>
+        <activity android:name=".ClientDetails"
+            android:label="Vendor Details"
+
+            android:parentActivityName=".InvoiceGenerate"/>
         <activity
             android:name=".typesofinvoice"
             android:parentActivityName=".NavigationDrawer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".OTPCheck"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".OTPCheck">
+
+        </activity>
         <activity
             android:name=".bankDetailsInvo"
             android:label="@string/title_activity_bank_details_invo"
+            android:parentActivityName=".InvoiceGenerate"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
