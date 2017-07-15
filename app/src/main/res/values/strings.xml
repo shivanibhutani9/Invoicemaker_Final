@@ -28,7 +28,7 @@
     <string name="post"><b> <h4>Generate a Invoice </h4></b>\n
     </string>
     <string name="generate"><h1>Which type of invoice would you like to generate ?</h1></string>
-
+    <string name="title_activity_bank_details_invo">bankDetailsInvo</string>
 
 
 </resources>

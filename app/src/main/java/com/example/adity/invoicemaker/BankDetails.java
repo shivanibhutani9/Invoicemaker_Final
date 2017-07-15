@@ -31,9 +31,6 @@ public class BankDetails extends AppCompatActivity {
         accholdername=(EditText)findViewById(R.id.accholder);
         accnumber=(EditText)findViewById(R.id.accno);
 
-
-
-
         Button save=(Button)findViewById(R.id.savebank) ;
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,23 +55,15 @@ public class BankDetails extends AppCompatActivity {
 
                     }
                 });
-
+                /*
                 Intent i=new Intent();
                 i.putExtra("bank_name",bank);
                 i.putExtra("ifsc_code",ifsccode);
                 i.putExtra("account_holder",accholder);
                 i.putExtra("account_number",accno);
 
-                Bundle extras = getIntent().getExtras();
-                 String act = extras.getString("Type");
 
-                if(act.equals("VENDOR")) {
-                    setResult(1,i);
-
-                } else {
-                    setResult(5,i);
-                }
-
+                */
                 finish();
 
 

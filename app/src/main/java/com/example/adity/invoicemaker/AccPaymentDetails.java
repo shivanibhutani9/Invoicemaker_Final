@@ -35,13 +35,14 @@ import static android.R.drawable.ic_delete;
  * Use the {@link AccPaymentDetails} factory method to
  * create an instance of this fragment.
  */
-public class AccPaymentDetails extends Fragment {
+public class AccPaymentDetails extends Fragment implements onItemTouchListener{
     bankDetailsAdapter adapter;
     RecyclerView rv;
     FloatingActionButton fab;
     ArrayList<ObjectAcc> arrayList;
     String ifsc,bname,accnum,accname;
     ProgressDialog pd;
+    onItemTouchListener onItemTouchListener;
     public AccPaymentDetails() {
         // Required empty public constructor
 
@@ -55,9 +56,9 @@ public class AccPaymentDetails extends Fragment {
         pd.setMessage("Please Wait ...");
         pd.show();
         arrayList.clear();
-        adapter =new bankDetailsAdapter(getContext(),arrayList);
+        adapter =new bankDetailsAdapter(getContext(),arrayList,onItemTouchListener);
 
-       Read();
+        Read();
 
 
 
@@ -90,10 +91,11 @@ public class AccPaymentDetails extends Fragment {
             public void onClick(View view) {
                 Intent i=new Intent(getContext(),BankDetails.class);
                 arrayList.clear();
-                i.putExtra("Type","BankDetails");
+                //i.putExtra("Type","BankDetails");
                 startActivityForResult(i,6);
             }
         });
+        adapter.setClickListener(this);
 
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.RIGHT ){
@@ -102,7 +104,6 @@ public class AccPaymentDetails extends Fragment {
 
                 return false;
             }
-
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final int pos=viewHolder.getAdapterPosition();
@@ -141,17 +142,45 @@ public class AccPaymentDetails extends Fragment {
 
     }
 
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == 5 ){
+       /*  if(resultCode == 5 ){
             Toast.makeText(getContext(), "RESULT", Toast.LENGTH_SHORT).show();
             ObjectAcc Ob= new ObjectAcc(data.getStringExtra("account_holder"),data.getStringExtra("bank_name"),data.getStringExtra("account_number"),data.getStringExtra("ifsc_code"));
 
-        }
+        }*/
     }
 
-    public class ObjectAcc{
+    @Override
+    public void onClick(View view, int position) {
+
+        Bundle extras = getActivity().getIntent().getExtras();
+        if(extras!=null){
+        String act = extras.getString("Type");
+
+        if(act.equals("VENDOR")) {
+            ObjectAcc ob=arrayList.get(position);
+        Intent i=new Intent();
+        i.putExtra("bank_name",ob.bankname);
+        i.putExtra("ifsc_code",ob.ifsc_code);
+        i.putExtra("account_holder",ob.accname);
+        i.putExtra("account_number",ob.accno);
+
+
+            getActivity().setResult(1,i);
+            getActivity().finish();
+
+        }}
+        else{
+            ;
+        }
+
+    }
+
+    public static class ObjectAcc{
         public String accno,accname,bankname,ifsc_code;
         ObjectAcc(String name,String bname,String acno,String ifsc){
             accname=name;

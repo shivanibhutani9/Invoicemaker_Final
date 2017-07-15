@@ -48,13 +48,15 @@
                 android:text="Bank Name"
                 android:textSize="15dp"
                 android:textStyle="bold" />
+
             <TextView
 
                 android:id="@+id/bname"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:padding="5dp"
+                android:text="Bank Name"
                 android:textSize="15dp" />
         </LinearLayout>
         <LinearLayout
@@ -71,12 +73,14 @@
                 android:text="Account Number"
                 android:textSize="15dp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/ac_no"
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:padding="5dp"
+                android:text="Account Number"
                 android:textSize="15dp" />
         </LinearLayout>
 

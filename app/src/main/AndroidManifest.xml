@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".signup" />
         <activity
             android:name=".splash"
@@ -41,18 +41,19 @@
             android:name=".InvoiceGen"
             android:label="Invoice" />
 
-        <activity android:name=".InvoiceGenerate"
-            android:label="Invoice"/>
+        <activity
+            android:name=".InvoiceGenerate"
+            android:label="Invoice" />
         <activity android:name=".ClientDetails" />
-        <activity android:name=".typesofinvoice"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".NavigationDrawer">
-
-        </activity>
-        <activity android:name=".OTPCheck"
-           >
-
-        </activity>
+        <activity
+            android:name=".typesofinvoice"
+            android:parentActivityName=".NavigationDrawer"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".OTPCheck"></activity>
+        <activity
+            android:name=".bankDetailsInvo"
+            android:label="@string/title_activity_bank_details_invo"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

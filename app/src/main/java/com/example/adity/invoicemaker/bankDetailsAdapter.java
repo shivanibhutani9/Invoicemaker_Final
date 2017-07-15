@@ -18,10 +18,13 @@ import java.util.ArrayList;
 
 public class bankDetailsAdapter extends RecyclerView.Adapter<bankDetailsAdapter.ViewHolder> {
    public  Context mContext;
+    private onItemTouchListener onItemTouchListener;
     ArrayList<AccPaymentDetails.ObjectAcc> objects;
-    bankDetailsAdapter(Context mContext, ArrayList<AccPaymentDetails.ObjectAcc> objects){
+    bankDetailsAdapter(Context mContext, ArrayList<AccPaymentDetails.ObjectAcc> objects, onItemTouchListener listener
+    ){
         this.mContext=mContext;
         this.objects=objects;
+        this.onItemTouchListener=listener;
     }
 
     @Override
@@ -50,7 +53,10 @@ public class bankDetailsAdapter extends RecyclerView.Adapter<bankDetailsAdapter.
         return objects.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public void setClickListener(onItemTouchListener itemClickListener) {
+        this.onItemTouchListener = itemClickListener;
+    }
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
       public TextView Acc_name,Acc_no,bankName,ifsc;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -58,7 +64,13 @@ public class bankDetailsAdapter extends RecyclerView.Adapter<bankDetailsAdapter.
             Acc_no=(TextView)itemView.findViewById(R.id.ac_no);
             bankName=(TextView)itemView.findViewById(R.id.bname);
             ifsc=(TextView)itemView.findViewById(R.id.ifsc_code);
+            itemView.setOnClickListener(this);
 
+        }
+
+        @Override
+        public void onClick(View view) {
+            onItemTouchListener.onClick(view,getAdapterPosition());
         }
     }
 }
