@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:padding="5dp"
-        android:text="Account Holder"
+        android:text=""
         android:textSize="15dp" />
 </LinearLayout>
         <LinearLayout
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:text="Bank Name"
+                android:text=""
                 android:textSize="15dp" />
         </LinearLayout>
         <LinearLayout
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:text="Account Number"
+                android:text=""
                 android:textSize="15dp" />
         </LinearLayout>
 
@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="5dp"
-            android:text="IFSC Code"
+            android:text=""
             android:textSize="15dp" />
     </LinearLayout>
     </LinearLayout>

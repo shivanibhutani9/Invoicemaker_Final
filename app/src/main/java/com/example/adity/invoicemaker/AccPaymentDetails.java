@@ -92,7 +92,7 @@ public class AccPaymentDetails extends Fragment implements onItemTouchListener{
             public void onClick(View view) {
                 Intent i=new Intent(getContext(),BankDetails.class);
                 arrayList.clear();
-                //i.putExtra("Type","BankDetails");
+                i.putExtra("Type","BankDetails");
                 startActivityForResult(i,6);
             }
         });
@@ -148,11 +148,12 @@ public class AccPaymentDetails extends Fragment implements onItemTouchListener{
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-       /*  if(resultCode == 5 ){
-            Toast.makeText(getContext(), "RESULT", Toast.LENGTH_SHORT).show();
-            ObjectAcc Ob= new ObjectAcc(data.getStringExtra("account_holder"),data.getStringExtra("bank_name"),data.getStringExtra("account_number"),data.getStringExtra("ifsc_code"));
 
-        }*/
+          if(resultCode == 5 ){
+         //   Toast.makeText(getContext(), "RESULT", Toast.LENGTH_SHORT).show();
+           // ObjectAcc Ob= new ObjectAcc(data.getStringExtra("account_holder"),data.getStringExtra("bank_name"),data.getStringExtra("account_number"),data.getStringExtra("ifsc_code"));
+    adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -176,7 +177,6 @@ public class AccPaymentDetails extends Fragment implements onItemTouchListener{
 
         }}
         else{
-            ;
         }
 
     }
