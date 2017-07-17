@@ -46,11 +46,11 @@ public class listadapt extends RecyclerView.Adapter<listadapt.ViewHolder> {
 
         holder.hsn.setText(a[1]);
 
-        holder.Unit_cost.setText(a[2]);
+        holder.Unit_cost.setText(a[5]);
 
-        holder.quantity.setText(a[3]);
+        holder.quantity.setText(a[6]);
 
-        holder.amt.setText(a[4]);
+        holder.amt.setText(a[7]);
 
 
     }

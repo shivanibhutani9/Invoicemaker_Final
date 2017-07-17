@@ -49,17 +49,9 @@ public class pdfreader extends AppCompatActivity {
         setContentView(R.layout.activity_pdfreader);
 
 
-       next = (Button) findViewById(R.id.next);
+      // next = (Button) findViewById(R.id.next);
         previous = (Button) findViewById(R.id.previous);
 
-        next.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                currentPage++;
-                render();
-            }
-        });
 
         previous.setOnClickListener(new View.OnClickListener() {
 
@@ -85,7 +77,7 @@ public class pdfreader extends AppCompatActivity {
             int REQ_HEIGHT = imageView.getHeight();
 
             Bitmap bitmap = Bitmap.createBitmap(REQ_WIDTH, REQ_HEIGHT, Bitmap.Config.ARGB_4444);
-            File file = new File(Environment.getExternalStorageDirectory()+"/mypdf2.pdf");
+            File file = new File(Environment.getExternalStorageDirectory()+"/mypdf.pdf");
             PdfRenderer renderer = new PdfRenderer(ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY));
 
             if(currentPage < 0) {

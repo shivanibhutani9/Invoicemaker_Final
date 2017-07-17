@@ -12,9 +12,11 @@ import org.w3c.dom.Text;
 
 public class AddItem extends AppCompatActivity {
 
-    EditText descrip,HSN,cost,quant;
+    EditText descrip,HSN,cost,quant,sgst,cgst,igst;
     TextView amt;
-    String description,HSNcode,unitcost,quantity,amount;
+    Double Cost;
+    Integer quanti;
+    String description,HSNcode,unitcost,quantity,amount,Sgst,Cgst,Igst;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +24,16 @@ public class AddItem extends AppCompatActivity {
         setContentView(R.layout.activity_add_item);
         descrip=(EditText)findViewById(R.id.description);
         HSN=(EditText)findViewById(R.id.HSNcode);
+        sgst=(EditText)findViewById(R.id.SGSTcodee);
+        cgst=(EditText)findViewById(R.id.CGSTcodee);
+        igst=(EditText)findViewById(R.id.IGSTcodee);
         cost=(EditText)findViewById(R.id.cost);
         quant=(EditText)findViewById(R.id.quant);
         amt=(TextView)findViewById(R.id.amt);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Button save=(Button)findViewById(R.id.save);
+
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,17 +41,25 @@ public class AddItem extends AppCompatActivity {
                 description=descrip.getText().toString();
                 HSNcode=HSN.getText().toString();
                 unitcost=cost.getText().toString();
+                Sgst=sgst.getText().toString();
+                Cgst=cgst.getText().toString();
+                Igst=igst.getText().toString();
                 quantity=quant.getText().toString();
                 amount=amt.getText().toString();
 
                 Intent i=new Intent();
                 i.putExtra("description",description);
                 i.putExtra("HSNcode",HSNcode);
+
+                i.putExtra("Sgst",Sgst);
+                i.putExtra("Cgst",Cgst);
+                i.putExtra("Igst",Igst);
+
                 i.putExtra("unitcost",unitcost);
                 i.putExtra("quantity",quantity);
                 i.putExtra("amount",amount);
                 setResult(2,i);
-
+                amt.setText("" + quanti * Cost);
                 finish();
             }
         });
@@ -55,11 +70,12 @@ public class AddItem extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus)
                 {
-                        Integer quanti = Integer.parseInt(quant.getText().toString());
-                        Double Cost = Double.parseDouble(cost.getText().toString());
+                         quanti = Integer.parseInt(quant.getText().toString());
+                         Cost = Double.parseDouble(cost.getText().toString());
                         Double l=(quanti*Cost);
+                    amt.setText("" + quanti * Cost);
 
-                        amt.setText("" + quanti * Cost);
+
 
                 }
             }

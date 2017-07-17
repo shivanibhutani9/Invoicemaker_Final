@@ -87,7 +87,7 @@ public class InvoiceGenerate extends AppCompatActivity {
     String description,HSNcode,unitcost,quantity,amount;
     listadapt adapter;
     RecyclerView rv;
-    String Name,Phone,Email,Address,Gstin,Pan_no;
+    String Name,Phone,Email,Address,Gstin,Pan_no,sgst,cgst,igst;
     TextView bank_details;
     LinearLayout l,ClientDetails;
     DatabaseReference db;
@@ -266,8 +266,11 @@ public class InvoiceGenerate extends AppCompatActivity {
                 unitcost = data.getStringExtra("unitcost");
                 quantity = data.getStringExtra("quantity");
                 amount = data.getStringExtra("amount");
+                sgst=data.getStringExtra("Sgst");;
+                cgst=data.getStringExtra("Cgst");
+                igst=data.getStringExtra("Igst");
 
-                items.add(new String[]{description, HSNcode, unitcost, quantity, amount});
+                items.add(new String[]{description, HSNcode,sgst,cgst,igst, unitcost, quantity, amount});
                 adapter.notifyDataSetChanged();
                 String invoiceid = invoice.getText().toString();
 
@@ -275,6 +278,9 @@ public class InvoiceGenerate extends AppCompatActivity {
                 db = FirebaseDatabase.getInstance().getReference("Invoice").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoiceid);
                 mp.put("Description", description);
                 mp.put("HSN code", HSNcode);
+                mp.put("Sgst",sgst);
+                mp.put("Cgst",cgst);
+                mp.put("Igst",igst);
                 mp.put("unit cost", unitcost);
                 mp.put("quantity", quantity);
                 mp.put("amount", amount);
@@ -392,6 +398,8 @@ public class InvoiceGenerate extends AppCompatActivity {
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable.addCell(cell);
+
+
 
 
 // column 2
@@ -641,20 +649,25 @@ public class InvoiceGenerate extends AppCompatActivity {
             innertable5.addCell(cell5);
 
             //first item
-            cell5 = new PdfPCell(new Phrase("1"));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase(description));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase(HSNcode));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("     "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase(quantity));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase(unitcost));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("      "));
-            innertable5.addCell(cell5);
+
+
+            for(int i=0;i<items.size();i++)
+            {
+                String item[]=items.get(i);
+                cell5 = new PdfPCell(new Phrase("1"));
+                innertable5.addCell(cell5);
+                cell5 = new PdfPCell(new Phrase(item[0]));
+                innertable5.addCell(cell5);
+                cell5 = new PdfPCell(new Phrase(item[1]));
+                innertable5.addCell(cell5);
+                cell5 = new PdfPCell(new Phrase("     "));
+                innertable5.addCell(cell5);
+                cell5 = new PdfPCell(new Phrase(item[6]));
+                innertable5.addCell(cell5);
+                cell5 = new PdfPCell(new Phrase(item[5]));
+                innertable5.addCell(cell5);
+                cell5 = new PdfPCell(new Phrase("      "));
+                innertable5.addCell(cell5);
               /*  cell5 = new PdfPCell(new Phrase("      "));
                 innertable5.addCell(cell5);
                 cell5 = new PdfPCell(new Phrase("     "));
@@ -662,24 +675,27 @@ public class InvoiceGenerate extends AppCompatActivity {
                 cell5 = new PdfPCell(new Phrase("     "));
                 innertable5.addCell(cell5);*/
 
-            PdfPTable nested4 = new PdfPTable(1);
-            nested4.addCell("R:    ");
-            nested4.addCell("A:     ");
-            PdfPCell nesthousing4 = new PdfPCell(nested4);
-            innertable5.addCell(nesthousing4);
-            PdfPTable nested5 = new PdfPTable(1);
-            nested5.addCell("R:     ");
-            nested5.addCell("A:     ");
-            PdfPCell nesthousing5 = new PdfPCell(nested5);
-            innertable5.addCell(nesthousing5);
-            PdfPTable nested6 = new PdfPTable(1);
-            nested6.addCell("R:");
-            nested6.addCell("A:");
-            PdfPCell nesthousing6 = new PdfPCell(nested6);
-            innertable5.addCell(nesthousing6);
-            cell5 = new PdfPCell(new Phrase(amount));
-            cell5.setMinimumHeight(10f);
-            innertable5.addCell(cell5);
+                PdfPTable nested4 = new PdfPTable(1);
+                nested4.addCell("R: "+item[2]);
+                nested4.addCell("A:     ");
+                PdfPCell nesthousing4 = new PdfPCell(nested4);
+                innertable5.addCell(nesthousing4);
+                PdfPTable nested5 = new PdfPTable(1);
+                nested5.addCell("R: "+item[3]);
+                nested5.addCell("A:     ");
+                PdfPCell nesthousing5 = new PdfPCell(nested5);
+                innertable5.addCell(nesthousing5);
+                PdfPTable nested6 = new PdfPTable(1);
+                nested6.addCell("R:"+item[4]);
+                nested6.addCell("A:");
+                PdfPCell nesthousing6 = new PdfPCell(nested6);
+                innertable5.addCell(nesthousing6);
+                cell5 = new PdfPCell(new Phrase(item[7]));
+                cell5.setMinimumHeight(10f);
+                innertable5.addCell(cell5);
+
+            }
+           /*
 
             //second item
             cell5 = new PdfPCell(new Phrase("2"));
@@ -758,7 +774,7 @@ public class InvoiceGenerate extends AppCompatActivity {
             cell5.setMinimumHeight(10f);
             innertable5.addCell(cell5);
 
-
+*/
 
 
 
