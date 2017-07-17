@@ -21,20 +21,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <android.inputmethodservice.ExtractEditText
+
+                <TextView
                     android:layout_width="81dp"
                     android:layout_height="wrap_content"
                     android:text="INV000"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:textColor="#000"
                     android:focusableInTouchMode="true"
                     android:id="@+id/invoiceid"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="date >"
+                    android:text="__/__/____ >"
                     android:layout_marginRight="16dp"
                     android:id="@+id/textdate"
                     android:gravity="right"
                     />
+
 
             </LinearLayout>
         </LinearLayout>
@@ -183,6 +188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Discount (0%)"
+                    android:id="@+id/discount"
                     android:gravity="left"/>
                 <TextView
                     android:layout_width="match_parent"
@@ -193,42 +199,7 @@
 
 
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CGST"
-                    android:gravity="left"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:gravity="right"
-                    android:text="₹ 0.00" />
 
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="SGST"
-                    android:gravity="left"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="16dp"
-                    android:gravity="right"
-                    android:text="₹ 0.00" />
-
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

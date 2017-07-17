@@ -30,6 +30,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 /**
  * Created by Simrandeep Singh
  *
@@ -97,8 +100,8 @@ public class pdfreader extends AppCompatActivity {
             imageView.setImageMatrix(m);
             imageView.setImageBitmap(bitmap);
             Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
-       //     PhotoViewAttacher photoView= new PhotoViewAttacher(imageView);
-         //   photoView.update();
+            PhotoViewAttacher photoView= new PhotoViewAttacher(imageView);
+            photoView.update();
             imageView.invalidate();
 
         } catch(Exception e) {

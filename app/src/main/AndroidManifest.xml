@@ -3,7 +3,8 @@
     package="com.example.adity.invoicemaker">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
 
     <application
@@ -67,7 +68,10 @@
             android:label="@string/title_activity_vendor__details"
             android:parentActivityName=".InvoiceGenerate"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".persondetails"/>
+        <activity android:name=".pdfreader"/>
+        <activity android:name=".Discount"/>
+        <activity android:name=".persondetails"
+            />
         <activity android:name=".edit"/>
     </application>
 

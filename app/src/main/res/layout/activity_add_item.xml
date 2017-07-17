@@ -40,6 +40,36 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:hint="SGST Rate"
+                android:id="@+id/SGSTcodee"
+                android:inputType="text"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:hint="CGST Rate"
+                android:id="@+id/CGSTcodee"
+                android:inputType="text"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:hint="IGST Rate"
+                android:id="@+id/IGSTcodee"
+                android:inputType="text"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
         </LinearLayout>
 
 
@@ -52,76 +82,76 @@
             android:layout_below="@+id/linearLayout3"
             android:id="@+id/linearLayout4"
             android:background="#ffff">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="2">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Unit Cost"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Unit Cost"
+                    android:padding="5dp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"/>
 
-            <EditText
-                android:id="@+id/cost"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:gravity="right|bottom"
-                android:inputType="numberDecimal"
-                android:padding="5dp"
-                android:text="0.0"
-                android:layout_weight="1"/>
-</LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Quantity"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
-
-            <EditText
-                android:id="@+id/quant"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:inputType="number"
-                android:text="0"
-                android:padding="5dp"
-                android:layout_weight="1"
-                />
+                <EditText
+                    android:id="@+id/cost"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right|bottom"
+                    android:inputType="numberDecimal"
+                    android:padding="5dp"
+                    android:text="0.0"
+                    android:layout_weight="1"/>
             </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Amount"
-                android:padding="5dp"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quantity"
+                    android:padding="5dp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"/>
 
-            <TextView
-                android:id="@+id/amt"
-                android:layout_width="50dp"
+                <EditText
+                    android:id="@+id/quant"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:inputType="number"
+                    android:text="0"
+                    android:padding="5dp"
+                    android:layout_weight="1"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
-                android:padding="5dp"
-                android:text="0.00"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Amount"
+                    android:padding="5dp"
+                    android:textStyle="bold"
+                    android:layout_weight="1"/>
 
-                android:layout_weight="1"/>
-</LinearLayout>
+                <TextView
+                    android:id="@+id/amt"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:padding="5dp"
+                    android:text="0.00"
+
+                    android:layout_weight="1"/>
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -133,15 +163,15 @@
             android:layout_below="@+id/linearLayout4"
             android:id="@+id/linearLayout5"
             android:background="#ffff">
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="SAVE"
-    android:id="@+id/save"
-    android:layout_gravity="center_horizontal|center_vertical"
-    android:background="@drawable/button"
-    android:textColor="#fff"
-    android:textStyle="bold"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SAVE"
+                android:id="@+id/save"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:background="@drawable/button"
+                android:textColor="#fff"
+                android:textStyle="bold"/>
 
 
         </LinearLayout>

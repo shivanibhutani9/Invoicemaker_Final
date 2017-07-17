@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 public class persondetails extends AppCompatActivity {
 
     TextView company,mail,num,person,add1,add2,add3,gst,pan;
-    String cname="",em="",no="",per="",a1="",a2="",a3="",gs="",pn="";
+    String em="",no="",per="",a1="",a2="",a3="",gs="",pn="";
     ProgressDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +47,8 @@ public class persondetails extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds:dataSnapshot.getChildren())
                 {
-                    if(ds.getKey().equals("Company"))
-                    {
-                        cname=ds.getValue(String.class);
-                    }
 
-                    else if(ds.getKey().equals("Email"))
+                     if(ds.getKey().equals("Email"))
                     {
                         em=ds.getValue(String.class);
                     }
@@ -101,7 +97,6 @@ public class persondetails extends AppCompatActivity {
         });
 
 
-        company.setText(""+cname);
 
         mail.setText(""+em);
 
