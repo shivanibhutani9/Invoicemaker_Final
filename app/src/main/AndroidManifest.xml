@@ -50,23 +50,23 @@
             android:parentActivityName=".typesofinvoice" />
         <activity
             android:name=".ClientDetails"
-            android:label="Vendor Details"/>
-            <!--android:parentActivityName=".InvoiceGenerate"-->
+            android:label="Vendor Details" />
+        <!-- android:parentActivityName=".InvoiceGenerate" -->
+        <activity android:name=".AccPaymentDetailsActivity"
+            android:label="Payment Details"
+            android:parentActivityName=".InvoiceGenerate"
+
+            />
         <activity
             android:name=".typesofinvoice"
             android:parentActivityName=".NavigationDrawer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".OTPCheck"></activity>
-        <activity
-            android:name=".bankDetailsInvo"
-            android:label="@string/title_activity_bank_details_invo"
-            android:parentActivityName=".InvoiceGenerate"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".OTPCheck" />
         <activity
             android:name=".Vendor_Details"
             android:label="@string/title_activity_vendor__details"
             android:parentActivityName=".InvoiceGenerate"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

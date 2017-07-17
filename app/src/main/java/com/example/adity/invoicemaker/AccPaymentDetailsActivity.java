@@ -1,5 +1,30 @@
 package com.example.adity.invoicemaker;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -30,73 +55,38 @@ import java.util.ArrayList;
 import static android.R.drawable.ic_delete;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AccPaymentDetails} factory method to
- * create an instance of this fragment.
- */
-public class AccPaymentDetails extends Fragment implements onItemTouchListener{
+
+import java.util.ArrayList;
+
+public class AccPaymentDetailsActivity extends AppCompatActivity implements onItemTouchListener{
+
     bankDetailsAdapter adapter;
     RecyclerView rv;
     FloatingActionButton fab;
-    ArrayList<ObjectAcc> arrayList;
+    ArrayList<AccPaymentDetailsActivity.ObjectAcc> arrayList;
     String ifsc,bname,accnum,accname;
     ProgressDialog pd;
     onItemTouchListener onItemTouchListener;
-    public AccPaymentDetails() {
-        // Required empty public constructor
-
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_acc_payment_details);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         arrayList=new ArrayList<ObjectAcc>();
-        pd=new ProgressDialog(getActivity());
-        pd.setMessage("Please Wait ...");
-        pd.show();
-        arrayList.clear();
-        adapter =new bankDetailsAdapter(getContext(),arrayList,onItemTouchListener);
+        rv= (RecyclerView)findViewById(R.id.list_item);
 
-        Read();
+        adapter =new bankDetailsAdapter(this,arrayList,onItemTouchListener);
 
-
-
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_acc_payment_details, container, false);
-    }
-
-    @Override
-    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        getActivity().setTitle("Payment Details");
-
-        fab=(FloatingActionButton)getActivity().findViewById(R.id.fab) ;
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rv= (RecyclerView)getActivity().findViewById(R.id.list_item);
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
 
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i=new Intent(getContext(),BankDetails.class);
-                arrayList.clear();
-                i.putExtra("Type","BankDetails");
-                startActivityForResult(i,6);
-            }
-        });
+        pd=new ProgressDialog(this);
+        pd.setMessage("Please Wait ...");
+        pd.show();
+        Read();
         adapter.setClickListener(this);
+
 
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.RIGHT ){
@@ -109,18 +99,18 @@ public class AccPaymentDetails extends Fragment implements onItemTouchListener{
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final int pos=viewHolder.getAdapterPosition();
                 ObjectAcc obj=arrayList.get(pos);
-                AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getActivity())
+                AlertDialog myQuittingDialogBox =new AlertDialog.Builder(AccPaymentDetailsActivity.this)
                         //set message, title, and icon
                         .setTitle("Delete")
                         .setMessage("Do you really want to delete the following bank details?\n\n"+"\t\tAccount Holder -"+obj.accname+"\n\t\tAccount Number -"
-            +obj.accno+"\n\t\tBank Name -"+obj.bankname)
+                                +obj.accno+"\n\t\tBank Name -"+obj.bankname)
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 //your deleting code
-                               arrayList.remove(pos);
-                               adapter.notifyDataSetChanged();
-                                Toast.makeText(getActivity(), "DELETED", Toast.LENGTH_SHORT).show();
+                                arrayList.remove(pos);
+                                adapter.notifyDataSetChanged();
+                                Toast.makeText(AccPaymentDetailsActivity.this, "DELETED", Toast.LENGTH_SHORT).show();
 
                                 dialog.dismiss();
                             }
@@ -129,7 +119,7 @@ public class AccPaymentDetails extends Fragment implements onItemTouchListener{
 
                         .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                            adapter.notifyDataSetChanged();
+                                adapter.notifyDataSetChanged();
                                 dialog.dismiss();
 
                             }
@@ -141,41 +131,54 @@ public class AccPaymentDetails extends Fragment implements onItemTouchListener{
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(rv);
 
+
+
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(AccPaymentDetailsActivity.this,BankDetails.class);
+                arrayList.clear();
+                i.putExtra("Type","BankDetails");
+                startActivityForResult(i,6);
+            }
+        });
+
+
+
     }
-
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-          if(resultCode == 5 ){
-         //   Toast.makeText(getContext(), "RESULT", Toast.LENGTH_SHORT).show();
-           // ObjectAcc Ob= new ObjectAcc(data.getStringExtra("account_holder"),data.getStringExtra("bank_name"),data.getStringExtra("account_number"),data.getStringExtra("ifsc_code"));
-    adapter.notifyDataSetChanged();
+        if(resultCode == 5 ){
+            //   Toast.makeText(getContext(), "RESULT", Toast.LENGTH_SHORT).show();
+            // ObjectAcc Ob= new ObjectAcc(data.getStringExtra("account_holder"),data.getStringExtra("bank_name"),data.getStringExtra("account_number"),data.getStringExtra("ifsc_code"));
+            adapter.notifyDataSetChanged();
         }
     }
 
     @Override
     public void onClick(View view, int position) {
 
-        Bundle extras = getActivity().getIntent().getExtras();
+        Bundle extras = this.getIntent().getExtras();
         if(extras!=null){
-        String act = extras.getString("Type");
+            String act = extras.getString("from");
 
-        if(act.equals("VENDOR")) {
-            ObjectAcc ob=arrayList.get(position);
-        Intent i=new Intent();
-        i.putExtra("bank_name",ob.bankname);
-        i.putExtra("ifsc_code",ob.ifsc_code);
-        i.putExtra("account_holder",ob.accname);
-        i.putExtra("account_number",ob.accno);
+            if(act.equals("Invoice")) {
+               AccPaymentDetailsActivity.ObjectAcc ob=arrayList.get(position);
+                Intent i=new Intent();
+                i.putExtra("bank_name",ob.bankname);
+                i.putExtra("ifsc_code",ob.ifsc_code);
+                i.putExtra("account_holder",ob.accname);
+                i.putExtra("account_number",ob.accno);
 
 
-            getActivity().setResult(1,i);
-            getActivity().finish();
+                setResult(1,i);
+                finish();
 
-        }}
+            }}
         else{
         }
 
@@ -239,10 +242,39 @@ public class AccPaymentDetails extends Fragment implements onItemTouchListener{
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getActivity(), "error"+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AccPaymentDetailsActivity.this, "error"+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        String from = getIntent().getExtras().getString("from");
+        Intent newIntent = null;
+        if(from.equals("Invoice")){
+            newIntent = new Intent(this, InvoiceGenerate.class);
+        }else if(from.equals("profile")){
+            //newIntent = new Intent(this,NavigationDrawer.class);
+            onBackPressed();
+        }
+        return newIntent;
+    }
 }
+
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link AccPaymentDetails} factory method to
+ * create an instance of this fragment.
+ */
+
+
+
+
+
+
+
+
+
+

@@ -19,8 +19,8 @@ import java.util.ArrayList;
 public class bankDetailsAdapter extends RecyclerView.Adapter<bankDetailsAdapter.ViewHolder> {
    public  Context mContext;
     private onItemTouchListener onItemTouchListener;
-    ArrayList<AccPaymentDetails.ObjectAcc> objects;
-    bankDetailsAdapter(Context mContext, ArrayList<AccPaymentDetails.ObjectAcc> objects, onItemTouchListener listener
+    ArrayList<AccPaymentDetailsActivity.ObjectAcc> objects;
+    bankDetailsAdapter(Context mContext, ArrayList<AccPaymentDetailsActivity.ObjectAcc> objects, onItemTouchListener listener
     ){
         this.mContext=mContext;
         this.objects=objects;
@@ -35,7 +35,7 @@ public class bankDetailsAdapter extends RecyclerView.Adapter<bankDetailsAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        final AccPaymentDetails.ObjectAcc obj=objects.get(position);
+        final AccPaymentDetailsActivity.ObjectAcc obj=objects.get(position);
 
         holder.bankName.setText(obj.bankname);
 

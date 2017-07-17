@@ -111,8 +111,9 @@ public class InvoiceGenerate extends AppCompatActivity {
         bank_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),bankDetailsInvo.class);
+                Intent intent=new Intent(getApplicationContext(),AccPaymentDetailsActivity.class);
                 intent.putExtra("Type","VENDOR");
+                intent.putExtra("from","Invoice");
                 startActivityForResult(intent,1);
 
             }

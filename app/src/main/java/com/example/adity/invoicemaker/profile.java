@@ -118,8 +118,7 @@ public class profile extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if(position==1)
-                {
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_layout,new AccPaymentDetails()).addToBackStack("AccPayment").commit();
+                {   startActivity(new Intent(getActivity(),AccPaymentDetailsActivity.class).putExtra("from","profile"));
                 }
                 else if(position==2)
                 {
