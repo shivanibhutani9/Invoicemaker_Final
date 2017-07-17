@@ -29,6 +29,7 @@
     </string>
     <string name="generate"><h1>Which type of invoice would you like to generate ?</h1></string>
     <string name="title_activity_bank_details_invo">bankDetailsInvo</string>
+    <string name="title_activity_vendor__details">Vendor_Details</string>
 
 
 </resources>

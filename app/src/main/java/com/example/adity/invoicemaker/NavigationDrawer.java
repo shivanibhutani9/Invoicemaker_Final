@@ -120,7 +120,7 @@ public class NavigationDrawer extends AppCompatActivity
 
 
         else if (id == R.id.vendors) {
-            fragment =new vendors_fragment();
+            startActivity(new Intent(this,Vendor_Details.class).putExtra("from","profile"));
         }
 
 

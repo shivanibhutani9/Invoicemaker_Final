@@ -108,18 +108,22 @@ public class MainActivity extends AppCompatActivity {
         sup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,signup.class));
+                startActivityForResult(new Intent(MainActivity.this,signup.class),1);
             }
         });
 
 
 
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-
-
-
-
+        if(resultCode==1)
+        {
+            finish();
+        }
 
     }
 }

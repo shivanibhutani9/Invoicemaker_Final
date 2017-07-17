@@ -46,7 +46,7 @@ public class signup extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,8 +77,7 @@ public class signup extends AppCompatActivity {
                     cb.setHint("please check this");
                 }
                 else {
-
-
+                    setResult(1,new Intent());
                     startActivity(new Intent(signup.this,OTPCheck.class).putExtra("number",no).putExtra("company_name",name).putExtra("Email",em).putExtra("Contact_person",repass.getText().toString()).putExtra("password",pwd));
                     finish();
 
@@ -88,5 +87,11 @@ public class signup extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(signup.this,MainActivity.class));
+        super.onBackPressed();
     }
 }

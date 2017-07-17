@@ -154,8 +154,8 @@ public class InvoiceGenerate extends AppCompatActivity {
         ClientDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),ClientDetails.class);
-                intent.putExtra("Type","Vendor");
+                Intent intent=new Intent(getApplicationContext(),Vendor_Details.class);
+                intent.putExtra("from","Invoice");
                 startActivityForResult(intent,3);
 
             }
