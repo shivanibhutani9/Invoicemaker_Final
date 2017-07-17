@@ -37,7 +37,7 @@ public class AddItem extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                amt.setText("" + quanti * Cost);
                 description=descrip.getText().toString();
                 HSNcode=HSN.getText().toString();
                 unitcost=cost.getText().toString();
@@ -59,7 +59,7 @@ public class AddItem extends AppCompatActivity {
                 i.putExtra("quantity",quantity);
                 i.putExtra("amount",amount);
                 setResult(2,i);
-                amt.setText("" + quanti * Cost);
+
                 finish();
             }
         });
@@ -72,12 +72,19 @@ public class AddItem extends AppCompatActivity {
                 {
                          quanti = Integer.parseInt(quant.getText().toString());
                          Cost = Double.parseDouble(cost.getText().toString());
-                        Double l=(quanti*Cost);
-                    amt.setText("" + quanti * Cost);
-
-
-
+                         Double l=(quanti*Cost);
+                         amt.setText("" + quanti * Cost);
+                    if(cost.getText().equals(""))
+                        cost.setText("0.0");
                 }
+                else if(hasFocus) {
+                    if(cost.getText().equals("0.0"))
+                        cost.setText("");
+                }
+
+
+
+
             }
         });
 
@@ -87,11 +94,18 @@ public class AddItem extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus)
                 {
-                        Integer quanti = Integer.parseInt(quant.getText().toString());
-                        Double Cost = Double.parseDouble(cost.getText().toString());
+                         quanti = Integer.parseInt(quant.getText().toString());
+                         Cost = Double.parseDouble(cost.getText().toString());
                         amt.setText("" + quanti * Cost);
 
+                    if(quant.getText().equals(""))
+                        quant.setText("0.0");
                 }
+                else if(hasFocus) {
+                    if(quant.getText().equals("0"))
+                        quant.setText("");
+                }
+
             }
         });
 

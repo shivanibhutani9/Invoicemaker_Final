@@ -46,7 +46,7 @@
                 android:layout_marginLeft="5dp"
                 android:hint="SGST Rate"
                 android:id="@+id/SGSTcodee"
-                android:inputType="text"
+                android:inputType="number"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -56,7 +56,7 @@
                 android:layout_marginLeft="5dp"
                 android:hint="CGST Rate"
                 android:id="@+id/CGSTcodee"
-                android:inputType="text"
+                android:inputType="number"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -66,7 +66,7 @@
                 android:layout_marginLeft="5dp"
                 android:hint="IGST Rate"
                 android:id="@+id/IGSTcodee"
-                android:inputType="text"
+                android:inputType="number"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 

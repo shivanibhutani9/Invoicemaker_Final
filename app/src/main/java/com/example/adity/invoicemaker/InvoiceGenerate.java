@@ -39,6 +39,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.ValueEventListener;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.DocumentException;
@@ -85,17 +87,17 @@ public class InvoiceGenerate extends AppCompatActivity {
     ProgressDialog pd;
     String bank,ifsccode,accholder,accno;
     String description,HSNcode,unitcost,quantity,amount;
+    String c,ad,cp;
     listadapt adapter;
     RecyclerView rv;
     String Name,Phone,Email,Address,Gstin,Pan_no,sgst,cgst,igst;
     TextView bank_details;
     LinearLayout l,ClientDetails;
     DatabaseReference db;
-    ListView lv;
     TextView invoice;
     ImageView image;
     int i=1;
-    ArrayList<String [] > items;
+    ArrayList<String[]> items;
     Map<String,String> mp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +120,40 @@ public class InvoiceGenerate extends AppCompatActivity {
 
             }
         });
+
+        DatabaseReference db1=FirebaseDatabase.getInstance().getReference("Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        db1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String a1="",a2="",a3="";
+                for(DataSnapshot ds:dataSnapshot.getChildren())
+                {
+                    if(ds.getKey().equals("Company"))
+                        c =ds.getValue(String.class);
+
+                    if(ds.getKey().equals("Address1"))
+                        a1 =ds.getValue(String.class);
+
+                    if(ds.getKey().equals("Address2"))
+                        a2 =ds.getValue(String.class);
+
+                    if(ds.getKey().equals("Address3"))
+                        a3 =ds.getValue(String.class);
+
+                    if(ds.getKey().equals("contact person"))
+                        cp =ds.getValue(String.class);
+
+                }
+                ad=a1+"\n"+a2+"\n"+a3;
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
 
 
@@ -220,14 +256,14 @@ public class InvoiceGenerate extends AppCompatActivity {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
             String date;
-            date=setDateString(year, monthOfYear, dayOfMonth);
+            date=setDateString(dayOfMonth, monthOfYear, year);
 
             dateString.setText(date);
         }
 
 
     }
-    private static String setDateString(int year, int monthOfYear, int dayOfMonth) {
+    private static String setDateString(int dayOfMonth, int monthOfYear, int year) {
 
         // Increment monthOfYear for Calendar/Date -> Time Format setting
         monthOfYear++;
@@ -239,7 +275,7 @@ public class InvoiceGenerate extends AppCompatActivity {
         if (dayOfMonth < 10)
             day = "0" + dayOfMonth;
 
-        String s= year + "-" + mon + "-" + day;
+        String s= day + "/" + mon + "/" + year;
     return s;
     }
     private void showDatePickerDialog() {
@@ -402,18 +438,19 @@ public class InvoiceGenerate extends AppCompatActivity {
 
 
 
+           // Toast.makeText(this, ""+c+""+ad+""+cp, Toast.LENGTH_SHORT).show();
 // column 2
-            cell = new PdfPCell(new Paragraph("Company name"));
+            cell = new PdfPCell(new Paragraph(c));
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable.addCell(cell);
 // column 3
-            cell = new PdfPCell(new Paragraph("Address"));
+            cell = new PdfPCell(new Paragraph(ad));
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable.addCell(cell);
 // column 4
-            cell = new PdfPCell(new Paragraph("Contact Person"));
+            cell = new PdfPCell(new Paragraph(cp));
             //cell.setPaddingLeft(2);
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);

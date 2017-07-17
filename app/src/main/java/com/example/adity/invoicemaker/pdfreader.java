@@ -43,14 +43,18 @@ public class pdfreader extends AppCompatActivity {
      private Button next, previous;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfreader);
+        imageView = (ImageView) findViewById(R.id.image);
 
 
       // next = (Button) findViewById(R.id.next);
-        previous = (Button) findViewById(R.id.previous);
+     /*   previous = (Button) findViewById(R.id.previous);
+
+
 
 
         previous.setOnClickListener(new View.OnClickListener() {
@@ -62,13 +66,75 @@ public class pdfreader extends AppCompatActivity {
             }
         });
 
-        render();
+        render();*/
+
+        try {
+            openPDF();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this,
+                    "Something Wrong: " + e.toString(),
+                    Toast.LENGTH_LONG).show();
+        }
+
     }
 
     /**
      * method to show the stored PDF in app
      *
      */
+
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void openPDF() throws IOException {
+        File file = new File(Environment.getExternalStorageDirectory()+"/mypdf.pdf");
+        ParcelFileDescriptor fileDescriptor = null;
+        fileDescriptor = ParcelFileDescriptor.open(
+                file, ParcelFileDescriptor.MODE_READ_ONLY);
+
+        //min. API Level 21
+        PdfRenderer pdfRenderer = null;
+        pdfRenderer = new PdfRenderer(fileDescriptor);
+
+        final int pageCount = pdfRenderer.getPageCount();
+      //  Toast.makeText(this,
+             //   "pageCount = " + pageCount,
+               // Toast.LENGTH_LONG).show();
+
+        //Display page 0
+        PdfRenderer.Page rendererPage = pdfRenderer.openPage(0);
+        int rendererPageWidth = rendererPage.getWidth();
+        int rendererPageHeight = rendererPage.getHeight();
+        Bitmap bitmap = Bitmap.createBitmap(
+                rendererPageWidth,
+                rendererPageHeight,
+                Bitmap.Config.ARGB_8888);
+        rendererPage.render(bitmap, null, null,
+                PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+
+        imageView.setImageBitmap(bitmap);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        PhotoViewAttacher photoView= new PhotoViewAttacher(imageView);
+        photoView.update();
+        imageView.invalidate();
+        rendererPage.close();
+
+        pdfRenderer.close();
+        fileDescriptor.close();
+    }
+
+
+
+
+
+
+
+
+
+
+
+/*
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void render() {
         try{
@@ -91,6 +157,7 @@ public class pdfreader extends AppCompatActivity {
             renderer.openPage(currentPage).render(bitmap, rect, m, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
             imageView.setImageMatrix(m);
             imageView.setImageBitmap(bitmap);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
             PhotoViewAttacher photoView= new PhotoViewAttacher(imageView);
             photoView.update();
@@ -100,5 +167,5 @@ public class pdfreader extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, "Failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 }
