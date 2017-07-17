@@ -67,6 +67,8 @@
             android:label="@string/title_activity_vendor__details"
             android:parentActivityName=".InvoiceGenerate"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".persondetails"/>
+        <activity android:name=".edit"/>
     </application>
 
 </manifest>

@@ -117,6 +117,10 @@ public class profile extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(position==0)
+                {
+                    startActivity(new Intent(getActivity(),persondetails.class));
+                }
                 if(position==1)
                 {   startActivity(new Intent(getActivity(),AccPaymentDetailsActivity.class).putExtra("from","profile"));
                 }
