@@ -1,9 +1,11 @@
 package com.example.adity.invoicemaker;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -244,6 +246,31 @@ String sms="";
 
     }
 
+    @Override
+    public void onBackPressed() {
+        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(this)
+                //set message, title, and icon
+
+                .setMessage("You cannot register without verifying your phone number")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        //your deleting code
+
+                        dialog.dismiss();
+                    }
+
+                })
+
+                .setNegativeButton("Back to SignUp", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                       startActivity(new Intent(OTPCheck.this,signup.class));;
+
+                    }
+                })
+                .create();
+        myQuittingDialogBox.show();
+    }
 }
 
 
