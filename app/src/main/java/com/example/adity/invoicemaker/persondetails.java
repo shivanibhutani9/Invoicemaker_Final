@@ -88,6 +88,24 @@ public class persondetails extends AppCompatActivity {
                         a3=ds.getValue(String.class);
                     }
                 }
+
+
+                mail.setText(""+em);
+
+                num.setText(""+no);
+
+                person.setText(""+per);
+
+                add3.setText(""+a3);
+
+                add2.setText(""+a2);
+
+                add1.setText(""+a1);
+
+                pan.setText(""+pn);
+
+                gst.setText(""+gs);
+
                 pd.hide();
             }
 
@@ -97,23 +115,6 @@ public class persondetails extends AppCompatActivity {
             }
         });
 
-
-
-        mail.setText(""+em);
-
-        num.setText(""+no);
-
-        person.setText(""+per);
-
-        add3.setText(""+a3);
-
-        add2.setText(""+a2);
-
-        add1.setText(""+a1);
-
-        pan.setText(""+pn);
-
-        gst.setText(""+gs);
 
 
 
