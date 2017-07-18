@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class ClientDetails extends AppCompatActivity {
 
-    EditText name,phone,email,addline,addline2,addline3,GSTIN,PAN_NO;
+    EditText name,phone,email,addline,addline2,state,zip,GSTIN,PAN_NO;
     String Name,Phone,Email,Address,pan_no,gstin;
     Map<String,String> mp;
     ProgressDialog pd;
@@ -35,7 +35,8 @@ public class ClientDetails extends AppCompatActivity {
         email=(EditText)findViewById(R.id.clientemail);
         addline=(EditText)findViewById(R.id.Address1);
         addline2=(EditText)findViewById(R.id.Address2);
-        addline3=(EditText)findViewById(R.id.Address3);
+        state=(EditText)findViewById(R.id.Address3);
+        zip=(EditText)findViewById(R.id.zip);
         GSTIN=(EditText)findViewById(R.id.gst);
         PAN_NO=(EditText)findViewById(R.id.pan);
 
@@ -47,7 +48,7 @@ public class ClientDetails extends AppCompatActivity {
                 Name=name.getText().toString();
                 Phone=phone.getText().toString();
                 Email=email.getText().toString();
-                Address=addline.getText().toString()+"\n"+addline2.getText().toString()+"\n"+addline3.getText().toString();
+             //   Address=addline.getText().toString()+"\n"+addline2.getText().toString()+"\n"+state.getText().toString();
                 pan_no=PAN_NO.getText().toString();
                 gstin=GSTIN.getText().toString();
                 mp=new HashMap<>();
@@ -60,7 +61,13 @@ public class ClientDetails extends AppCompatActivity {
 
                 mp.put("Phone",Phone);
                 mp.put("Email",Email);
-                mp.put("Address",Address);
+               // mp.put("Address",Address);
+                mp.put("Address1",addline.getText().toString());
+                mp.put("Address2",addline2.getText().toString());
+                mp.put("State",state.getText().toString());
+                mp.put("Zip",zip.getText().toString());
+                mp.put("Phone",Phone);
+                mp.put("Email",Email);
                 mp.put("Pan no",pan_no);
                 mp.put("Gstin",gstin);
 

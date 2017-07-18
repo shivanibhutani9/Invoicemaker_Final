@@ -296,7 +296,6 @@ public class InvoiceGenerate extends AppCompatActivity {
             }
            else if (resultCode == 2) {
 
-                Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
                 description = data.getStringExtra("description");
                 HSNcode = data.getStringExtra("HSNcode");
                 unitcost = data.getStringExtra("unitcost");
@@ -340,7 +339,6 @@ public class InvoiceGenerate extends AppCompatActivity {
                 Address = data.getStringExtra("address");
                 Gstin=data.getStringExtra("gstin");
                 Pan_no=data.getStringExtra("pan");
-                Toast.makeText(this, "Client", Toast.LENGTH_SHORT).show();
 
                 TextView company,gst,pan;
                 company=(TextView)findViewById(R.id.com);
@@ -581,16 +579,16 @@ public class InvoiceGenerate extends AppCompatActivity {
             cell4 = new PdfPCell(new Phrase("--------"));
             innertable4.addCell(cell4);
 
-                    /*cell4 = new PdfPCell(new Phrase("____________"));
+                    cell4 = new PdfPCell(new Phrase("____________"));
                     innertable4.addCell(cell4);
 
-                    cell4 = new PdfPCell(new Phrase("--------"));
+                    cell4 = new PdfPCell(new Phrase(""));
                     innertable4.addCell(cell4);
-                    cell4 = new PdfPCell(new Phrase("______________-"));
+                    cell4 = new PdfPCell(new Phrase("______________"));
                     innertable4.addCell(cell4);
 
-                    cell4 = new PdfPCell(new Phrase("--------"));
-                    innertable4.addCell(cell4);*/
+                    cell4 = new PdfPCell(new Phrase(""));
+                    innertable4.addCell(cell4);
 
             cell4 = new PdfPCell(new Phrase("GSTIN :"));
             innertable4.addCell(cell4);

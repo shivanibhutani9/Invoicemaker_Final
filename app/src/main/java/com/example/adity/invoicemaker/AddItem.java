@@ -15,6 +15,7 @@ public class AddItem extends AppCompatActivity {
     EditText descrip,HSN,cost,quant,sgst,cgst,igst;
     TextView amt;
     Double Cost;
+    Integer sg,cg,ig;
     Integer quanti;
     String description,HSNcode,unitcost,quantity,amount,Sgst,Cgst,Igst;
 
@@ -37,7 +38,6 @@ public class AddItem extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                amt.setText("" + quanti * Cost);
                 description=descrip.getText().toString();
                 HSNcode=HSN.getText().toString();
                 unitcost=cost.getText().toString();
@@ -45,6 +45,18 @@ public class AddItem extends AppCompatActivity {
                 Cgst=cgst.getText().toString();
                 Igst=igst.getText().toString();
                 quantity=quant.getText().toString();
+
+                quanti = Integer.parseInt(quant.getText().toString());
+                Cost = Double.parseDouble(cost.getText().toString());
+
+                Double l=(quanti*Cost);
+                amt.setText("" + quanti * Cost);
+                sg=Integer.parseInt(Sgst);
+                cg=Integer.parseInt(Cgst);
+                ig=Integer.parseInt(Igst);
+
+
+
                 amount=amt.getText().toString();
 
                 Intent i=new Intent();
@@ -70,10 +82,7 @@ public class AddItem extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus)
                 {
-                         quanti = Integer.parseInt(quant.getText().toString());
-                         Cost = Double.parseDouble(cost.getText().toString());
-                         Double l=(quanti*Cost);
-                         amt.setText("" + quanti * Cost);
+
                     if(cost.getText().equals(""))
                         cost.setText("0.0");
                 }
@@ -94,9 +103,6 @@ public class AddItem extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus)
                 {
-                         quanti = Integer.parseInt(quant.getText().toString());
-                         Cost = Double.parseDouble(cost.getText().toString());
-                        amt.setText("" + quanti * Cost);
 
                     if(quant.getText().equals(""))
                         quant.setText("0.0");
