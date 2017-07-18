@@ -35,7 +35,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".BankDetails"
-            android:label="Bank Details" />
+            android:label="Bank Details"
+            android:parentActivityName=".AccPaymentDetailsActivity"/>
         <activity
             android:name=".AddItem"
             android:label="Add Item"

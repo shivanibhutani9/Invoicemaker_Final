@@ -99,7 +99,11 @@ public class ClientDetails extends AppCompatActivity {
     }
     @Override
     public Intent getSupportParentActivityIntent() {
-        onBackPressed();
+        Intent i=new Intent();
+        Toast.makeText(this, "HIEEE", Toast.LENGTH_SHORT).show();
+        setResult(11,i);
+        finish();
+
         return null;
     }
 }

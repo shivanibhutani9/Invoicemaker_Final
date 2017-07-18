@@ -2,10 +2,12 @@ package com.example.adity.invoicemaker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
@@ -25,7 +27,7 @@ public class BankDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_details);
         mp=new HashMap<>();
-
+      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         bankname=(EditText)findViewById(R.id.bankname);
         ifsc=(EditText)findViewById(R.id.IfSc);
         accholdername=(EditText)findViewById(R.id.accholder);
@@ -55,15 +57,13 @@ public class BankDetails extends AppCompatActivity {
 
                     }
                 });
-                /*
+
                 Intent i=new Intent();
                 i.putExtra("bank_name",bank);
                 i.putExtra("ifsc_code",ifsccode);
                 i.putExtra("account_holder",accholder);
                 i.putExtra("account_number",accno);
-
-
-                */
+                setResult(5,i);
                 finish();
 
 
@@ -71,5 +71,16 @@ public class BankDetails extends AppCompatActivity {
         });
 
 
+    }
+
+    @Nullable
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        Intent i=new Intent();
+        Toast.makeText(this, "HIEEE", Toast.LENGTH_SHORT).show();
+        setResult(10,i);
+        finish();
+
+        return null;
     }
 }

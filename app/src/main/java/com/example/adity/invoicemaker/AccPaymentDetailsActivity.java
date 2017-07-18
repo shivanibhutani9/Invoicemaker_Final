@@ -151,11 +151,14 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if(resultCode == 5 ){
-            //   Toast.makeText(getContext(), "RESULT", Toast.LENGTH_SHORT).show();
+              Toast.makeText(this, "RESULT", Toast.LENGTH_SHORT).show();
             // ObjectAcc Ob= new ObjectAcc(data.getStringExtra("account_holder"),data.getStringExtra("bank_name"),data.getStringExtra("account_number"),data.getStringExtra("ifsc_code"));
             adapter.notifyDataSetChanged();
+        }
+        if(resultCode == 10){
+            Toast.makeText(this, "RESULT", Toast.LENGTH_SHORT).show();
+           Read();
         }
     }
 

@@ -152,12 +152,18 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == 3 ){
-            //   Toast.makeText(getContext(), "RESULT", Toast.LENGTH_SHORT).show();
+        if(resultCode == 3){
+            Toast.makeText(this, "RESULT", Toast.LENGTH_SHORT).show();
             // ObjectAcc Ob= new ObjectAcc(data.getStringExtra("account_holder"),data.getStringExtra("bank_name"),data.getStringExtra("account_number"),data.getStringExtra("ifsc_code"));
             adapter.notifyDataSetChanged();
         }
+        if(resultCode == 11){
+            Toast.makeText(this, "RESULT", Toast.LENGTH_SHORT).show();
+            Read();
+        }
     }
+
+
 
 
 
