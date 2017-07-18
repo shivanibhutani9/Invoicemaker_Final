@@ -232,13 +232,23 @@
 
             <EditText
                 android:id="@+id/Address3"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:hint="State"
+                android:padding="5dp"
+                android:textSize="15dp" />
+            <EditText
+                android:id="@+id/Address4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:gravity="left"
-                android:hint="Address Line 3"
+                android:hint="Zip Code"
                 android:padding="5dp"
                 android:textSize="15dp" />
+
 
 
         </LinearLayout>

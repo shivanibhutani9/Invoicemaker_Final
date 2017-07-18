@@ -581,16 +581,16 @@ public class InvoiceGenerate extends AppCompatActivity {
             cell4 = new PdfPCell(new Phrase("--------"));
             innertable4.addCell(cell4);
 
-                    /*cell4 = new PdfPCell(new Phrase("____________"));
+                    cell4 = new PdfPCell(new Phrase("____________"));
                     innertable4.addCell(cell4);
 
-                    cell4 = new PdfPCell(new Phrase("--------"));
+                    cell4 = new PdfPCell(new Phrase(""));
                     innertable4.addCell(cell4);
-                    cell4 = new PdfPCell(new Phrase("______________-"));
+                    cell4 = new PdfPCell(new Phrase("______________"));
                     innertable4.addCell(cell4);
 
-                    cell4 = new PdfPCell(new Phrase("--------"));
-                    innertable4.addCell(cell4);*/
+                    cell4 = new PdfPCell(new Phrase(""));
+                    innertable4.addCell(cell4);
 
             cell4 = new PdfPCell(new Phrase("GSTIN :"));
             innertable4.addCell(cell4);
