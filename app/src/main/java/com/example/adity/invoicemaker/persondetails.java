@@ -2,6 +2,7 @@ package com.example.adity.invoicemaker;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -145,4 +146,10 @@ public class persondetails extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Nullable
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        onBackPressed();
+        return null;
+    }
 }

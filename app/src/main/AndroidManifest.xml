@@ -51,12 +51,12 @@
             android:parentActivityName=".typesofinvoice" />
         <activity
             android:name=".ClientDetails"
-            android:label="Vendor Details" />
+            android:label="Vendor Details"
+            android:parentActivityName=".Vendor_Details"/>
         <!-- android:parentActivityName=".InvoiceGenerate" -->
         <activity android:name=".AccPaymentDetailsActivity"
             android:label="Payment Details"
             android:parentActivityName=".InvoiceGenerate"
-
             />
         <activity
             android:name=".typesofinvoice"
@@ -71,6 +71,7 @@
         <activity android:name=".pdfreader"/>
         <activity android:name=".Discount"/>
         <activity android:name=".persondetails"
+           android:parentActivityName=".NavigationDrawer"
             />
         <activity android:name=".edit"/>
     </application>

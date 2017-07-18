@@ -270,6 +270,7 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
         }else if(from.equals("profile")){
             newIntent = new Intent(this,NavigationDrawer.class);
         }
+
         return newIntent;
     }
 }
