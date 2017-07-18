@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
 
     <application
@@ -36,7 +37,7 @@
         <activity
             android:name=".BankDetails"
             android:label="Bank Details"
-            android:parentActivityName=".AccPaymentDetailsActivity"/>
+            android:parentActivityName=".AccPaymentDetailsActivity" />
         <activity
             android:name=".AddItem"
             android:label="Add Item"
@@ -53,12 +54,12 @@
         <activity
             android:name=".ClientDetails"
             android:label="Vendor Details"
-            android:parentActivityName=".Vendor_Details"/>
+            android:parentActivityName=".Vendor_Details" />
         <!-- android:parentActivityName=".InvoiceGenerate" -->
-        <activity android:name=".AccPaymentDetailsActivity"
+        <activity
+            android:name=".AccPaymentDetailsActivity"
             android:label="Payment Details"
-            android:parentActivityName=".InvoiceGenerate"
-            />
+            android:parentActivityName=".InvoiceGenerate" />
         <activity
             android:name=".typesofinvoice"
             android:parentActivityName=".NavigationDrawer"
@@ -69,12 +70,12 @@
             android:label="@string/title_activity_vendor__details"
             android:parentActivityName=".InvoiceGenerate"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".pdfreader"/>
-        <activity android:name=".Discount"/>
-        <activity android:name=".persondetails"
-           android:parentActivityName=".NavigationDrawer"
-            />
-        <activity android:name=".edit"/>
+        <activity android:name=".pdfreader" />
+        <activity android:name=".Discount" />
+        <activity
+            android:name=".persondetails"
+            android:parentActivityName=".NavigationDrawer" />
+        <activity android:name=".edit" />
     </application>
 
 </manifest>

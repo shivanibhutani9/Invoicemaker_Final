@@ -381,6 +381,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
             mp.put("Date_of_Invoice",dateString.getText().toString());
          //   mp.put("Invoice_ID",invoiceid);
+            mp.put("VendorName",Name);
             mp.put("Amount",amount);
             mp.put("place_of_supply","india");
 

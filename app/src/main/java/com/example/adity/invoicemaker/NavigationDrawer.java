@@ -21,10 +21,17 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    Boolean doubleBackToExitPressedOnce=false;
+    Boolean doubleBackToExitPressedOnce=false,hasInvoice=true;
+    DatabaseReference db;
+
     android.support.v4.app.Fragment fragment;
 
     @Override
@@ -32,6 +39,21 @@ public class NavigationDrawer extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        db= FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getChildrenCount()==0)
+                    hasInvoice=false;
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -41,9 +63,16 @@ public class NavigationDrawer extends AppCompatActivity
         toggle.syncState();
 
 
-        fragment=new invoice_fragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,fragment).commit();
 
+        if(!hasInvoice) {
+            fragment = new invoice_fragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
+        }
+        else {
+            fragment = new InvoiceListFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
+
+        }
 
 
 
@@ -113,9 +142,16 @@ public class NavigationDrawer extends AppCompatActivity
         }
 
         else if (id == R.id.invoice) {
-            fragment=new invoice_fragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,fragment).commit();
+            if(!hasInvoice) {
+                fragment = new invoice_fragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
+            }
+            else
+            {
+                fragment = new InvoiceListFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
 
+            }
         }
 
 

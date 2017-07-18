@@ -16,16 +16,16 @@ import android.widget.EditText;
 
 public class invoice_fragment extends Fragment {
     EditText name,email,msg;
-
     public invoice_fragment() {
+
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-
-        return (inflater.inflate(R.layout.invoice,container,false));
+                  return (inflater.inflate(R.layout.invoice,container,false));
     }
 
 
@@ -34,15 +34,13 @@ public class invoice_fragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Invoice");
 
-
-        Button invoice=(Button)getActivity().findViewById(R.id.createinvoice);
-        invoice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(),typesofinvoice.class));
-            }
-        });
-
+            Button invoice = (Button) getActivity().findViewById(R.id.createinvoice);
+            invoice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(getActivity(), typesofinvoice.class));
+                }
+            });
 
 
 
