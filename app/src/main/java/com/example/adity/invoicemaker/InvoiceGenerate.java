@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -86,7 +87,7 @@ import java.util.Map;
 public class InvoiceGenerate extends AppCompatActivity {
  static TextView dateString;
     int ADD_SEAL=99;
-    ProgressDialog pd;
+    ProgressDialog pd,pd1;
     String bank,ifsccode,accholder,accno;
     String state,zip;
     String description,HSNcode,unitcost,quantity,amount;
@@ -98,6 +99,7 @@ public class InvoiceGenerate extends AppCompatActivity {
     Double sub=0.0,discount=0.0,tot=0.0;
     TextView bank_details;
     LinearLayout l,ClientDetails;
+    File file;
     DatabaseReference db;
     TextView invoice;
     ImageView image;
@@ -121,7 +123,7 @@ public class InvoiceGenerate extends AppCompatActivity {
         pd.setMessage("please wait ....");
         pd.show();
         db=FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Long g = dataSnapshot.getChildrenCount();
@@ -223,7 +225,12 @@ public class InvoiceGenerate extends AppCompatActivity {
         preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(InvoiceGenerate.this,pdfreader.class).putExtra("inv",invoice.getText().toString()));
+
+                String path=Environment.getExternalStorageDirectory()+ File.separator+invoice.getText().toString()+"temp.pdf";
+                file=new File(path);
+                createpdf(file);
+                    startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+
             }
         });
 
@@ -279,9 +286,18 @@ public class InvoiceGenerate extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pd.setMessage("Generating Invoice");
+                pd.show();
                 uploadInvoice();
-
                 save();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        pd.hide();
+                    }
+                }, 2000);
+
+
             }
         });
 
@@ -408,7 +424,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                 Name = data.getStringExtra("name");
                 Phone = data.getStringExtra("phone");
                 Email = data.getStringExtra("email");
-                Address = data.getStringExtra("address1")+"\n"+data.getStringExtra("address2")+"\n"+data.getStringExtra("State ")+data.getStringExtra("Zip");
+                Address = data.getStringExtra("address1")+"\n"+data.getStringExtra("address2")+"\n";
                 Gstin=data.getStringExtra("gstin");
                 Pan_no=data.getStringExtra("pan");
 
@@ -460,8 +476,7 @@ public class InvoiceGenerate extends AppCompatActivity {
         public void uploadInvoice()
         {
 
-            pd.setMessage("Generating Invoice");
-            pd.show();
+
              db= FirebaseDatabase.getInstance().getReference("Invoice");
 
 
@@ -476,8 +491,7 @@ public class InvoiceGenerate extends AppCompatActivity {
             db.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoiceid).child("Details").setValue(mp, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-            if(databaseError==null)
-                pd.hide();
+
                 }
             });
         }
@@ -485,10 +499,22 @@ public class InvoiceGenerate extends AppCompatActivity {
 
     public void save()
     {
-        pd.setMessage("Generating Invoice");
-        pd.show();
-        com.itextpdf.text.Document doc=new com.itextpdf.text.Document(PageSize.A4, 0f, 0f, 0f, 0f); //creating document
-        String outPath= Environment.getExternalStorageDirectory()+ File.separator+invoice.getText().toString()+".pdf"; //location where the pdf will store
+
+
+       file=new File(Environment.getExternalStorageDirectory()+ File.separator+invoice.getText().toString()+".pdf");
+        createpdf(file);
+
+
+    }
+
+
+
+
+    public void createpdf(File f)
+    {
+        com.itextpdf.text.Document doc=new com.itextpdf.text.Document(PageSize.A4.rotate(), 0f, 0f, 0f, 0f); //creating document
+        String outPath=f.getPath();
+        //location where the pdf will store
         try{
             PdfWriter.getInstance(doc,new FileOutputStream(outPath));
             doc.open();
@@ -527,7 +553,6 @@ public class InvoiceGenerate extends AppCompatActivity {
 
 
 
-           // Toast.makeText(this, ""+c+""+ad+""+cp, Toast.LENGTH_SHORT).show();
 // column 2
             cell = new PdfPCell(new Paragraph(c));
             cell.setBorder(Rectangle.NO_BORDER);
@@ -670,17 +695,18 @@ public class InvoiceGenerate extends AppCompatActivity {
             cell4 = new PdfPCell(new Phrase("--------"));
             innertable4.addCell(cell4);
 
-                    cell4 = new PdfPCell(new Phrase("____________"));
-                    innertable4.addCell(cell4);
+          /*  cell4 = new PdfPCell(new Phrase("____________"));
+            innertable4.addCell(cell4);
 
-                    cell4 = new PdfPCell(new Phrase(""));
-                    innertable4.addCell(cell4);
-                    cell4 = new PdfPCell(new Phrase("______________"));
-                    innertable4.addCell(cell4);
+            cell4 = new PdfPCell(new Phrase(""));
+            innertable4.addCell(cell4);
+            cell4 = new PdfPCell(new Phrase("______________"));
+            innertable4.addCell(cell4);
 
-                    cell4 = new PdfPCell(new Phrase(""));
-                    innertable4.addCell(cell4);
+            cell4 = new PdfPCell(new Phrase(""));
+            innertable4.addCell(cell4);
 
+*/
             cell4 = new PdfPCell(new Phrase("GSTIN :"));
             innertable4.addCell(cell4);
 
@@ -768,7 +794,6 @@ public class InvoiceGenerate extends AppCompatActivity {
             cell5 = new PdfPCell(new Phrase("IGST"));
             innertable5.addCell(cell5);
 
-            //cell5=new PdfPCell(new Phrase("SGST"));
 
             cell5 = new PdfPCell(new Phrase("Total"));
             cell5.setMinimumHeight(10f);
@@ -822,88 +847,6 @@ public class InvoiceGenerate extends AppCompatActivity {
                 innertable5.addCell(cell5);
 
             }
-           /*
-
-            //second item
-            cell5 = new PdfPCell(new Phrase("2"));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("       "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("      "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("    "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("    "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("     "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("      "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("      "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("     "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("     "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("    "));
-            cell5.setMinimumHeight(10f);
-            innertable5.addCell(cell5);
-
-
-            //Third item
-            cell5 = new PdfPCell(new Phrase("3"));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("       "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("      "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("    "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("    "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("     "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("      "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("      "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("     "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("     "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("    "));
-            cell5.setMinimumHeight(10f);
-            innertable5.addCell(cell5);
-
-
-            //Fourth item
-            cell5 = new PdfPCell(new Phrase("3"));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("        "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("      "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("    "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("    "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("     "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("      "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("      "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("     "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("     "));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("    "));
-            cell5.setMinimumHeight(10f);
-            innertable5.addCell(cell5);
-
-*/
-
-
 
 
 
@@ -965,13 +908,9 @@ public class InvoiceGenerate extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        pd.hide();
+
 
     }
-
-
-
-
 
 
 

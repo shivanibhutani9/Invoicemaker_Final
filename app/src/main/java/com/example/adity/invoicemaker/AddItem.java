@@ -81,9 +81,9 @@ public class AddItem extends AppCompatActivity {
                 i.putExtra("Cgst",Cgst);
                 i.putExtra("Igst",Igst);
 
-                i.putExtra("Sgstcost",s);
-                i.putExtra("Cgstcost",c);
-                i.putExtra("Igstcost",igg);
+                i.putExtra("Sgstcost",s.toString());
+                i.putExtra("Cgstcost",c.toString());
+                i.putExtra("Igstcost",igg.toString());
 
                 i.putExtra("unitcost",unitcost);
                 i.putExtra("quantity",quantity);
@@ -139,5 +139,19 @@ public class AddItem extends AppCompatActivity {
 
 
 
+    }
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        //String from = getIntent().getExtras().getString("from");
+        Intent newIntent = null;
+       /* if(from.equals("Invoice")){
+            newIntent = new Intent(this, InvoiceGenerate.class);
+        }else if(from.equals("profile")){
+            //newIntent = new Intent(this,NavigationDrawer.class);
+            onBackPressed();
+        }*/
+        onBackPressed();
+
+        return newIntent;
     }
 }

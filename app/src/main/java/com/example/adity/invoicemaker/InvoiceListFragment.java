@@ -190,7 +190,7 @@ RecyclerView recyclerView;
 
 
 
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot invoice:dataSnapshot.getChildren())

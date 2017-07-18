@@ -1,7 +1,9 @@
 package com.example.adity.invoicemaker;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -29,31 +31,21 @@ import com.google.firebase.database.ValueEventListener;
 
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    Boolean doubleBackToExitPressedOnce=false,hasInvoice=true;
+    Boolean doubleBackToExitPressedOnce=false;
+    static  boolean hasInvoice=true;
     DatabaseReference db;
-
+    ProgressDialog pd;
     android.support.v4.app.Fragment fragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        db= FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
-        db.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getChildrenCount()==0)
-                    hasInvoice=false;
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        pd=new ProgressDialog(this);
+        pd.setMessage("Please wait..");
+       pd.show();
+        chkval();
 
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -64,15 +56,7 @@ public class NavigationDrawer extends AppCompatActivity
 
 
 
-        if(!hasInvoice) {
-            fragment = new invoice_fragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
-        }
-        else {
-            fragment = new InvoiceListFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
 
-        }
 
 
 
@@ -180,5 +164,40 @@ public class NavigationDrawer extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    void chkval(){
+        db= FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getChildrenCount()==0)
+                    hasInvoice=false;
+                if(!hasInvoice) {
+                    fragment = new invoice_fragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
+                }
+                else {
+                    fragment = new InvoiceListFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
+
+                }
+                pd.hide();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        db.goOffline();
+
     }
 }

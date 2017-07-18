@@ -116,6 +116,7 @@ public class pdfreader extends AppCompatActivity {
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         PhotoViewAttacher photoView= new PhotoViewAttacher(imageView);
         photoView.update();
+       // imageView.setRotation(90);
         imageView.invalidate();
         rendererPage.close();
 
@@ -123,17 +124,14 @@ public class pdfreader extends AppCompatActivity {
         fileDescriptor.close();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        File file = new File(Environment.getExternalStorageDirectory()+ File.separator+getIntent().getStringExtra("inv")+"temp.pdf");
+            file.delete();
+    }
 
-
-
-
-
-
-
-
-
-
-/*
+    /*
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void render() {

@@ -39,7 +39,6 @@ public class listadapt extends RecyclerView.Adapter<listadapt.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
 
 
-        Toast.makeText(mContext, "hello", Toast.LENGTH_SHORT).show();
         String[] a=objects.get(position);
 
         holder.description.setText(a[0]);

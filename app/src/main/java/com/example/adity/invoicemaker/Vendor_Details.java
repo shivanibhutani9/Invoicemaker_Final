@@ -64,7 +64,7 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
     RecyclerView rv;
     FloatingActionButton fab;
     ArrayList<ObjectVendor> arrayList;
-    String name,email,gstin,pan,address,number;
+    String name,email,gstin,pan,add1,add2,zip,state,number,address;
     ProgressDialog pd;
     onItemTouchListener onItemTouchListener;
     @Override
@@ -153,12 +153,10 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode == 3){
-            Toast.makeText(this, "RESULT", Toast.LENGTH_SHORT).show();
             // ObjectAcc Ob= new ObjectAcc(data.getStringExtra("account_holder"),data.getStringExtra("bank_name"),data.getStringExtra("account_number"),data.getStringExtra("ifsc_code"));
             adapter.notifyDataSetChanged();
         }
         if(resultCode == 11){
-            Toast.makeText(this, "RESULT", Toast.LENGTH_SHORT).show();
             Read();
         }
     }
@@ -168,14 +166,17 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
 
 
     public static class ObjectVendor{
-        public String v_name,v_email,v_gstin,v_pan,v_addr,v_phone;
-        ObjectVendor(String name,String mail,String gstin,String pan,String addr,String phone){
+        public String v_name,v_email,v_gstin,v_pan,v_add1,v_add2,v_state,v_zip,v_phone;
+        ObjectVendor(String name,String mail,String gstin,String pan,String add1,String add2,String state,String zip,String phone){
 
             v_name=name;
             v_email=mail;
             v_gstin=gstin;
             v_pan=pan;
-            v_addr=addr;
+            v_add1=add1;
+            v_add2=add2;
+            v_zip=zip;
+            v_state=state;
             v_phone=phone;
         }
 
@@ -193,10 +194,13 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
 
                 ObjectVendor ob=arrayList.get(position);
                 Intent i=new Intent();
-        i.putExtra("name",ob.v_name);
-        i.putExtra("phone",ob.v_phone);
-        i.putExtra("email",ob.v_email);
-        i.putExtra("address",ob.v_email);
+                i.putExtra("name",ob.v_name);
+                i.putExtra("phone",ob.v_phone);
+                i.putExtra("email",ob.v_email);
+                i.putExtra("address1",ob.v_add1);
+                i.putExtra("address2",ob.v_add2);
+                i.putExtra("State",ob.v_state);
+                i.putExtra("Zip",ob.v_zip);
         i.putExtra("gstin",ob.v_gstin);
         i.putExtra("pan",ob.v_pan);
 
@@ -225,9 +229,21 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
                     for(DataSnapshot ds:Company.getChildren())
                     {
 
-                        if(ds.getKey().equals("Address"))
+                        if(ds.getKey().equals("Address1"))
                         {
-                            address=ds.getValue(String.class);
+                            add1=ds.getValue(String.class);
+                        }
+                        if(ds.getKey().equals("Address2"))
+                        {
+                            add2=ds.getValue(String.class);
+                        }
+                        if(ds.getKey().equals("Zip"))
+                        {
+                            zip=ds.getValue(String.class);
+                        }
+                        if(ds.getKey().equals("State"))
+                        {
+                            state=ds.getValue(String.class);
                         }
                         if(ds.getKey().equals("Email"))
                         {
@@ -247,7 +263,7 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
                         }
 
                     }
-                    ObjectVendor obj=new ObjectVendor(name,email,gstin,pan,address,number);
+                    ObjectVendor obj=new ObjectVendor(name,email,gstin,pan,add1,add2,state,zip,number);
                     arrayList.add(obj);
                     adapter.notifyDataSetChanged();
 
@@ -269,15 +285,15 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
 
     @Override
     public Intent getSupportParentActivityIntent() {
-        String from = getIntent().getExtras().getString("from");
+        /*String from = getIntent().getExtras().getString("from");
         Intent newIntent = null;
         if(from.equals("Invoice")){
             newIntent = new Intent(this, InvoiceGenerate.class);
         }else if(from.equals("profile")){
             newIntent = new Intent(this,NavigationDrawer.class);
-        }
-
-        return newIntent;
+        }*/
+onBackPressed();
+        return null;
     }
 }
 

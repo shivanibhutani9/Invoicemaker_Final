@@ -72,7 +72,7 @@ public class ClientDetails extends AppCompatActivity {
                 mp.put("Gstin",gstin);
 
 
-                if(getIntent().getExtras().getString("Type").equals("Vendor")) {
+
                     DatabaseReference db = FirebaseDatabase.getInstance().getReference("Company");
                     db.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Name).setValue(mp, new DatabaseReference.CompletionListener() {
                         @Override
@@ -80,11 +80,6 @@ public class ClientDetails extends AppCompatActivity {
                         pd.hide();
                         }
                     });
-                }
-                else if(getIntent().getExtras().getString("Type").equals(""))
-                {
-
-                }
 
 
 

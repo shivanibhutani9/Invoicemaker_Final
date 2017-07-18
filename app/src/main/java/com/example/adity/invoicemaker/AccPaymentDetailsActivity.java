@@ -152,12 +152,10 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == 5 ){
-              Toast.makeText(this, "RESULT", Toast.LENGTH_SHORT).show();
             // ObjectAcc Ob= new ObjectAcc(data.getStringExtra("account_holder"),data.getStringExtra("bank_name"),data.getStringExtra("account_number"),data.getStringExtra("ifsc_code"));
             adapter.notifyDataSetChanged();
         }
         if(resultCode == 10){
-            Toast.makeText(this, "RESULT", Toast.LENGTH_SHORT).show();
            Read();
         }
     }
@@ -253,14 +251,16 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
 
     @Override
     public Intent getSupportParentActivityIntent() {
-        String from = getIntent().getExtras().getString("from");
+        //String from = getIntent().getExtras().getString("from");
         Intent newIntent = null;
-        if(from.equals("Invoice")){
+       /* if(from.equals("Invoice")){
             newIntent = new Intent(this, InvoiceGenerate.class);
         }else if(from.equals("profile")){
             //newIntent = new Intent(this,NavigationDrawer.class);
             onBackPressed();
-        }
+        }*/
+        onBackPressed();
+
         return newIntent;
     }
 }
