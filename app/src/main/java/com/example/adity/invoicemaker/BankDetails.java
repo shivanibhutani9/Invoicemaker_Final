@@ -77,7 +77,6 @@ public class BankDetails extends AppCompatActivity {
     @Override
     public Intent getSupportParentActivityIntent() {
         Intent i=new Intent();
-        Toast.makeText(this, "HIEEE", Toast.LENGTH_SHORT).show();
         setResult(10,i);
         finish();
 
