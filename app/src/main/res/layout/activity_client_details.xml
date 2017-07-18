@@ -240,7 +240,7 @@
                 android:padding="5dp"
                 android:textSize="15dp" />
             <EditText
-                android:id="@+id/Address4"
+                android:id="@+id/zip"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"

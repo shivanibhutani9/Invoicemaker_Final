@@ -36,7 +36,7 @@ public class ClientDetails extends AppCompatActivity {
         addline=(EditText)findViewById(R.id.Address1);
         addline2=(EditText)findViewById(R.id.Address2);
         state=(EditText)findViewById(R.id.Address3);
-        zip=(EditText)findViewById(R.id.Address4);
+        zip=(EditText)findViewById(R.id.zip);
         GSTIN=(EditText)findViewById(R.id.gst);
         PAN_NO=(EditText)findViewById(R.id.pan);
 

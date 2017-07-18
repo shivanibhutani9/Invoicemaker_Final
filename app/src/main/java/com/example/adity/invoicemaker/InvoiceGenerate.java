@@ -296,7 +296,6 @@ public class InvoiceGenerate extends AppCompatActivity {
             }
            else if (resultCode == 2) {
 
-                Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
                 description = data.getStringExtra("description");
                 HSNcode = data.getStringExtra("HSNcode");
                 unitcost = data.getStringExtra("unitcost");
@@ -340,7 +339,6 @@ public class InvoiceGenerate extends AppCompatActivity {
                 Address = data.getStringExtra("address");
                 Gstin=data.getStringExtra("gstin");
                 Pan_no=data.getStringExtra("pan");
-                Toast.makeText(this, "Client", Toast.LENGTH_SHORT).show();
 
                 TextView company,gst,pan;
                 company=(TextView)findViewById(R.id.com);
