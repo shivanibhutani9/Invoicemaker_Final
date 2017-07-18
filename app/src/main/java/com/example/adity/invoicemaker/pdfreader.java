@@ -87,7 +87,7 @@ public class pdfreader extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void openPDF() throws IOException {
-        File file = new File(Environment.getExternalStorageDirectory()+"/mypdf.pdf");
+        File file = new File(Environment.getExternalStorageDirectory()+ File.separator+getIntent().getStringExtra("inv")+".pdf");
         ParcelFileDescriptor fileDescriptor = null;
         fileDescriptor = ParcelFileDescriptor.open(
                 file, ParcelFileDescriptor.MODE_READ_ONLY);

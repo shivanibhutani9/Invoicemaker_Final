@@ -61,6 +61,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
@@ -74,6 +75,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -86,18 +88,23 @@ public class InvoiceGenerate extends AppCompatActivity {
     int ADD_SEAL=99;
     ProgressDialog pd;
     String bank,ifsccode,accholder,accno;
+    String state,zip;
     String description,HSNcode,unitcost,quantity,amount;
     String c,ad,cp;
     listadapt adapter;
     RecyclerView rv;
     String Name,Phone,Email,Address,Gstin,Pan_no,sgst,cgst,igst;
+    TextView subtotal, dis,Discount1,total;
+    Double sub=0.0,discount=0.0,tot=0.0;
     TextView bank_details;
     LinearLayout l,ClientDetails;
     DatabaseReference db;
     TextView invoice;
     ImageView image;
+    String in="";
     int i=1;
     ArrayList<String[]> items;
+    ArrayList<String[]> GST;
     Map<String,String> mp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +114,57 @@ public class InvoiceGenerate extends AppCompatActivity {
         bank_details=(TextView)findViewById(R.id.bank);
         image=(ImageView)findViewById(R.id.SEAL);
         items=new ArrayList<>();
+        GST=new ArrayList<>();
+         in="";
         adapter=new listadapt(InvoiceGenerate.this,items);
+        pd  =new ProgressDialog(InvoiceGenerate.this);
+        pd.setMessage("please wait ....");
+        pd.show();
+        db=FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        db.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Long g = dataSnapshot.getChildrenCount();
+                Long l = 0l;
+                if (g > 0) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        if (l == g-1) {
+                            in = ds.getKey();
+                        }
+                        l++;
+                    }
+
+
+                        in = in.substring(3);
+                        int o = Integer.parseInt(in);
+                        o++;
+                        DecimalFormat format = new DecimalFormat("000");
+                        in = format.format(o);
+                        invoice.setText("INV"+in);
+
+
+
+                    pd.hide();
+                }
+                else
+                {
+                    invoice.setText("INV000");
+                    pd.hide();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+
+
+
+
 
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         bank_details.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +178,11 @@ public class InvoiceGenerate extends AppCompatActivity {
             }
         });
 
+        subtotal=(TextView)findViewById(R.id.subtotal);
+
+        Discount1=(TextView)findViewById(R.id.discount1);
+
+        total=(TextView)findViewById(R.id.total);
         DatabaseReference db1=FirebaseDatabase.getInstance().getReference("Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         db1.addValueEventListener(new ValueEventListener() {
             @Override
@@ -161,7 +223,7 @@ public class InvoiceGenerate extends AppCompatActivity {
         preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(InvoiceGenerate.this,pdfreader.class));
+                startActivity(new Intent(InvoiceGenerate.this,pdfreader.class).putExtra("inv",invoice.getText().toString()));
             }
         });
 
@@ -170,17 +232,17 @@ public class InvoiceGenerate extends AppCompatActivity {
 
          invoice=(TextView) findViewById(R.id.invoiceid);
         rv= (RecyclerView)findViewById(R.id.itemlist);
-        pd  =new ProgressDialog(InvoiceGenerate.this);
+
 
         rv.setLayoutManager(new LinearLayoutManager(InvoiceGenerate.this));
         rv.setAdapter(adapter);
 
-        TextView dis=(TextView)findViewById(R.id.discount);
+         dis=(TextView)findViewById(R.id.discount);
         dis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(InvoiceGenerate.this,Discount.class);
-                startActivity(i);
+                startActivityForResult(i,5);
             }
         });
 
@@ -305,6 +367,11 @@ public class InvoiceGenerate extends AppCompatActivity {
                 cgst=data.getStringExtra("Cgst");
                 igst=data.getStringExtra("Igst");
 
+                String [] gstcost={data.getStringExtra("Sgstcost"),data.getStringExtra("Cgstcost"),data.getStringExtra("Igstcost")};
+
+                GST.add(gstcost);
+
+
                 items.add(new String[]{description, HSNcode,sgst,cgst,igst, unitcost, quantity, amount});
                 adapter.notifyDataSetChanged();
                 String invoiceid = invoice.getText().toString();
@@ -320,6 +387,12 @@ public class InvoiceGenerate extends AppCompatActivity {
                 mp.put("quantity", quantity);
                 mp.put("amount", amount);
 
+                sub=sub+Double.parseDouble(amount);
+                subtotal.setText("₹ "+sub.toString());
+
+                total.setText("₹"+sub.toString());
+
+
                 db.child("Items").child("Item " + i).setValue(mp, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -329,16 +402,18 @@ public class InvoiceGenerate extends AppCompatActivity {
 
                 i++;
                 mp.clear();
-                Toast.makeText(this, "Item", Toast.LENGTH_SHORT).show();
 
             }
             else if (resultCode == 3) {
                 Name = data.getStringExtra("name");
                 Phone = data.getStringExtra("phone");
                 Email = data.getStringExtra("email");
-                Address = data.getStringExtra("address");
+                Address = data.getStringExtra("address1")+"\n"+data.getStringExtra("address2")+"\n"+data.getStringExtra("State ")+data.getStringExtra("Zip");
                 Gstin=data.getStringExtra("gstin");
                 Pan_no=data.getStringExtra("pan");
+
+                state=data.getStringExtra("State");
+                zip=data.getStringExtra("Zip");
 
                 TextView company,gst,pan;
                 company=(TextView)findViewById(R.id.com);
@@ -353,6 +428,19 @@ public class InvoiceGenerate extends AppCompatActivity {
                 clients.setVisibility(View.VISIBLE);
 
             }
+            else if(resultCode==5)
+            {
+                discount=data.getExtras().getDouble("discount");
+                discount=sub*(discount/100);
+                Discount1.setText("₹"+discount);
+
+
+                tot=sub-discount;
+                total.setText("₹"+tot.toString());
+
+
+            }
+
             else if (requestCode == ADD_SEAL) {
             try {
                 switch (resultCode) {
@@ -397,8 +485,10 @@ public class InvoiceGenerate extends AppCompatActivity {
 
     public void save()
     {
+        pd.setMessage("Generating Invoice");
+        pd.show();
         com.itextpdf.text.Document doc=new com.itextpdf.text.Document(PageSize.A4, 0f, 0f, 0f, 0f); //creating document
-        String outPath= Environment.getExternalStorageDirectory()+"/mypdf.pdf"; //location where the pdf will store
+        String outPath= Environment.getExternalStorageDirectory()+ File.separator+invoice.getText().toString()+".pdf"; //location where the pdf will store
         try{
             PdfWriter.getInstance(doc,new FileOutputStream(outPath));
             doc.open();
@@ -605,17 +695,17 @@ public class InvoiceGenerate extends AppCompatActivity {
             cell4 = new PdfPCell(new Phrase("State :"));
             innertable4.addCell(cell4);
 
-            cell4 = new PdfPCell(new Phrase("--------"));
+            cell4 = new PdfPCell(new Phrase(""+state));
             innertable4.addCell(cell4);
             cell4 = new PdfPCell(new Phrase("State :"));
             innertable4.addCell(cell4);
 
-            cell4 = new PdfPCell(new Phrase("--------"));
+            cell4 = new PdfPCell(new Phrase("------"));
             innertable4.addCell(cell4);
             cell4 = new PdfPCell(new Phrase("code :"));
             innertable4.addCell(cell4);
 
-            cell4 = new PdfPCell(new Phrase("--------"));
+            cell4 = new PdfPCell(new Phrase(""+zip));
             innertable4.addCell(cell4);
             cell4 = new PdfPCell(new Phrase("code :"));
             innertable4.addCell(cell4);
@@ -690,6 +780,7 @@ public class InvoiceGenerate extends AppCompatActivity {
             for(int i=0;i<items.size();i++)
             {
                 String item[]=items.get(i);
+                String gsco[]=GST.get(i);
                 cell5 = new PdfPCell(new Phrase("1"));
                 innertable5.addCell(cell5);
                 cell5 = new PdfPCell(new Phrase(item[0]));
@@ -713,17 +804,17 @@ public class InvoiceGenerate extends AppCompatActivity {
 
                 PdfPTable nested4 = new PdfPTable(1);
                 nested4.addCell("R: "+item[2]);
-                nested4.addCell("A:     ");
+                nested4.addCell("A: "+gsco[0]);
                 PdfPCell nesthousing4 = new PdfPCell(nested4);
                 innertable5.addCell(nesthousing4);
                 PdfPTable nested5 = new PdfPTable(1);
                 nested5.addCell("R: "+item[3]);
-                nested5.addCell("A:     ");
+                nested5.addCell("A: "+gsco[1]);
                 PdfPCell nesthousing5 = new PdfPCell(nested5);
                 innertable5.addCell(nesthousing5);
                 PdfPTable nested6 = new PdfPTable(1);
                 nested6.addCell("R:"+item[4]);
-                nested6.addCell("A:");
+                nested6.addCell("A:"+gsco[2]);
                 PdfPCell nesthousing6 = new PdfPCell(nested6);
                 innertable5.addCell(nesthousing6);
                 cell5 = new PdfPCell(new Phrase(item[7]));
@@ -830,7 +921,7 @@ public class InvoiceGenerate extends AppCompatActivity {
             innertable6.addCell(cell6);
             cell6 = new PdfPCell(new Phrase("Place Of Supply :"));
             innertable6.addCell(cell6);
-            cell6 = new PdfPCell(new Phrase("Total Amount:"));
+            cell6 = new PdfPCell(new Phrase("Total Amount:"+total.getText().toString()));
             innertable6.addCell(cell6);
             doc.add(innertable6);
             // Chunk linebreak5 = new Chunk(new LineSeparator());
@@ -861,6 +952,8 @@ public class InvoiceGenerate extends AppCompatActivity {
             doc.close();
 
 
+
+
         }
         catch (DocumentException e)
         {
@@ -871,6 +964,8 @@ public class InvoiceGenerate extends AppCompatActivity {
         {
             e.printStackTrace();
         }
+
+        pd.hide();
 
     }
 

@@ -92,7 +92,11 @@ public class ClientDetails extends AppCompatActivity {
                 i.putExtra("name",Name);
                 i.putExtra("phone",Phone);
                 i.putExtra("email",Email);
-                i.putExtra("address",Address);
+                i.putExtra("address1",addline.getText().toString());
+                i.putExtra("address2",addline2.getText().toString());
+                i.putExtra("Zip",zip.getText().toString());
+                i.putExtra("State",state.getText().toString());
+
                 i.putExtra("gstin",gstin);
                 i.putExtra("pan",pan_no);
                 setResult(3,i);

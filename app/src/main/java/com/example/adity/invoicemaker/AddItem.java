@@ -15,7 +15,7 @@ public class AddItem extends AppCompatActivity {
     EditText descrip,HSN,cost,quant,sgst,cgst,igst;
     TextView amt;
     Double Cost;
-    Integer sg,cg,ig;
+    Double sg,cg,ig;
     Integer quanti;
     String description,HSNcode,unitcost,quantity,amount,Sgst,Cgst,Igst;
 
@@ -41,6 +41,15 @@ public class AddItem extends AppCompatActivity {
                 description=descrip.getText().toString();
                 HSNcode=HSN.getText().toString();
                 unitcost=cost.getText().toString();
+                if(sgst.getText().toString().equals(""))
+                    sgst.setText("0.0");
+
+                if(cgst.getText().toString().equals(""))
+                    cgst.setText("0.0");
+
+                if(igst.getText().toString().equals(""))
+                    igst.setText("0.0");
+
                 Sgst=sgst.getText().toString();
                 Cgst=cgst.getText().toString();
                 Igst=igst.getText().toString();
@@ -50,14 +59,19 @@ public class AddItem extends AppCompatActivity {
                 Cost = Double.parseDouble(cost.getText().toString());
 
                 Double l=(quanti*Cost);
-                amt.setText("" + quanti * Cost);
-                sg=Integer.parseInt(Sgst);
-                cg=Integer.parseInt(Cgst);
-                ig=Integer.parseInt(Igst);
 
+                sg=Double.parseDouble(Sgst);
+                cg=Double.parseDouble(Cgst);
+                ig=Double.parseDouble(Igst);
 
+                Double s=l*(sg/100);
+                Double c=l*(cg/100);
+                Double igg=l*(ig/100);
 
-                amount=amt.getText().toString();
+                l=l+s+c+igg;
+                amt.setText(""+l);
+
+                amount=l.toString();
 
                 Intent i=new Intent();
                 i.putExtra("description",description);
@@ -67,9 +81,13 @@ public class AddItem extends AppCompatActivity {
                 i.putExtra("Cgst",Cgst);
                 i.putExtra("Igst",Igst);
 
+                i.putExtra("Sgstcost",s);
+                i.putExtra("Cgstcost",c);
+                i.putExtra("Igstcost",igg);
+
                 i.putExtra("unitcost",unitcost);
                 i.putExtra("quantity",quantity);
-                i.putExtra("amount",amount);
+                i.putExtra("amount",l.toString());
                 setResult(2,i);
 
                 finish();
