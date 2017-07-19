@@ -151,7 +151,8 @@ public class NavigationDrawer extends AppCompatActivity
 
 
         else if (id == R.id.vendors) {
-            startActivity(new Intent(this,Vendor_Details.class).putExtra("from","profile"));
+            fragment=new vendorfragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,fragment).commit();
         }
 
 
