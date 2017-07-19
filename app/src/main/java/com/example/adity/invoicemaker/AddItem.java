@@ -29,8 +29,9 @@ public class AddItem extends AppCompatActivity {
         igst=(EditText)findViewById(R.id.IGSTcodee);
         cost=(EditText)findViewById(R.id.cost);
         quant=(EditText)findViewById(R.id.quant);
-        amt=(TextView)findViewById(R.id.amt);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         Button save=(Button)findViewById(R.id.save);
 
 
@@ -40,102 +41,88 @@ public class AddItem extends AppCompatActivity {
                 description=descrip.getText().toString();
                 HSNcode=HSN.getText().toString();
                 unitcost=cost.getText().toString();
-                if(sgst.getText().toString().equals(""))
-                    sgst.setText("0.0");
-
-                if(cgst.getText().toString().equals(""))
-                    cgst.setText("0.0");
-
-                if(igst.getText().toString().equals(""))
-                    igst.setText("0.0");
-
-                Sgst=sgst.getText().toString();
-                Cgst=cgst.getText().toString();
-                Igst=igst.getText().toString();
-                quantity=quant.getText().toString();
-
-                quanti = Integer.parseInt(quant.getText().toString());
-                Cost = Double.parseDouble(cost.getText().toString());
-
-                Double l=(quanti*Cost);
-
-                sg=Double.parseDouble(Sgst);
-                cg=Double.parseDouble(Cgst);
-                ig=Double.parseDouble(Igst);
-
-                Double s=l*(sg/100);
-                Double c=l*(cg/100);
-                Double igg=l*(ig/100);
-
-                l=l+s+c+igg;
-                amt.setText(""+l);
-
-                amount=l.toString();
-
-                Intent i=new Intent();
-                i.putExtra("description",description);
-                i.putExtra("HSNcode",HSNcode);
-
-                i.putExtra("Sgst",Sgst);
-                i.putExtra("Cgst",Cgst);
-                i.putExtra("Igst",Igst);
-
-                i.putExtra("Sgstcost",s.toString());
-                i.putExtra("Cgstcost",c.toString());
-                i.putExtra("Igstcost",igg.toString());
-
-                i.putExtra("unitcost",unitcost);
-                i.putExtra("quantity",quantity);
-                i.putExtra("amount",l.toString());
-                setResult(2,i);
-
-                finish();
-            }
-        });
+                Sgst = sgst.getText().toString();
+                Cgst = cgst.getText().toString();
+                Igst = igst.getText().toString();
+                quantity = quant.getText().toString();
 
 
-        cost.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus)
+                if(description.isEmpty())
                 {
-
-                    if(cost.getText().equals(""))
-                        cost.setText("0.0");
+                    descrip.setError("Please enter the Item Description");
+                    descrip.requestFocus();
                 }
-                else if(hasFocus) {
-                    if(cost.getText().equals("0.0"))
-                        cost.setText("");
+                else if(HSNcode.isEmpty())
+                {HSN.setError("Please enter the HSN code");
+                    HSN.requestFocus();
+                }
+                else if(Sgst.isEmpty())
+                {  if(sgst.isEnabled()) {
+                    sgst.setError("Please enter the SGST Rate");
+                    sgst.requestFocus();
+                }
+                }
+                else if(Cgst.isEmpty())
+                {  if(cgst.isEnabled()) {
+                    cgst.setError("Please enter the CGST Rate");
+                    cgst.requestFocus();
+                }
+                }
+                else if(Igst.isEmpty())
+                {  if(igst.isEnabled()) {
+                    igst.setError("Please enter the IGST Rate");
+                    igst.requestFocus();
+                }
+                }
+                else if(unitcost.isEmpty())
+                {cost.setError("Please enter the Unit Cost");
+                    cost.requestFocus();
+                }
+                else if(quantity.isEmpty())
+                {quant.setError("Please enter the Quantity");
+                    quant.requestFocus();
                 }
 
+                else {
+
+                    quanti = Integer.parseInt(quantity);
+                    Cost = Double.parseDouble(unitcost);
 
 
 
+                    Double l = (quanti * Cost);
+                    sg = Double.parseDouble(Sgst);
+                    cg = Double.parseDouble(Cgst);
+                    ig = Double.parseDouble(Igst);
+                    Double s = l * (sg / 100);
+                    Double c = l * (cg / 100);
+                    Double igg = l * (ig / 100);
+                    l = l + s + c + igg;
+                    amount = l.toString();
+
+
+
+                    Intent i = new Intent();
+                    i.putExtra("description", description);
+                    i.putExtra("HSNcode", HSNcode);
+
+                    i.putExtra("Sgst", Sgst);
+                    i.putExtra("Cgst", Cgst);
+                    i.putExtra("Igst", Igst);
+
+                    i.putExtra("Sgstcost", s.toString());
+                    i.putExtra("Cgstcost", c.toString());
+                    i.putExtra("Igstcost", igg.toString());
+
+                    i.putExtra("unitcost", unitcost);
+                    i.putExtra("quantity", quantity);
+                    i.putExtra("amount", l.toString());
+                    setResult(2, i);
+
+                    finish();
+                }
             }
         });
-
-
-        quant.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus)
-                {
-
-                    if(quant.getText().equals(""))
-                        quant.setText("0.0");
-                }
-                else if(hasFocus) {
-                    if(quant.getText().equals("0"))
-                        quant.setText("");
-                }
-
-            }
-        });
-
-
-
-
-
 
 
     }

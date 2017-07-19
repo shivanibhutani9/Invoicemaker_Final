@@ -100,25 +100,68 @@ public class edit extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String,String> mp=new HashMap<>();
-                mp.put("contact person",person.getText().toString());
-                mp.put("GSTIN",gstin.getText().toString());
-                mp.put("Email",email.getText().toString());
-                mp.put("Mobile number",phone.getText().toString());
-                mp.put("Pan",pan.getText().toString());
-                mp.put("Address1",address1.getText().toString());
-                mp.put("Address2",address2.getText().toString());
-                mp.put("Address3",address3.getText().toString());
 
-            db.setValue(mp, new DatabaseReference.CompletionListener() {
-                @Override
-                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+                String per,gin,em,pho,pn,add1,add2,add3;
 
-                    finish();
+                per=person.getText().toString();
+                gin=gstin.getText().toString();
+                em=email.getText().toString();
+                pho=phone.getText().toString();
+                pn=pan.getText().toString();
+                add1=address1.getText().toString();
+                add2=address2.getText().toString();
+                add3=address3.getText().toString();
+
+                if(per.isEmpty())
+                {
+                    person.setError("Please enter the Contact Person Name");
+                    person.requestFocus();
                 }
-            });
+                else if(pho.isEmpty())
+                {phone.setError("Please enter the Phone number");
+                    phone.requestFocus();
+                }
+                else if(em.isEmpty())
+                { email.setError("Please enter the Email");
+                    email.requestFocus();
+                }
+                else if(gin.isEmpty())
+                {   gstin.setError("Please enter the GSTIN");
+                    gstin.requestFocus();
+                }
+                else if(pn.isEmpty())
+                {pan.setError("Please enter the Pan No");
+                    pan.requestFocus();
+                }
+                else if(add1.isEmpty())
+                {   address1.setError("Please enter the address");
+                    address1.requestFocus();
+                }
+                else if(add2.isEmpty())
+                {   address2.setError("Please enter the address");
+                    address2.requestFocus();
+                }
 
+                else {
+                    Map<String, String> mp = new HashMap<>();
+                    mp.put("contact person",per);
+                    mp.put("GSTIN",gin);
+                    mp.put("Email", em);
+                    mp.put("Mobile number",pho);
+                    mp.put("Pan",pn);
+                    mp.put("Address1",add1);
+                    mp.put("Address2", add2);
+                    mp.put("Address3", add3);
 
+                    db.setValue(mp, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+
+                            finish();
+                        }
+                    });
+
+                }
             }
         });
 

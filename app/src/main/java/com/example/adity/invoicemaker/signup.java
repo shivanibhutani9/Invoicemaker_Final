@@ -58,23 +58,28 @@ public class signup extends AppCompatActivity {
                 no = phone.getText().toString().trim();
 
                 if (name.equals("")) {
-                    fn.setText("");
-                    fn.setHint("Enter a valid name");
+                    fn.setError("Enter a valid name");
+                    fn.requestFocus();
                 }
                 else if ( (em.isEmpty()) || !(em.contains("@")) || !(em.contains("."))) {
-                    email.setText("");
-                    email.setHint("Enter  valid Email");
+                    email.setError("Enter  valid Email");
+                    email.requestFocus();
+
                 }
                 else if (pwd.isEmpty()) {
-                    pass.setText("");
-                    pass.setHint("please Enter a valid Password");
+                    pass.setError("please Enter a valid Password");
+                    pass.requestFocus();
+
                 }
                 else if (no.length() < 10) {
-                    phone.setText("");
-                    phone.setHint("Please enter a valid number");
+                    phone.setError("Please enter a valid number");
+                    phone.requestFocus();
+
                 }
                 else if (!cb.isChecked()) {
-                    cb.setHint("please check this");
+                    cb.setError("please check this");
+                    cb.requestFocus();
+
                 }
                 else {
                     startActivity(new Intent(signup.this,OTPCheck.class).putExtra("number",no).putExtra("company_name",name).putExtra("Email",em).putExtra("Contact_person",repass.getText().toString()).putExtra("password",pwd));

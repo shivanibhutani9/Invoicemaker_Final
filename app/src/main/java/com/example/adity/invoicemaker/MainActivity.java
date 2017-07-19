@@ -67,15 +67,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 final String em=email.getText().toString().trim();
-                String pas=pass.getText().toString().trim();
+                final String pas=pass.getText().toString().trim();
 
                 if((em.equals("")) || !(em.contains("@")) || !(em.contains(".")))
-                {   email.setText("");
-                    email.setHint("Enter  valid Email");}
+                {
+                    email.setError("Enter  valid Email");
+                    email.requestFocus();
+
+                }
 
                 else if(pas.equals(""))
-                {   pass.setText("");
-                    pass.setHint("please Enter a valid Password");
+                {
+                    pass.setError("please Enter a valid Password");
+                    pass.requestFocus();
                 }
 
                 else
@@ -97,8 +101,19 @@ public class MainActivity extends AppCompatActivity {
 
                             else {
                                 pd.hide();
+                                if(task.getException().getMessage().toLowerCase().contains("password"))
+                                { pass.setError(task.getException().getMessage());
+                                        pass.requestFocus();
+                                }
 
-                                    Toast.makeText(MainActivity.this, "" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                else if(task.getException().getMessage().toLowerCase().contains("no user"))
+                                { email.setError("There is no user with this account");
+                                    email.requestFocus();
+                                }
+                                else if(task.getException().getMessage().toLowerCase().contains("badly formatted"))
+                                { email.setError(""+task.getException().getMessage());
+                                    email.requestFocus();
+                                }
 
 
                             }

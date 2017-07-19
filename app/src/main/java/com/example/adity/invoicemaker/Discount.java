@@ -15,25 +15,26 @@ public class Discount extends AppCompatActivity {
         setContentView(R.layout.activity_discount);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
          dis=(EditText)findViewById(R.id.editdiscount);
+
 
         Button save =(Button)findViewById(R.id.savedis);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(dis.getText().equals(""))
-                    dis.setText("0.0");
 
-
-
-                Intent i=new Intent();
-                i.putExtra("discount",Double.parseDouble(dis.getText().toString()));
-                setResult(5,i);
-                finish();
-
+                  if(dis.getText().toString().isEmpty())
+                {   dis.setError("Please enter the Discount Rate");
+                    dis.requestFocus();
+                }
+                else {
+                      Intent i = new Intent();
+                      i.putExtra("discount", Double.parseDouble(dis.getText().toString()));
+                      setResult(5, i);
+                      finish();
+                  }
             }
         });
-
-
     }
 }

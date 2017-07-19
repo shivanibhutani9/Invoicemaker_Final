@@ -76,6 +76,7 @@
             android:name=".persondetails"
             android:parentActivityName=".NavigationDrawer" />
         <activity android:name=".edit" />
+        <activity android:name=".vendorfragment"></activity>
     </application>
 
 </manifest>

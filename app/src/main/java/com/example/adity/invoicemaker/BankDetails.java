@@ -34,38 +34,48 @@ public class BankDetails extends AppCompatActivity {
         accholdername=(EditText)findViewById(R.id.accholder);
         accnumber=(EditText)findViewById(R.id.accno);
 
+
+
+
+
         Button save=(Button)findViewById(R.id.savebank) ;
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                bank = bankname.getText().toString();
+                ifsccode = ifsc.getText().toString();
+                accholder = accholdername.getText().toString();
+                accno = accnumber.getText().toString();
+                if(bank.isEmpty())
+                {
+                    bankname.setError("Please enter the Bank Name");
+                    bankname.requestFocus();
+                }
+                else if(ifsccode.isEmpty())
+                {ifsc.setError("Please enter the Ifsc Code");
+                    ifsc.requestFocus();
+                }
+                else if(accholder.isEmpty())
+                { accholdername.setError("Please enter the Account Holder Name");
+                    accholdername.requestFocus();
+                }
+                else if(accno.isEmpty()) {
+                    accnumber.setError("Please enter the Account No");
+                    accnumber.requestFocus();
+                }
+                else {
+                    DatabaseReference db = FirebaseDatabase.getInstance().getReference("Account Details");
+                    mp.put("Ifsc Code", ifsccode);
+                    mp.put("Account Holder", accholder);
+                    db.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(bank).child(accno).setValue(mp, new DatabaseReference.CompletionListener() {
+                        @Override
+                        public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
-
-                bank=bankname.getText().toString();
-                ifsccode=ifsc.getText().toString();
-                accholder=accholdername.getText().toString();
-                accno=accnumber.getText().toString();
-
-
-                DatabaseReference db= FirebaseDatabase.getInstance().getReference("Account Details");
-
-
-                mp.put("Ifsc Code",ifsccode);
-                mp.put("Account Holder",accholder);
-
-                db.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(bank).child(accno).setValue(mp, new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-
-                    }
-                });
-
-                finish();
-
-
+                        }
+                    });
+                    finish();
+                }
             }
         });
-
-
     }
-
 }

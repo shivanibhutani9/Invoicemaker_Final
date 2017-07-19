@@ -186,7 +186,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
         total=(TextView)findViewById(R.id.total);
         DatabaseReference db1=FirebaseDatabase.getInstance().getReference("Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
-        db1.addValueEventListener(new ValueEventListener() {
+        db1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String a1="",a2="",a3="";
@@ -286,16 +286,18 @@ public class InvoiceGenerate extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pd.setMessage("Generating Invoice");
-                pd.show();
-                uploadInvoice();
-                save();
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    public void run() {
-                        pd.hide();
-                    }
-                }, 2000);
+
+
+                    pd.setMessage("Generating Invoice");
+                    pd.show();
+                    uploadInvoice();
+                    save();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            pd.hide();
+                        }
+                    }, 2000);
 
 
             }
@@ -333,7 +335,7 @@ public class InvoiceGenerate extends AppCompatActivity {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
-            String date;
+           String date;
             date=setDateString(dayOfMonth, monthOfYear, year);
 
             dateString.setText(date);
