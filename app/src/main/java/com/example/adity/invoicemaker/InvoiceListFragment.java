@@ -4,6 +4,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -27,6 +35,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static android.R.drawable.ic_menu_delete;
+import static android.R.drawable.ic_menu_edit;
+
 
 /**
  * A fragment representing a list of Items.
@@ -43,7 +54,8 @@ public class InvoiceListFragment extends Fragment {
     RecyclerView recyclerView;
     String invoiceno,vname,amount;
     private OnListFragmentInteractionListener mListener;
-
+    private Paint p = new Paint();
+    private View VIEW;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -105,7 +117,7 @@ public class InvoiceListFragment extends Fragment {
             }
         });
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.RIGHT ){
+                ItemTouchHelper.RIGHT |ItemTouchHelper.LEFT){
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
 
@@ -113,7 +125,8 @@ public class InvoiceListFragment extends Fragment {
             }
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                final int pos=viewHolder.getAdapterPosition();
+               if(direction==ItemTouchHelper.RIGHT)
+               {final int pos=viewHolder.getAdapterPosition();
                 ObjectInv obj=mValues.get(pos);
                 AlertDialog DeletionDialogBox =new AlertDialog.Builder(getActivity())
                         //set message, title, and icon
@@ -143,6 +156,47 @@ public class InvoiceListFragment extends Fragment {
                         .create();
                 DeletionDialogBox.show();
             }
+            else
+               {
+                   startActivity(new Intent(getActivity(),InvoiceEdit.class));
+                   adapter.notifyDataSetChanged();
+                //   Toast.makeText(getActivity(), "EDITINGGG", Toast.LENGTH_SHORT).show();
+               }
+            }
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+                Bitmap icon;
+                if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
+
+                    View itemView = viewHolder.itemView;
+                    float height = (float) itemView.getBottom() - (float) itemView.getTop();
+                    float width = height / 3;
+
+                    if(dX<0){
+                        p.setColor(Color.parseColor("#388E3C"));
+                        RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(),(float) itemView.getRight(), (float) itemView.getBottom());
+                        c.drawRect(background,p);
+                        Drawable d=getResources().getDrawable(R.drawable.ic_edit_white);
+                        icon = drawableToBitmap(d);
+                        RectF icon_dest = new RectF((float) itemView.getRight() - 2*width ,(float) itemView.getTop() + width,(float) itemView.getRight() - width,(float)itemView.getBottom() - width);
+                        c.drawBitmap(icon,null,icon_dest,p);
+                    }
+                    else
+                    {
+                        p.setColor(Color.parseColor("#D32F2F"));
+                        RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX,(float) itemView.getBottom());
+                        c.drawRect(background,p);
+                        Drawable d=getResources().getDrawable(R.drawable.ic_delete_white);
+                        icon = drawableToBitmap(d);
+                        //icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_menu_send);
+                        RectF icon_dest = new RectF((float) itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width);
+                        c.drawBitmap(icon,null,icon_dest,p);
+
+                    }
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
         };
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(recyclerView);
@@ -154,6 +208,8 @@ public class InvoiceListFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -232,4 +288,18 @@ public class InvoiceListFragment extends Fragment {
         });
 
     }
+    public static Bitmap drawableToBitmap (Drawable drawable) {
+
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable)drawable).getBitmap();
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
+    }
+
 }

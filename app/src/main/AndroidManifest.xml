@@ -76,6 +76,10 @@
             android:name=".persondetails"
             android:parentActivityName=".NavigationDrawer" />
         <activity android:name=".edit" />
+        <activity android:name=".InvoiceEdit" />
+        <activity android:name=".VendorEDIT" />
+        <activity android:name=".BankEdit" />
+        <activity android:name=".ItemEdit"></activity>
     </application>
 
 </manifest>
