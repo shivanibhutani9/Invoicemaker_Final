@@ -4,19 +4,15 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,35 +21,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-
-import static android.R.drawable.ic_delete;
-
 
 
 import java.util.ArrayList;
@@ -64,7 +31,7 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
     RecyclerView rv;
     FloatingActionButton fab;
     ArrayList<ObjectVendor> arrayList;
-    String name,email,gstin,pan,add1,add2,zip,state,number,address;
+    String name,email,gstin,pan,add1,add2,zip,state,number;
     ProgressDialog pd;
     onItemTouchListener onItemTouchListener;
     @Override
@@ -74,7 +41,7 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        arrayList=new ArrayList<ObjectVendor>();
+        arrayList=new ArrayList<>();
         rv= (RecyclerView)findViewById(R.id.vendor_list);
 
         adapter =new Vendor_Adapter(this,arrayList,onItemTouchListener);
@@ -99,7 +66,7 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final int pos=viewHolder.getAdapterPosition();
                ObjectVendor obj=arrayList.get(pos);
-                AlertDialog myQuittingDialogBox =new AlertDialog.Builder(Vendor_Details.this)
+                AlertDialog DeletionDialogBox =new AlertDialog.Builder(Vendor_Details.this)
                         //set message, title, and icon
                         .setTitle("Delete")
                         .setMessage("Do you really want to delete the following bank details?\n\n"+"\t\tVendor Name-"+obj.v_name+"\n\t\tE-mail -"
@@ -125,7 +92,7 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
                             }
                         })
                         .create();
-                myQuittingDialogBox.show();
+                DeletionDialogBox.show();
             }
         };
         ItemTouchHelper helper = new ItemTouchHelper(callback);
@@ -138,31 +105,14 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(Vendor_Details.this,ClientDetails.class);
                 arrayList.clear();
-                i.putExtra("Type","Vendor");
-                startActivityForResult(i,6);
+                startActivity(new Intent(Vendor_Details.this,ClientDetails.class));
             }
         });
 
 
 
     }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(resultCode == 3){
-            // ObjectAcc Ob= new ObjectAcc(data.getStringExtra("account_holder"),data.getStringExtra("bank_name"),data.getStringExtra("account_number"),data.getStringExtra("ifsc_code"));
-            adapter.notifyDataSetChanged();
-        }
-        if(resultCode == 11){
-            Read();
-        }
-    }
-
-
-
 
 
     public static class ObjectVendor{
@@ -201,8 +151,8 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
                 i.putExtra("address2",ob.v_add2);
                 i.putExtra("State",ob.v_state);
                 i.putExtra("Zip",ob.v_zip);
-        i.putExtra("gstin",ob.v_gstin);
-        i.putExtra("pan",ob.v_pan);
+                i.putExtra("gstin",ob.v_gstin);
+                i.putExtra("pan",ob.v_pan);
 
                setResult(3,i);
                finish();
@@ -217,7 +167,6 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
     {
         DatabaseReference db= FirebaseDatabase.getInstance().getReference("Company/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        // String name,String bname,String acno,String ifsc
 
         db.addValueEventListener(new ValueEventListener() {
             @Override
@@ -285,24 +234,12 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
 
     @Override
     public Intent getSupportParentActivityIntent() {
-        /*String from = getIntent().getExtras().getString("from");
-        Intent newIntent = null;
-        if(from.equals("Invoice")){
-            newIntent = new Intent(this, InvoiceGenerate.class);
-        }else if(from.equals("profile")){
-            newIntent = new Intent(this,NavigationDrawer.class);
-        }*/
-onBackPressed();
+        onBackPressed();
         return null;
     }
 }
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AccPaymentDetails} factory method to
- * create an instance of this fragment.
- */
 
 
 

@@ -27,7 +27,8 @@ public class BankDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bank_details);
         mp=new HashMap<>();
-      //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         bankname=(EditText)findViewById(R.id.bankname);
         ifsc=(EditText)findViewById(R.id.IfSc);
         accholdername=(EditText)findViewById(R.id.accholder);
@@ -58,12 +59,6 @@ public class BankDetails extends AppCompatActivity {
                     }
                 });
 
-                Intent i=new Intent();
-                i.putExtra("bank_name",bank);
-                i.putExtra("ifsc_code",ifsccode);
-                i.putExtra("account_holder",accholder);
-                i.putExtra("account_number",accno);
-                setResult(5,i);
                 finish();
 
 
@@ -73,13 +68,4 @@ public class BankDetails extends AppCompatActivity {
 
     }
 
-    @Nullable
-    @Override
-    public Intent getSupportParentActivityIntent() {
-        Intent i=new Intent();
-        setResult(10,i);
-        finish();
-
-        return null;
-    }
 }

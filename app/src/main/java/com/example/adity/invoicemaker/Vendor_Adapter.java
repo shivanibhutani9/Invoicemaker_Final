@@ -20,8 +20,8 @@ public class Vendor_Adapter extends RecyclerView.Adapter<Vendor_Adapter.ViewHold
     public  Context mContext;
     private onItemTouchListener onItemTouchListener;
     ArrayList<Vendor_Details.ObjectVendor> objects;
-    Vendor_Adapter(Context mContext, ArrayList<Vendor_Details.ObjectVendor> objects, onItemTouchListener listener
-    ){
+    Vendor_Adapter(Context mContext, ArrayList<Vendor_Details.ObjectVendor> objects, onItemTouchListener listener)
+    {
         this.mContext=mContext;
         this.objects=objects;
         this.onItemTouchListener=listener;

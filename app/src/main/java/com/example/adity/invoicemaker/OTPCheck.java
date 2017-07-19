@@ -57,7 +57,6 @@ String sms="";
 
         editText=(EditText)findViewById(R.id.OTP);
         url= NetworkUtils.buildUrl(phoneNumber);
-        //getSupportLoaderManager().initLoader(GITHUB_SEARCH_LOADER, null, this);
         new SendOTP().execute();
         Button submit=(Button)findViewById(R.id.submit);
 
@@ -75,7 +74,7 @@ String sms="";
                 }
 
                  if(test.equals("Success")) {
-                  new GetAnswersThread().execute();
+                  new OTPVerificationThread().execute();
 
 
               }
@@ -88,15 +87,15 @@ String sms="";
 
 
 
-    public class GetAnswersThread extends AsyncTask<Void, Void, String> {
+    public class OTPVerificationThread extends AsyncTask<Void, Void, String> {
 
 
         @Override
         protected String doInBackground(Void... params) {
 
             try {
-                String githubSearchResults = NetworkUtils.getResponseFromHttpUrl(urlverify);
-                return githubSearchResults;
+                String Results = NetworkUtils.getResponseFromHttpUrl(urlverify);
+                return Results;
              } catch (IOException e) {
                 e.printStackTrace();
                 return null;
@@ -211,8 +210,8 @@ String sms="";
         protected String doInBackground(Void... params) {
 
             try {
-                String githubSearchResults = NetworkUtils.getResponseFromHttpUrl(url);
-                return githubSearchResults;
+                String Results = NetworkUtils.getResponseFromHttpUrl(url);
+                return Results;
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;
@@ -248,7 +247,7 @@ String sms="";
 
     @Override
     public void onBackPressed() {
-        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(this)
+        AlertDialog BacktoSignupDialogBox =new AlertDialog.Builder(this)
                 //set message, title, and icon
 
                 .setMessage("You cannot register without verifying your phone number")
@@ -269,7 +268,7 @@ String sms="";
                     }
                 })
                 .create();
-        myQuittingDialogBox.show();
+        BacktoSignupDialogBox.show();
     }
 }
 

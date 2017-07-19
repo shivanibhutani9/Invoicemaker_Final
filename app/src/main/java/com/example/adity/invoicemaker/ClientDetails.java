@@ -48,7 +48,6 @@ public class ClientDetails extends AppCompatActivity {
                 Name=name.getText().toString();
                 Phone=phone.getText().toString();
                 Email=email.getText().toString();
-             //   Address=addline.getText().toString()+"\n"+addline2.getText().toString()+"\n"+state.getText().toString();
                 pan_no=PAN_NO.getText().toString();
                 gstin=GSTIN.getText().toString();
                 mp=new HashMap<>();
@@ -61,7 +60,6 @@ public class ClientDetails extends AppCompatActivity {
 
                 mp.put("Phone",Phone);
                 mp.put("Email",Email);
-               // mp.put("Address",Address);
                 mp.put("Address1",addline.getText().toString());
                 mp.put("Address2",addline2.getText().toString());
                 mp.put("State",state.getText().toString());
@@ -81,36 +79,12 @@ public class ClientDetails extends AppCompatActivity {
                         }
                     });
 
-
-
-                Intent i=new Intent();
-                i.putExtra("name",Name);
-                i.putExtra("phone",Phone);
-                i.putExtra("email",Email);
-                i.putExtra("address1",addline.getText().toString());
-                i.putExtra("address2",addline2.getText().toString());
-                i.putExtra("Zip",zip.getText().toString());
-                i.putExtra("State",state.getText().toString());
-
-                i.putExtra("gstin",gstin);
-                i.putExtra("pan",pan_no);
-                setResult(3,i);
-
                 finish();
-
 
             }
         });
 
     }
-    @Override
-    public Intent getSupportParentActivityIntent() {
-        Intent i=new Intent();
-        Toast.makeText(this, "HIEEE", Toast.LENGTH_SHORT).show();
-        setResult(11,i);
-        finish();
 
-        return null;
-    }
 }
 

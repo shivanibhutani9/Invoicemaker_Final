@@ -87,7 +87,7 @@ import java.util.Map;
 public class InvoiceGenerate extends AppCompatActivity {
  static TextView dateString;
     int ADD_SEAL=99;
-    ProgressDialog pd,pd1;
+    ProgressDialog pd;
     String bank,ifsccode,accholder,accno;
     String state,zip;
     String description,HSNcode,unitcost,quantity,amount;
@@ -173,7 +173,7 @@ public class InvoiceGenerate extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getApplicationContext(),AccPaymentDetailsActivity.class);
-                intent.putExtra("Type","VENDOR");
+                //intent.putExtra("Type","VENDOR");
                 intent.putExtra("from","Invoice");
                 startActivityForResult(intent,1);
 
@@ -545,7 +545,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
 // column 1
             PdfPCell cell = new PdfPCell(new Phrase("Tax Invoice",
-                    FontFactory.getFont(FontFactory.COURIER_BOLD,18,Font.NORMAL,BaseColor.BLACK)));
+                    FontFactory.getFont(FontFactory.COURIER_BOLD,20,Font.NORMAL,BaseColor.BLACK)));
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable.addCell(cell);
@@ -554,17 +554,17 @@ public class InvoiceGenerate extends AppCompatActivity {
 
 
 // column 2
-            cell = new PdfPCell(new Paragraph(c));
+            cell = new PdfPCell(new Paragraph(c,FontFactory.getFont(FontFactory.TIMES_BOLD,17,Font.NORMAL,BaseColor.BLACK)));
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable.addCell(cell);
 // column 3
-            cell = new PdfPCell(new Paragraph(ad));
+            cell = new PdfPCell(new Paragraph(ad, FontFactory.getFont(FontFactory.TIMES_BOLD,17,Font.NORMAL,BaseColor.BLACK)));
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable.addCell(cell);
 // column 4
-            cell = new PdfPCell(new Paragraph(cp));
+            cell = new PdfPCell(new Paragraph(cp,FontFactory.getFont(FontFactory.TIMES_BOLD,17,Font.NORMAL,BaseColor.BLACK)));
             //cell.setPaddingLeft(2);
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);

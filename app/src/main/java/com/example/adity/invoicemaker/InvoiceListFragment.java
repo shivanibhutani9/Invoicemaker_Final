@@ -26,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * A fragment representing a list of Items.
@@ -36,13 +36,11 @@ import java.util.List;
  */
 public class InvoiceListFragment extends Fragment {
 
-    // TODO: Customize parameters
     FloatingActionButton fab;
-    private int mColumnCount = 1;
     ArrayList<ObjectInv> mValues;
- MyInvoiceRecyclerViewAdapter adapter;
+    MyInvoiceRecyclerViewAdapter adapter;
     ProgressDialog pd;
-RecyclerView recyclerView;
+    RecyclerView recyclerView;
     String invoiceno,vname,amount;
     private OnListFragmentInteractionListener mListener;
 
@@ -74,11 +72,7 @@ RecyclerView recyclerView;
         if (view !=null) {
             Context context = view.getContext();
             recyclerView = (RecyclerView)view.findViewById(R.id.fragment_invoice);
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
             adapter=new MyInvoiceRecyclerViewAdapter(mValues, mListener);
             recyclerView.setAdapter(adapter);
         }
@@ -102,6 +96,7 @@ RecyclerView recyclerView;
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle("Invoice");
         fab=(FloatingActionButton)view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +115,7 @@ RecyclerView recyclerView;
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final int pos=viewHolder.getAdapterPosition();
                 ObjectInv obj=mValues.get(pos);
-                AlertDialog myQuittingDialogBox =new AlertDialog.Builder(getActivity())
+                AlertDialog DeletionDialogBox =new AlertDialog.Builder(getActivity())
                         //set message, title, and icon
                         .setTitle("Delete")
                         .setMessage("Do you really want to delete the following invoice?\n\n"+"\t\tInvoice Number -"+obj.inv_no+"\n\t\tVendor Name -"
@@ -146,7 +141,7 @@ RecyclerView recyclerView;
                             }
                         })
                         .create();
-                myQuittingDialogBox.show();
+                DeletionDialogBox.show();
             }
         };
         ItemTouchHelper helper = new ItemTouchHelper(callback);
@@ -171,7 +166,6 @@ RecyclerView recyclerView;
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(ObjectInv obj);
     }
 

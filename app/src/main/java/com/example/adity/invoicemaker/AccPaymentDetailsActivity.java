@@ -4,19 +4,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,37 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static android.R.drawable.ic_delete;
-
-
-
-import java.util.ArrayList;
 
 public class AccPaymentDetailsActivity extends AppCompatActivity implements onItemTouchListener{
 
@@ -71,11 +37,10 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_acc_payment_details);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        arrayList=new ArrayList<ObjectAcc>();
+        arrayList=new ArrayList<>();
         rv= (RecyclerView)findViewById(R.id.list_item);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         adapter =new bankDetailsAdapter(this,arrayList,onItemTouchListener);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -86,6 +51,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
         pd.show();
         Read();
         adapter.setClickListener(this);
+
 
 
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
@@ -99,7 +65,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final int pos=viewHolder.getAdapterPosition();
                 ObjectAcc obj=arrayList.get(pos);
-                AlertDialog myQuittingDialogBox =new AlertDialog.Builder(AccPaymentDetailsActivity.this)
+                AlertDialog DeletionDialogBox =new AlertDialog.Builder(AccPaymentDetailsActivity.this)
                         //set message, title, and icon
                         .setTitle("Delete")
                         .setMessage("Do you really want to delete the following bank details?\n\n"+"\t\tAccount Holder -"+obj.accname+"\n\t\tAccount Number -"
@@ -125,7 +91,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
                             }
                         })
                         .create();
-                myQuittingDialogBox.show();
+                DeletionDialogBox.show();
             }
         };
         ItemTouchHelper helper = new ItemTouchHelper(callback);
@@ -138,26 +104,13 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i=new Intent(AccPaymentDetailsActivity.this,BankDetails.class);
                 arrayList.clear();
-                i.putExtra("Type","BankDetails");
-                startActivityForResult(i,6);
-            }
+                startActivity(new Intent(AccPaymentDetailsActivity.this,BankDetails.class));
+              }
         });
 
 
 
-    }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == 5 ){
-            // ObjectAcc Ob= new ObjectAcc(data.getStringExtra("account_holder"),data.getStringExtra("bank_name"),data.getStringExtra("account_number"),data.getStringExtra("ifsc_code"));
-            adapter.notifyDataSetChanged();
-        }
-        if(resultCode == 10){
-           Read();
-        }
     }
 
     @Override
@@ -179,9 +132,9 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
                 setResult(1,i);
                 finish();
 
-            }}
-        else{
+            }
         }
+
 
     }
 
@@ -201,7 +154,6 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
     {
         DatabaseReference db= FirebaseDatabase.getInstance().getReference("Account Details/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        // String name,String bname,String acno,String ifsc
 
         db.addValueEventListener(new ValueEventListener() {
             @Override
@@ -251,26 +203,12 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
 
     @Override
     public Intent getSupportParentActivityIntent() {
-        //String from = getIntent().getExtras().getString("from");
-        Intent newIntent = null;
-       /* if(from.equals("Invoice")){
-            newIntent = new Intent(this, InvoiceGenerate.class);
-        }else if(from.equals("profile")){
-            //newIntent = new Intent(this,NavigationDrawer.class);
-            onBackPressed();
-        }*/
         onBackPressed();
-
-        return newIntent;
+        return null;
     }
 }
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AccPaymentDetails} factory method to
- * create an instance of this fragment.
- */
 
 
 
