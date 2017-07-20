@@ -23,10 +23,11 @@ import java.util.List;
 public class listadapt extends RecyclerView.Adapter<listadapt.ViewHolder> {
     public  Context mContext;
     ArrayList<String[]> objects;
-
-    listadapt(Context mContext, ArrayList<String[]> objects){
+    String type;
+    listadapt(Context mContext, ArrayList<String[]> objects,String type){
         this.mContext=mContext;
         this.objects=objects;
+        this.type=type;
     }
 
     @Override
@@ -38,19 +39,32 @@ public class listadapt extends RecyclerView.Adapter<listadapt.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        if(type.contains("Intra")) {
+            String[] a = objects.get(position);
 
-        String[] a=objects.get(position);
+            holder.description.setText(a[0]);
 
-        holder.description.setText(a[0]);
+            holder.hsn.setText(a[1]);
 
-        holder.hsn.setText(a[1]);
+            holder.Unit_cost.setText(a[4]);
 
-        holder.Unit_cost.setText(a[5]);
+            holder.quantity.setText(a[5]);
 
-        holder.quantity.setText(a[6]);
+            holder.amt.setText(a[6]);
+        }
+        else if(type.contains("Inter")) {
+            String[] a = objects.get(position);
 
-        holder.amt.setText(a[7]);
+            holder.description.setText(a[0]);
 
+            holder.hsn.setText(a[1]);
+
+            holder.Unit_cost.setText(a[3]);
+
+            holder.quantity.setText(a[4]);
+
+            holder.amt.setText(a[5]);
+        }
 
     }
 
