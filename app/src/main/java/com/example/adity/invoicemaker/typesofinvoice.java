@@ -89,7 +89,8 @@ public class typesofinvoice extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(typesofinvoice.this,InvoiceGenerate.class));
+                String type=INTERESTS.get(position).get("type");
+                startActivity(new Intent(typesofinvoice.this,InvoiceGenerate.class).putExtra("type",type));
             }
         });
 

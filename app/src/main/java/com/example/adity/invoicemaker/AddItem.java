@@ -17,7 +17,7 @@ public class AddItem extends AppCompatActivity {
     Double sg,cg,ig;
     Integer quanti;
     String description,HSNcode,unitcost,quantity,amount,Sgst,Cgst,Igst;
-
+    String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +30,20 @@ public class AddItem extends AppCompatActivity {
         cost=(EditText)findViewById(R.id.cost);
         quant=(EditText)findViewById(R.id.quant);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        type=getIntent().getStringExtra("type");
+        if(type.contains("Intra"))
+        {
+            igst.setEnabled(false);
+            igst.setHint("IGST Rate - 0%");
+        }
+        else if(type.contains("Inter"))
+        {
+            sgst.setEnabled(false);
+            sgst.setHint("SGST Rate - 0%");
+            cgst.setEnabled(false);
+            cgst.setHint("CGST Rate - 0%");
+        }
 
 
         Button save=(Button)findViewById(R.id.save);
@@ -56,23 +70,23 @@ public class AddItem extends AppCompatActivity {
                 {HSN.setError("Please enter the HSN code");
                     HSN.requestFocus();
                 }
-                else if(Sgst.isEmpty())
-                {  if(sgst.isEnabled()) {
+                else if(sgst.isEnabled()&&Sgst.isEmpty())
+                {
                     sgst.setError("Please enter the SGST Rate");
                     sgst.requestFocus();
+
                 }
-                }
-                else if(Cgst.isEmpty())
-                {  if(cgst.isEnabled()) {
+                else if(cgst.isEnabled()&&Cgst.isEmpty())
+                {
                     cgst.setError("Please enter the CGST Rate");
                     cgst.requestFocus();
+
                 }
-                }
-                else if(Igst.isEmpty())
-                {  if(igst.isEnabled()) {
+                else if(igst.isEnabled()&&Igst.isEmpty())
+                {
                     igst.setError("Please enter the IGST Rate");
                     igst.requestFocus();
-                }
+
                 }
                 else if(unitcost.isEmpty())
                 {cost.setError("Please enter the Unit Cost");
@@ -88,15 +102,22 @@ public class AddItem extends AppCompatActivity {
                     quanti = Integer.parseInt(quantity);
                     Cost = Double.parseDouble(unitcost);
 
-
+                    Double s=0.0,c=0.0,igg=0.0;
 
                     Double l = (quanti * Cost);
-                    sg = Double.parseDouble(Sgst);
-                    cg = Double.parseDouble(Cgst);
-                    ig = Double.parseDouble(Igst);
-                    Double s = l * (sg / 100);
-                    Double c = l * (cg / 100);
-                    Double igg = l * (ig / 100);
+                    if(type.contains("Intra")) {
+                        sg = Double.parseDouble(Sgst);
+                        cg = Double.parseDouble(Cgst);
+                        s= l * (sg / 100);
+                        c = l * (cg / 100);
+                    }
+
+
+                    if(type.contains("Inter")) {
+                        ig = Double.parseDouble(Igst);
+                        igg = l * (ig / 100);
+                    }
+
                     l = l + s + c + igg;
                     amount = l.toString();
 
@@ -106,13 +127,19 @@ public class AddItem extends AppCompatActivity {
                     i.putExtra("description", description);
                     i.putExtra("HSNcode", HSNcode);
 
-                    i.putExtra("Sgst", Sgst);
-                    i.putExtra("Cgst", Cgst);
-                    i.putExtra("Igst", Igst);
+                    if(type.contains("Intra")) {
+                        i.putExtra("Sgst", Sgst);
+                        i.putExtra("Cgst", Cgst);
+                        i.putExtra("Sgstcost", s.toString());
+                        i.putExtra("Cgstcost", c.toString());
+                    }
 
-                    i.putExtra("Sgstcost", s.toString());
-                    i.putExtra("Cgstcost", c.toString());
-                    i.putExtra("Igstcost", igg.toString());
+                    else if(type.contains("Inter")) {
+                        i.putExtra("Igst", Igst);
+                        i.putExtra("Igstcost", igg.toString());
+                    }
+
+
 
                     i.putExtra("unitcost", unitcost);
                     i.putExtra("quantity", quantity);
