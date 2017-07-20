@@ -32,6 +32,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static com.example.adity.invoicemaker.InvoiceListFragment.drawableToBitmap;
+
 public class Vendor_Details extends AppCompatActivity implements onItemTouchListener{
 
     Vendor_Adapter adapter;
@@ -64,7 +66,7 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
         adapter.setClickListener(this);
 
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.RIGHT ){
+                ItemTouchHelper.RIGHT|ItemTouchHelper.LEFT ){
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
 
@@ -72,35 +74,41 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
             }
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                final int pos=viewHolder.getAdapterPosition();
-               ObjectVendor obj=arrayList.get(pos);
-                AlertDialog DeletionDialogBox =new AlertDialog.Builder(Vendor_Details.this)
-                        //set message, title, and icon
-                        .setTitle("Delete")
-                        .setMessage("Do you really want to delete the following bank details?\n\n"+"\t\tVendor Name-"+obj.v_name+"\n\t\tE-mail -"
-                                +obj.v_email)
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+               if(direction==ItemTouchHelper.RIGHT) {
+                   final int pos = viewHolder.getAdapterPosition();
+                   ObjectVendor obj = arrayList.get(pos);
+                   AlertDialog DeletionDialogBox = new AlertDialog.Builder(Vendor_Details.this)
+                           //set message, title, and icon
+                           .setTitle("Delete")
+                           .setMessage("Do you really want to delete the following bank details?\n\n" + "\t\tVendor Name-" + obj.v_name + "\n\t\tE-mail -"
+                                   + obj.v_email)
+                           .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                //your deleting code
-                                arrayList.remove(pos);
-                                adapter.notifyDataSetChanged();
-                                Toast.makeText(Vendor_Details.this, "DELETED", Toast.LENGTH_SHORT).show();
+                               public void onClick(DialogInterface dialog, int whichButton) {
+                                   //your deleting code
+                                   arrayList.remove(pos);
+                                   adapter.notifyDataSetChanged();
+                                   Toast.makeText(Vendor_Details.this, "DELETED", Toast.LENGTH_SHORT).show();
 
-                                dialog.dismiss();
-                            }
+                                   dialog.dismiss();
+                               }
 
-                        })
+                           })
 
-                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                adapter.notifyDataSetChanged();
-                                dialog.dismiss();
+                           .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                               public void onClick(DialogInterface dialog, int which) {
+                                   adapter.notifyDataSetChanged();
+                                   dialog.dismiss();
 
-                            }
-                        })
-                        .create();
-                DeletionDialogBox.show();
+                               }
+                           })
+                           .create();
+                   DeletionDialogBox.show();
+               }
+            else
+               { startActivity(new Intent(Vendor_Details.this,VendorEDIT.class));
+                   adapter.notifyDataSetChanged();
+               }
             }
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
@@ -279,19 +287,7 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
         onBackPressed();
         return null;
     }
-    public static Bitmap drawableToBitmap (Drawable drawable) {
 
-        if (drawable instanceof BitmapDrawable) {
-            return ((BitmapDrawable)drawable).getBitmap();
-        }
-
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-
-        return bitmap;
-    }
 }
 
 

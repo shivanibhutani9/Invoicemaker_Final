@@ -41,9 +41,9 @@ public class bankDetailsAdapter extends RecyclerView.Adapter<bankDetailsAdapter.
 
         holder.Acc_no.setText(obj.accno);
 
-        holder.Acc_name.setText(obj.accname);
+//        holder.Acc_name.setText(obj.accname);
 
-        holder.ifsc.setText(obj.ifsc_code);
+  //      holder.ifsc.setText(obj.ifsc_code);
 
     }
 
@@ -60,10 +60,10 @@ public class bankDetailsAdapter extends RecyclerView.Adapter<bankDetailsAdapter.
       public TextView Acc_name,Acc_no,bankName,ifsc;
         public ViewHolder(View itemView) {
             super(itemView);
-            Acc_name=(TextView)itemView.findViewById(R.id.ac_name);
+          //  Acc_name=(TextView)itemView.findViewById(R.id.ac_name);
             Acc_no=(TextView)itemView.findViewById(R.id.ac_no);
             bankName=(TextView)itemView.findViewById(R.id.bname);
-            ifsc=(TextView)itemView.findViewById(R.id.ifsc_code);
+           // ifsc=(TextView)itemView.findViewById(R.id.ifsc_code);
             itemView.setOnClickListener(this);
 
         }

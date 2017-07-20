@@ -72,6 +72,8 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
             }
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+               if(direction==ItemTouchHelper.RIGHT){
+
                 final int pos=viewHolder.getAdapterPosition();
                 ObjectAcc obj=arrayList.get(pos);
                 AlertDialog DeletionDialogBox =new AlertDialog.Builder(AccPaymentDetailsActivity.this)
@@ -100,7 +102,12 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
                             }
                         })
                         .create();
-                DeletionDialogBox.show();
+                DeletionDialogBox.show();}
+                else
+               {
+                   startActivity(new Intent(AccPaymentDetailsActivity.this,BankEdit.class));
+                    adapter.notifyDataSetChanged();
+               }
             }
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {

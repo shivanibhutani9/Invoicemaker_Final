@@ -3,6 +3,13 @@ package com.example.adity.invoicemaker;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -27,6 +34,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import static com.example.adity.invoicemaker.InvoiceListFragment.drawableToBitmap;
+
 public class vendorfragment extends Fragment implements onItemTouchListener{
 
     Vendor_Adapter adapter;
@@ -36,7 +45,7 @@ public class vendorfragment extends Fragment implements onItemTouchListener{
     String name,email,gstin,pan,add1,add2,zip,state,number;
     ProgressDialog pd;
     onItemTouchListener onItemTouchListener;
-
+    private  Paint p=new Paint();
     public vendorfragment() {
 
 
@@ -110,6 +119,41 @@ public class vendorfragment extends Fragment implements onItemTouchListener{
                         .create();
                 DeletionDialogBox.show();
             }
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+                Bitmap icon;
+                if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
+
+                    View itemView = viewHolder.itemView;
+                    float height = (float) itemView.getBottom() - (float) itemView.getTop();
+                    float width = height / 3;
+
+                    if(dX<0){
+                        p.setColor(Color.parseColor("#388E3C"));
+                        RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(),(float) itemView.getRight(), (float) itemView.getBottom());
+                        c.drawRect(background,p);
+                        Drawable d=getResources().getDrawable(R.drawable.ic_edit_white);
+                        icon = drawableToBitmap(d);
+                        RectF icon_dest = new RectF((float) itemView.getRight() - 2*width ,(float) itemView.getTop() + width,(float) itemView.getRight() - width,(float)itemView.getBottom() - width);
+                        c.drawBitmap(icon,null,icon_dest,p);
+                    }
+                    else
+                    {
+                        p.setColor(Color.parseColor("#D32F2F"));
+                        RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX,(float) itemView.getBottom());
+                        c.drawRect(background,p);
+                        Drawable d=getResources().getDrawable(R.drawable.ic_delete_white);
+                        icon = drawableToBitmap(d);
+                        //icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_menu_send);
+                        RectF icon_dest = new RectF((float) itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width);
+                        c.drawBitmap(icon,null,icon_dest,p);
+
+                    }
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+
         };
         ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(rv);

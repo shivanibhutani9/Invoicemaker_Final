@@ -21,9 +21,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,18 +35,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+
+import org.w3c.dom.Text;
+
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Boolean doubleBackToExitPressedOnce=false;
+    ImageView image;
     static  boolean hasInvoice=true;
     DatabaseReference db;
     ProgressDialog pd;
     android.support.v4.app.Fragment fragment;
+    TextView name,email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         int permissionCheck1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int permissionCheck2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
 
@@ -66,13 +75,30 @@ public class NavigationDrawer extends AppCompatActivity
         toggle.syncState();
 
 
-
-
-
-
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        name=(TextView)(navigationView.getHeaderView(0).findViewById(R.id.CompanyName));
+        email=(TextView)(navigationView.getHeaderView(0).findViewById(R.id.EmailID));
+
+
+        image=(ImageView)(navigationView.getHeaderView(0).findViewById(R.id.imageView));
+        char let= FirebaseAuth.getInstance().getCurrentUser().getDisplayName().trim().charAt(0);
+        String letter=String.valueOf(let);
+
+
+
+        ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+        int color1 = generator.getRandomColor();
+        TextDrawable drawable1=TextDrawable.builder().buildRound(letter.toUpperCase(), color1);
+        image.setImageDrawable(drawable1);
+
+        final FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+
+        name.setText(""+user.getDisplayName());
+
+        email.setText(""+user.getEmail());
+
 
     }
 
@@ -137,6 +163,7 @@ public class NavigationDrawer extends AppCompatActivity
         }
 
         else if (id == R.id.invoice) {
+            chkval();
             if(!hasInvoice) {
                 fragment = new invoice_fragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
@@ -178,10 +205,38 @@ public class NavigationDrawer extends AppCompatActivity
         return true;
     }
     void chkval(){
+  /*      db= FirebaseDatabase.getInstance().getReference("Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren())
+                {
+                    /*if(ds.getKey().equals("Company"))
+                    {
+                        name.setText(ds.getValue(String.class));
+                    }
+                    name.setText("Hie");
+                    if(ds.getKey().equals("Email"))
+                    {
+                        email.setText(ds.getValue(String.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+*/
+
+
         db= FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 if(dataSnapshot.getChildrenCount()==0)
                     hasInvoice=false;
                 if(!hasInvoice) {

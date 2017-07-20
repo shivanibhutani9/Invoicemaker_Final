@@ -52,7 +52,7 @@ public class InvoiceListFragment extends Fragment {
     MyInvoiceRecyclerViewAdapter adapter;
     ProgressDialog pd;
     RecyclerView recyclerView;
-    String invoiceno,vname,amount;
+    String invoiceno,vname,amount,inv_date;
     private OnListFragmentInteractionListener mListener;
     private Paint p = new Paint();
     private View VIEW;
@@ -226,12 +226,13 @@ public class InvoiceListFragment extends Fragment {
     }
 
     public static class ObjectInv {
-        public String inv_no, inv_vname, inv_amt;
+        public String inv_no, inv_vname, inv_amt,inv_date;
 
-        ObjectInv(String inv_no, String inv_vname, String inv_amt) {
+        ObjectInv(String inv_no, String inv_vname, String inv_amt,String inv_date) {
             this.inv_no = inv_no;
             this.inv_amt = inv_amt;
             this.inv_vname = inv_vname;
+            this.inv_date=inv_date;
         }
     }
     public void Read()
@@ -260,6 +261,11 @@ public class InvoiceListFragment extends Fragment {
                                 {
                                      amount=details.getValue(String.class);
                                 }
+                                if(details.getKey().equals("Date_of_Invoice"))
+                                {
+                                    inv_date=details.getValue(String.class);
+                                }
+
 
                             }
                         }
@@ -269,7 +275,7 @@ public class InvoiceListFragment extends Fragment {
 
 
 
-                    ObjectInv obj=new ObjectInv(invoiceno,vname,amount);
+                    ObjectInv obj=new ObjectInv(invoiceno,vname,amount,inv_date);
                     mValues.add(obj);
                     adapter.notifyDataSetChanged();
 
@@ -293,7 +299,6 @@ public class InvoiceListFragment extends Fragment {
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable)drawable).getBitmap();
         }
-
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());

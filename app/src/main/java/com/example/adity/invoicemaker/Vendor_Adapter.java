@@ -41,9 +41,9 @@ public class Vendor_Adapter extends RecyclerView.Adapter<Vendor_Adapter.ViewHold
 
         holder.email.setText(obj.v_email);
 
-        holder.gstin.setText(obj.v_gstin);
+//        holder.gstin.setText(obj.v_gstin);
 
-        holder.pan.setText(obj.v_pan);
+//        holder.pan.setText(obj.v_pan);
 
     }
 
@@ -62,8 +62,8 @@ public class Vendor_Adapter extends RecyclerView.Adapter<Vendor_Adapter.ViewHold
             super(itemView);
             name=(TextView)itemView.findViewById(R.id.v_name);
            email=(TextView)itemView.findViewById(R.id.v_email);
-           gstin=(TextView)itemView.findViewById(R.id.v_gstin);
-           pan=(TextView)itemView.findViewById(R.id.v_pan);
+          // gstin=(TextView)itemView.findViewById(R.id.v_gstin);
+         //  pan=(TextView)itemView.findViewById(R.id.v_pan);
             itemView.setOnClickListener(this);
 
         }

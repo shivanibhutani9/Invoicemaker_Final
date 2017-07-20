@@ -22,12 +22,12 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:text="Invoice No"
+                android:text="Vendor Name"
                 android:textSize="15dp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/in_no"
+                android:id="@+id/in_vname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -46,13 +46,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:text="Vendor Name"
+                android:text="Date of Invoice"
                 android:textSize="15dp"
                 android:textStyle="bold" />
 
             <TextView
 
-                android:id="@+id/in_vname"
+                android:id="@+id/in_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
