@@ -6,9 +6,13 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.ParcelFileDescriptor;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -65,6 +69,7 @@ import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 import com.itextpdf.text.pdf.draw.LineSeparator;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
@@ -382,7 +387,8 @@ public class InvoiceGenerate extends AppCompatActivity {
                                startActivityForResult(Intent.createChooser(intent, "Select Picture"),ADD_SEAL);
                                break;
                            case R.id.draw:
-                               startActivity(new Intent(InvoiceGenerate.this,Signature_Activity.class));
+                               startActivityForResult(new Intent(InvoiceGenerate.this,Signature_Activity.class),99);
+
                        }
                         return true;
                     }
@@ -447,6 +453,38 @@ public class InvoiceGenerate extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
+        if(resultCode==99)
+        {   File f=new File(data.getStringExtra("image"));
+            /*Bitmap bmp = null;
+            try {
+                FileInputStream is = this.openFileInput(Environment.getExternalStorageDirectory()+ File.separator+"sign.png");
+                bmp = BitmapFactory.decodeStream(is);
+                is.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }*/
+          // File file = new File(Environment.getExternalStorageDirectory()+ File.separator+"sign.png");
+           /* ParcelFileDescriptor fileDescriptor = null;
+            try {
+                fileDescriptor = ParcelFileDescriptor.open(
+                        file, ParcelFileDescriptor.MODE_READ_ONLY);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }*/
+            Picasso.with(getApplicationContext()).load(f).into(image);
+            /*Bitmap bitmap = Bitmap.createBitmap(
+                    image.getWidth(),image.getHeight(),
+                    Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            View v=new View(this);
+            v.draw(canvas);
+
+            image.setImageBitmap(bitmap);
+            image.setScaleType(ImageView.ScaleType.FIT_XY);
+*/
+
+
+        }
             if (resultCode == 1) {
                 bank = data.getStringExtra("bank_name");
                 ifsccode = data.getStringExtra("ifsc_code");

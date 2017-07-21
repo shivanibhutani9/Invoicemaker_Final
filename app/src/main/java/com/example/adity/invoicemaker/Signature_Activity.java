@@ -1,5 +1,6 @@
 package com.example.adity.invoicemaker;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.xml.sax.Attributes;
 
@@ -51,6 +53,7 @@ public class Signature_Activity extends AppCompatActivity {
                 v1.setImageBitmap(bitmap);
                 v.setVisibility(View.INVISIBLE);
                 v1.setVisibility(View.VISIBLE);
+                Toast.makeText(Signature_Activity.this, "Preview...", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -59,7 +62,7 @@ public class Signature_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     convertToImage();
-                } catch (IOException e) {
+                  } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -92,6 +95,11 @@ public class Signature_Activity extends AppCompatActivity {
         FileOutputStream fout=new FileOutputStream(file,false);
 
         bitmap.compress(Bitmap.CompressFormat.PNG, 100,fout );
+        Toast.makeText(this, "File Saved...", Toast.LENGTH_SHORT).show();
         fout.flush();
         fout.close();
-}}
+        Intent i=new Intent();
+        i.putExtra("image",file.getPath());
+        setResult(99,i);
+        finish();
+    }}
