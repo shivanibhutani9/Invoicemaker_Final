@@ -81,7 +81,8 @@
         <activity android:name=".edit" />
         <activity android:name=".InvoiceEdit" />
         <activity android:name=".VendorEDIT" />
-        <activity android:name=".BankEdit" />
+        <activity android:name=".BankEdit"
+            android:parentActivityName=".AccPaymentDetailsActivity"/>
         <activity android:name=".ItemEdit" />
         <activity android:name=".CanvasSign" />
         <activity android:name=".Signature_Activity"></activity>
