@@ -22,10 +22,15 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -66,6 +71,8 @@ public class profile extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Profile");
 
+
+
         INTERESTS=new ArrayList<>();
 
         pd=new ProgressDialog(getActivity());
@@ -91,14 +98,19 @@ public class profile extends Fragment {
 
 
 
-        DatabaseReference db= FirebaseDatabase.getInstance().getReference();
 
         auth =FirebaseAuth.getInstance();
         final FirebaseUser user=auth.getCurrentUser();
 
+
         name.setText(""+user.getDisplayName());
 
         email.setText(""+user.getEmail());
+
+        if(user.isEmailVerified())
+        {
+         items[2]="Email Verified \t\t\t (✔)";
+        }
 
 
 
@@ -126,7 +138,11 @@ public class profile extends Fragment {
                 }
                 else if(position==2)
                 {
-                    verifyEmail();
+                    if(!user.isEmailVerified())
+                    {
+                        verifyEmail();
+                    }
+
                 }
                 else if(position==3)
                 {
@@ -193,19 +209,22 @@ public class profile extends Fragment {
         pd.setMessage("sending Email");
         pd.show();
 
-
-
-
-
         user.sendEmailVerification().addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    pd.hide();
-                    Toast.makeText(getActivity(),
-                            "Verification email sent to " + user.getEmail(),
-                            Toast.LENGTH_SHORT).show();
-                    Log.e("", "email sent");
+
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            pd.hide();
+                            auth.signOut();
+                            startActivity(new Intent(getActivity(),MainActivity.class));
+                            getActivity().finish();
+
+                        }
+                    }, 3000);
 
 
                 } else {
@@ -215,6 +234,11 @@ public class profile extends Fragment {
                 }
             }
         });
+
+
+
+
+
 
         lv.getChildAt(2).setEnabled(false);
     }

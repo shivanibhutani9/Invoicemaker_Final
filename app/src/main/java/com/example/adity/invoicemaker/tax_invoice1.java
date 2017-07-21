@@ -229,7 +229,7 @@ public class tax_invoice1 {
             cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
             innertable2.addCell(cell1);
 
-            cell1 = new PdfPCell(new Phrase("\"State: \"+client_state+\" \\t\\t\\t  Code: \"+client_zip"));
+            cell1 = new PdfPCell(new Phrase("State: "+client_state+" \t\t\t  Code: "+client_zip));
             //cell.setBorder(Rectangle.NO_BORDER);
             cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 
