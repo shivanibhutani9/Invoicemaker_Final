@@ -1,6 +1,8 @@
 package com.example.adity.invoicemaker;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +12,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
@@ -18,9 +21,14 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 public class tax_invoice2 {
@@ -53,7 +61,7 @@ public class tax_invoice2 {
 
 
     public void pdfcreate(File f) {
-        com.itextpdf.text.Document doc = new com.itextpdf.text.Document(PageSize.A4.rotate(), 0f, 0f, 0f, 0f);
+        com.itextpdf.text.Document doc = new com.itextpdf.text.Document(PageSize.A4, 0f, 0f, 0f, 0f);
 
         String outPath = f.getPath();
 
@@ -389,6 +397,16 @@ public class tax_invoice2 {
             innertable6.addCell(cell6);
             doc.add(innertable6);
 
+            File file1 = new File(Environment.getExternalStorageDirectory()+"/sign.png");
+            //FileInputStream fileInputStream = new FileInputStream(file);
+            //InputStream ims = getAssets().open("black-2189644_960_720.png");
+            InputStream ims=new FileInputStream(file1);
+            Bitmap bmp = BitmapFactory.decodeStream(ims);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
+            Image image = Image.getInstance(stream.toByteArray());
+            image.scaleToFit(50,50);
+
             PdfPTable innertable7 = new PdfPTable(3);
             innertable7.setWidthPercentage(100);
             //innertable6.setWidths(new int[]{20,20,20});
@@ -403,10 +421,13 @@ public class tax_invoice2 {
             cell7.setMinimumHeight(100f);
             cell7.setVerticalAlignment(Element.ALIGN_BOTTOM);
             innertable7.addCell(cell7);
-            cell7 = new PdfPCell(new Phrase("Authorised Signatory"));
-            cell7.setMinimumHeight(100f);
-            cell7.setVerticalAlignment(Element.ALIGN_BOTTOM);
-            innertable7.addCell(cell7);
+            PdfPTable nested4 = new PdfPTable(1);
+            nested4.addCell(image);
+            nested4.addCell("Authorised Signatory");
+            PdfPCell nesthousing4 = new PdfPCell(nested4);
+
+            innertable7.addCell(nesthousing4);
+
 
 
             doc.add(innertable7);
@@ -415,6 +436,10 @@ public class tax_invoice2 {
             e.printStackTrace();
 
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -71,8 +71,10 @@
             android:label="@string/title_activity_vendor__details"
             android:parentActivityName=".InvoiceGenerate"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".pdfreader" />
-        <activity android:name=".Discount" />
+        <activity android:name=".pdfreader"
+            android:parentActivityName=".InvoiceGenerate"/>
+        <activity android:name=".Discount"
+            android:parentActivityName=".InvoiceGenerate"/>
         <activity
             android:name=".persondetails"
             android:parentActivityName=".NavigationDrawer" />
