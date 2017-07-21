@@ -104,6 +104,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
                 DeletionDialogBox.show();}
                 else{
                   startActivity((new Intent(AccPaymentDetailsActivity.this,BankEdit.class).putExtra("Bankname",bname).putExtra("Accholder",accname).putExtra("Accno",accnum).putExtra("Ifsc",ifsc)));
+                    adapter.notifyDataSetChanged();
               }
             }
             @Override
