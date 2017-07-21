@@ -78,7 +78,7 @@ public class Signature_Activity extends AppCompatActivity {
         switch(item.getItemId())
         {
             case R.id.clear:
-             recreate();
+             recreate();   break;
         }
         return true;
     }

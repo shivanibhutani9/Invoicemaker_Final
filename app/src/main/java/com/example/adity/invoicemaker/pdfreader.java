@@ -2,6 +2,7 @@ package com.example.adity.invoicemaker;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.Rect;
@@ -10,6 +11,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,7 +51,8 @@ public class pdfreader extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfreader);
         imageView = (ImageView) findViewById(R.id.image);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Invoice Preview");
 
       // next = (Button) findViewById(R.id.next);
      /*   previous = (Button) findViewById(R.id.previous);
@@ -166,4 +169,12 @@ public class pdfreader extends AppCompatActivity {
             Toast.makeText(this, "Failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }*/
+
+    @Nullable
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        onBackPressed();
+        return null;
+
+    }
 }

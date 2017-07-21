@@ -14,6 +14,7 @@ public class Discount extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Discount");
 
 
          dis=(EditText)findViewById(R.id.editdiscount);

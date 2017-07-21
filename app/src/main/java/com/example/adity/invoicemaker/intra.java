@@ -1,10 +1,15 @@
 package com.example.adity.invoicemaker;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Environment;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
@@ -13,9 +18,14 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 /**
@@ -47,7 +57,7 @@ public intra( String invoice_id,String invoice_date,String user_com,String user_
 
     public void createpdf(File f)
     {
-        com.itextpdf.text.Document doc=new com.itextpdf.text.Document(PageSize.A4.rotate(), 0f, 0f, 0f, 0f); //creating document
+        com.itextpdf.text.Document doc=new com.itextpdf.text.Document(PageSize.A4, 0f, 0f, 0f, 0f); //creating document
         String outPath=f.getPath();
         //location where the pdf will store
         try{
@@ -383,6 +393,16 @@ public intra( String invoice_id,String invoice_date,String user_com,String user_
             //Chunk linebreak4 = new Chunk(new LineSeparator());
             //doc.add(linebreak4);
 
+            File file1 = new File(Environment.getExternalStorageDirectory()+"/sign.png");
+            //FileInputStream fileInputStream = new FileInputStream(file);
+            //InputStream ims = getAssets().open("black-2189644_960_720.png");
+            InputStream ims=new FileInputStream(file1);
+            Bitmap bmp = BitmapFactory.decodeStream(ims);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
+            Image image = Image.getInstance(stream.toByteArray());
+            image.scaleToFit(50,50);
+
 
 
             //next step
@@ -408,11 +428,12 @@ public intra( String invoice_id,String invoice_date,String user_com,String user_
             cell7 = new PdfPCell(new Phrase("Common Seal"));
             cell7.setVerticalAlignment(Element.ALIGN_BOTTOM);
             innertable7.addCell(cell7);
-            cell7 = new PdfPCell(new Phrase("Authorised Signatory"));
-            cell7.setMinimumHeight(100f);
-            cell7.setVerticalAlignment(Element.ALIGN_BOTTOM);
-            innertable7.addCell(cell7);
+            PdfPTable nested4 = new PdfPTable(1);
+            nested4.addCell(image);
+            nested4.addCell("Authorised Signatory");
+            PdfPCell nesthousing4 = new PdfPCell(nested4);
 
+            innertable7.addCell(nesthousing4);
 
 
 
@@ -435,8 +456,11 @@ public intra( String invoice_id,String invoice_date,String user_com,String user_
         catch (FileNotFoundException e)
         {
             e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
 
 
     }
