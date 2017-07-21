@@ -39,12 +39,22 @@ public class VendorEDIT extends AppCompatActivity {
         GSTIN=(EditText)findViewById(R.id.gst);
         PAN_NO=(EditText)findViewById(R.id.pan);
 
+        Bundle extras = this.getIntent().getExtras();
+        if(extras!=null){
+            name.setText(extras.getString("name"));
+            phone.setText(extras.getString("phone"));
+            email.setText(extras.getString("email"));
+            addline.setText(extras.getString("address1"));
+            addline2.setText(extras.getString("address2"));
+            GSTIN.setText(extras.getString("gstin"));
+            zip.setText(extras.getString("Zip"));
+            state.setText(extras.getString("State"));
+            PAN_NO.setText(extras.getString("pan"));}
+
         Button save=(Button)findViewById(R.id.buttonclient) ;
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
 
                 Name=name.getText().toString();
                 Phone=phone.getText().toString();

@@ -41,7 +41,7 @@ public class ClientDetails extends AppCompatActivity {
         GSTIN=(EditText)findViewById(R.id.gst);
         PAN_NO=(EditText)findViewById(R.id.pan);
 
-        Button save=(Button)findViewById(R.id.buttonclient) ;
+            Button save=(Button)findViewById(R.id.buttonclient) ;
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

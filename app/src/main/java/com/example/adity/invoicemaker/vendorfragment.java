@@ -81,7 +81,7 @@ public class vendorfragment extends Fragment implements onItemTouchListener{
         adapter.setClickListener(this);
 
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.RIGHT ){
+                ItemTouchHelper.RIGHT |ItemTouchHelper.LEFT){
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
 
@@ -89,36 +89,55 @@ public class vendorfragment extends Fragment implements onItemTouchListener{
             }
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                final int pos=viewHolder.getAdapterPosition();
-                Vendor_Details.ObjectVendor obj=arrayList.get(pos);
-                AlertDialog DeletionDialogBox =new AlertDialog.Builder(getActivity())
-                        //set message, title, and icon
-                        .setTitle("Delete")
-                        .setMessage("Do you really want to delete the following bank details?\n\n"+"\t\tVendor Name-"+obj.v_name+"\n\t\tE-mail -"
-                                +obj.v_email)
-                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                final int pos = viewHolder.getAdapterPosition();
+                Vendor_Details.ObjectVendor obj = arrayList.get(pos);
+                if(direction==ItemTouchHelper.RIGHT) {
 
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                //your deleting code
-                                arrayList.remove(pos);
-                                adapter.notifyDataSetChanged();
-                                Toast.makeText(getActivity(), "DELETED", Toast.LENGTH_SHORT).show();
+                    AlertDialog DeletionDialogBox = new AlertDialog.Builder(getActivity())
+                            //set message, title, and icon
+                            .setTitle("Delete")
+                            .setMessage("Do you really want to delete the following bank details?\n\n" + "\t\tVendor Name-" + obj.v_name + "\n\t\tE-mail -"
+                                    + obj.v_email)
+                            .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
-                                dialog.dismiss();
-                            }
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    //your deleting code
+                                    arrayList.remove(pos);
+                                    adapter.notifyDataSetChanged();
+                                    Toast.makeText(getActivity(), "DELETED", Toast.LENGTH_SHORT).show();
 
-                        })
+                                    dialog.dismiss();
+                                }
 
-                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                adapter.notifyDataSetChanged();
-                                dialog.dismiss();
+                            })
 
-                            }
-                        })
-                        .create();
-                DeletionDialogBox.show();
+                            .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    adapter.notifyDataSetChanged();
+                                    dialog.dismiss();
+
+                                }
+                            })
+                            .create();
+                    DeletionDialogBox.show();
+                }
+                else
+                {    Intent i=new Intent(getActivity(),VendorEDIT.class);
+                    i.putExtra("name",obj.v_name);
+                    i.putExtra("phone",obj.v_phone);
+                    i.putExtra("email",obj.v_email);
+                    i.putExtra("address1",obj.v_add1);
+                    i.putExtra("address2",obj.v_add2);
+                    i.putExtra("State",obj.v_state);
+                    i.putExtra("Zip",obj.v_zip);
+                    i.putExtra("gstin",obj.v_gstin);
+                    i.putExtra("pan",obj.v_pan);
+
+                    startActivity(i);
+                    adapter.notifyDataSetChanged();
+                }
             }
+
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
 
@@ -303,4 +322,5 @@ public class vendorfragment extends Fragment implements onItemTouchListener{
         arrayList.clear();
         Read();
     }
+
 }

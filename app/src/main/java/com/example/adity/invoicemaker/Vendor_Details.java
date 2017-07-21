@@ -74,9 +74,10 @@ pd.hide();
             }
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                final int pos = viewHolder.getAdapterPosition();
+                ObjectVendor obj = arrayList.get(pos);
                if(direction==ItemTouchHelper.RIGHT) {
-                   final int pos = viewHolder.getAdapterPosition();
-                   ObjectVendor obj = arrayList.get(pos);
+
                    AlertDialog DeletionDialogBox = new AlertDialog.Builder(Vendor_Details.this)
                            //set message, title, and icon
                            .setTitle("Delete")
@@ -106,7 +107,18 @@ pd.hide();
                    DeletionDialogBox.show();
                }
             else
-               { startActivity(new Intent(Vendor_Details.this,VendorEDIT.class));
+               {    Intent i=new Intent(Vendor_Details.this,VendorEDIT.class);
+                   i.putExtra("name",obj.v_name);
+                   i.putExtra("phone",obj.v_phone);
+                   i.putExtra("email",obj.v_email);
+                   i.putExtra("address1",obj.v_add1);
+                   i.putExtra("address2",obj.v_add2);
+                   i.putExtra("State",obj.v_state);
+                   i.putExtra("Zip",obj.v_zip);
+                   i.putExtra("gstin",obj.v_gstin);
+                   i.putExtra("pan",obj.v_pan);
+
+                   startActivity(i);
                    adapter.notifyDataSetChanged();
                }
             }
