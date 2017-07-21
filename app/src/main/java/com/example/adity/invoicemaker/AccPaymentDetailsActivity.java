@@ -1,6 +1,7 @@
 package com.example.adity.invoicemaker;
 
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -72,9 +73,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
             }
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-               if(direction==ItemTouchHelper.RIGHT){
-
-                final int pos=viewHolder.getAdapterPosition();
+              if(direction== ItemTouchHelper.RIGHT){  final int pos=viewHolder.getAdapterPosition();
                 ObjectAcc obj=arrayList.get(pos);
                 AlertDialog DeletionDialogBox =new AlertDialog.Builder(AccPaymentDetailsActivity.this)
                         //set message, title, and icon
@@ -103,11 +102,9 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
                         })
                         .create();
                 DeletionDialogBox.show();}
-                else
-               {
-                   startActivity(new Intent(AccPaymentDetailsActivity.this,BankEdit.class));
-                    adapter.notifyDataSetChanged();
-               }
+                else{
+                  startActivity((new Intent(AccPaymentDetailsActivity.this,BankEdit.class).putExtra("Bankname",bname).putExtra("Accholder",accname).putExtra("Accno",accnum).putExtra("Ifsc",ifsc)));
+              }
             }
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {

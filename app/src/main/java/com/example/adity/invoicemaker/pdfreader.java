@@ -116,7 +116,7 @@ public class pdfreader extends AppCompatActivity {
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         PhotoViewAttacher photoView= new PhotoViewAttacher(imageView);
         photoView.update();
-       // imageView.setRotation(90);
+        imageView.setRotation(90);
         imageView.invalidate();
         rendererPage.close();
 

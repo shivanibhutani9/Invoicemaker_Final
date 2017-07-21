@@ -37,6 +37,7 @@
                 android:layout_marginLeft="5dp"
                 android:id="@+id/IfSc"
                 android:hint="IFSC Code"
+                android:maxLength="11"
                 android:inputType="text"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -91,6 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
+                    android:maxLength="20"
                     android:inputType="number"
                     android:padding="5dp" />
             </LinearLayout>
