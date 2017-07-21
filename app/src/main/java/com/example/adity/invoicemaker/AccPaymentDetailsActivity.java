@@ -73,8 +73,9 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
             }
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-              if(direction== ItemTouchHelper.RIGHT){  final int pos=viewHolder.getAdapterPosition();
+                final int pos=viewHolder.getAdapterPosition();
                 ObjectAcc obj=arrayList.get(pos);
+              if(direction== ItemTouchHelper.RIGHT){
                 AlertDialog DeletionDialogBox =new AlertDialog.Builder(AccPaymentDetailsActivity.this)
                         //set message, title, and icon
                         .setTitle("Delete")
@@ -103,7 +104,13 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
                         .create();
                 DeletionDialogBox.show();}
                 else{
-                  startActivity((new Intent(AccPaymentDetailsActivity.this,BankEdit.class).putExtra("Bankname",bname).putExtra("Accholder",accname).putExtra("Accno",accnum).putExtra("Ifsc",ifsc)));
+                  Intent i=new Intent(AccPaymentDetailsActivity.this,BankEdit.class);
+                  i.putExtra("Bankname",obj.bankname);
+                  i.putExtra("Ifsc",obj.ifsc_code);
+                  i.putExtra("Accholder",obj.accname);
+                  i.putExtra("Accno",obj.accno);
+
+                  startActivity(i);
                     adapter.notifyDataSetChanged();
               }
             }

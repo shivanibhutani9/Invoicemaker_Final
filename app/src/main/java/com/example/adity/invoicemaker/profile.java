@@ -66,6 +66,8 @@ public class profile extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Profile");
 
+
+
         INTERESTS=new ArrayList<>();
 
         pd=new ProgressDialog(getActivity());
@@ -100,6 +102,11 @@ public class profile extends Fragment {
 
         email.setText(""+user.getEmail());
 
+        if(user.isEmailVerified())
+        {
+         items[2]="Email Verified U+2714";
+        }
+
 
 
 
@@ -126,7 +133,11 @@ public class profile extends Fragment {
                 }
                 else if(position==2)
                 {
-                    verifyEmail();
+                    if(!user.isEmailVerified())
+                    {
+                        verifyEmail();
+                    }
+
                 }
                 else if(position==3)
                 {
@@ -193,20 +204,10 @@ public class profile extends Fragment {
         pd.setMessage("sending Email");
         pd.show();
 
-
-
-
-
         user.sendEmailVerification().addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    pd.hide();
-                    Toast.makeText(getActivity(),
-                            "Verification email sent to " + user.getEmail(),
-                            Toast.LENGTH_SHORT).show();
-                    Log.e("", "email sent");
-
 
                 } else {
                     Toast.makeText(getActivity(),
@@ -215,6 +216,11 @@ public class profile extends Fragment {
                 }
             }
         });
+
+
+
+
+
 
         lv.getChildAt(2).setEnabled(false);
     }
