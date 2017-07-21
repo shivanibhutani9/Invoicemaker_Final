@@ -76,7 +76,7 @@ String sms="";
                 }
 
                  if(test.equals("Success")) {
-                 new OTPVerificationThread().execute();
+ //                 new OTPVerificationThread().execute();
 
 
               }

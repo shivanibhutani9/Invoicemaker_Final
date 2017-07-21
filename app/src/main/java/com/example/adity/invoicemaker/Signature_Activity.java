@@ -78,10 +78,7 @@ public class Signature_Activity extends AppCompatActivity {
         switch(item.getItemId())
         {
             case R.id.clear:
-                v.clearFocus();
-                v.setVisibility(View.VISIBLE);
-                v1.setVisibility(View.INVISIBLE);
-                break;
+             recreate();   break;
         }
         return true;
     }
