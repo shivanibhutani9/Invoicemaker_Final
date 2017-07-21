@@ -39,7 +39,7 @@ public class listadapt extends RecyclerView.Adapter<listadapt.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        if(type.contains("Intra")) {
+        if(type.contains("Intra")||type.contains("Receipt")||type.contains("Payment")||type.contains("Debit")||type.contains("Credit")) {
             String[] a = objects.get(position);
 
             holder.description.setText(a[0]);
@@ -52,7 +52,7 @@ public class listadapt extends RecyclerView.Adapter<listadapt.ViewHolder> {
 
             holder.amt.setText(a[6]);
         }
-        else if(type.contains("Inter")) {
+        else if(type.contains("Inter")||type.contains("Export")) {
             String[] a = objects.get(position);
 
             holder.description.setText(a[0]);

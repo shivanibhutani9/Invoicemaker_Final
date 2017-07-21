@@ -18,15 +18,43 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 public class Payment_Voucher {
 
 
-    public void pdfcreate() {
+    String invoice_id,invoice_date,user_phone,user_com,user_add,user_gst,user_cp,client_com,client_add,client_state,client_zip,client_gst,total,accno,ifsc;
+    ArrayList<String[]> items;
+    ArrayList<String[]> GST;
+
+    public Payment_Voucher(String invoice_id, String invoice_date, String user_com, String user_add, String user_gst, String user_cp, String user_phone,String client_com, String client_add, String client_state, String client_zip, String client_gst, ArrayList<String[]> items, ArrayList<String[]> gsts, String total,String accno,String ifsc)
+    {
+        this.invoice_id=invoice_id;
+        this.invoice_date=invoice_date;
+        this.user_com=user_com;
+        this.user_add=user_add;
+        this.user_gst=user_gst;
+        this.user_cp=user_cp;
+        this.client_com=client_com;
+        this.client_add=client_add;
+        this.client_state=client_state;
+        this.client_zip=client_zip;
+        this.client_gst=client_gst;
+        this.items=items;
+        this.GST=gsts;
+        this.total=total;
+        this.accno=accno;
+        this.ifsc=ifsc;
+        this.user_phone=user_phone;
+    }
+
+
+    public void pdfcreate(File file) {
         com.itextpdf.text.Document doc = new com.itextpdf.text.Document(PageSize.A4.rotate(), 0f, 0f, 0f, 0f);
-        String outPath = Environment.getExternalStorageDirectory() + "/mypdff.pdf";
+        String outPath =file.getPath();
 
         try {
             PdfWriter.getInstance(doc, new FileOutputStream(outPath));
@@ -37,7 +65,7 @@ public class Payment_Voucher {
 
             innertable.setWidths(new int[]{40});
 
-            PdfPCell cell = new PdfPCell(new Paragraph("COMPANY NAME", FontFactory.getFont(FontFactory.TIMES_BOLD, 17, Font.NORMAL, BaseColor.BLACK)));
+            PdfPCell cell = new PdfPCell(new Paragraph(""+user_com, FontFactory.getFont(FontFactory.TIMES_BOLD, 17, Font.NORMAL, BaseColor.BLACK)));
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable.addCell(cell);
@@ -45,7 +73,7 @@ public class Payment_Voucher {
 // column 3
 
 
-            cell = new PdfPCell(new Paragraph("ADDRESS LINE 1", FontFactory.getFont(FontFactory.TIMES_BOLD, 17, Font.NORMAL, BaseColor.BLACK)));
+            cell = new PdfPCell(new Paragraph(""+user_add, FontFactory.getFont(FontFactory.TIMES_BOLD, 17, Font.NORMAL, BaseColor.BLACK)));
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable.addCell(cell);
@@ -53,14 +81,14 @@ public class Payment_Voucher {
 // column 4
 
 
-            cell = new PdfPCell(new Paragraph("PHONE NO", FontFactory.getFont(FontFactory.TIMES_BOLD, 17, Font.NORMAL, BaseColor.BLACK)));
+            cell = new PdfPCell(new Paragraph(""+user_phone, FontFactory.getFont(FontFactory.TIMES_BOLD, 17, Font.NORMAL, BaseColor.BLACK)));
             //cell.setPaddingLeft(2);
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable.addCell(cell);
 
 
-            cell = new PdfPCell(new Paragraph("GSTIN", FontFactory.getFont(FontFactory.TIMES_BOLD, 17, Font.NORMAL, BaseColor.BLACK)));
+            cell = new PdfPCell(new Paragraph("GSTIN "+user_gst, FontFactory.getFont(FontFactory.TIMES_BOLD, 17, Font.NORMAL, BaseColor.BLACK)));
             //cell.setPaddingLeft(2);
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -95,7 +123,7 @@ public class Payment_Voucher {
             PdfPTable innertable2 = new PdfPTable(2);
             innertable2.setWidthPercentage(100);
             innertable2.setWidths(new int[]{50, 50});
-            PdfPCell cell1 = new PdfPCell(new Phrase("Voucher no. :"));
+            PdfPCell cell1 = new PdfPCell(new Phrase("Voucher no. :"+invoice_id));
             //cell1.setBorder(Rectangle.NO_BORDER);
             cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
             innertable2.addCell(cell1);
@@ -106,39 +134,39 @@ public class Payment_Voucher {
             cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable2.addCell(cell1);
 
-            cell1 = new PdfPCell(new Phrase("Voucher Date:"));
+            cell1 = new PdfPCell(new Phrase("Voucher Date: "+invoice_date));
 
             innertable2.addCell(cell1);
 
 
-            cell1 = new PdfPCell(new Phrase("Name:"));
+            cell1 = new PdfPCell(new Phrase("Name: "+client_com));
             //cell.setBorder(Rectangle.NO_BORDER);
             cell.setPaddingLeft(2);
 
             innertable2.addCell(cell1);
-            cell1 = new PdfPCell(new Phrase("Place of supply:"));
+            cell1 = new PdfPCell(new Phrase("Place of supply: "));
             //cell1.setBorder(Rectangle.NO_BORDER);
             cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
             innertable2.addCell(cell1);
 
-            cell1 = new PdfPCell(new Phrase("Address :"));
+            cell1 = new PdfPCell(new Phrase("Address :"+client_add));
             innertable2.addCell(cell1);
 
             cell1 = new PdfPCell(new Phrase(""));
             innertable2.addCell(cell1);
 
 
-            cell1 = new PdfPCell(new Phrase("GSTIN :"));
+            cell1 = new PdfPCell(new Phrase("GSTIN :"+client_gst));
             //cell.setBorder(Rectangle.NO_BORDER);
             cell.setPaddingLeft(2);
 
             innertable2.addCell(cell1);
-            cell1 = new PdfPCell(new Phrase("State:  \t\t\t  Code:"));
+            cell1 = new PdfPCell(new Phrase("Address : \t"+user_add));
 
             cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
             innertable2.addCell(cell1);
 
-            cell1 = new PdfPCell(new Phrase("State:         Code: "));
+            cell1 = new PdfPCell(new Phrase("State: "+client_state+"        Code: "+client_zip));
             //cell.setBorder(Rectangle.NO_BORDER);
             cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
 
@@ -179,40 +207,41 @@ public class Payment_Voucher {
             innertable5.addCell(cell5);
 
     
+Double amtbefore=0.0;
 
+            for(int i=0;i<items.size();i++) {
+                String item[] = items.get(i);
+                String gsco[] = GST.get(i);
 
-         /*   for(int i=0;i<items.size();i++)
-            {
-                String item[]=items.get(i);
-                String gsco[]=GST.get(i);*/
-
-            cell5 = new PdfPCell(new Phrase(""));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase(""));
-            innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("     "));
-            innertable5.addCell(cell5);
-            PdfPTable nested4 = new PdfPTable(1);
-            nested4.addCell("R: ");
-            nested4.addCell("A: ");
-            PdfPCell nesthousing4 = new PdfPCell(nested4);
-            innertable5.addCell(nesthousing4);
-            PdfPTable nested5 = new PdfPTable(1);
-            nested5.addCell("R: ");
-            nested5.addCell("A: ");
-            PdfPCell nesthousing5 = new PdfPCell(nested5);
-            innertable5.addCell(nesthousing5);
-            cell5 = new PdfPCell(new Phrase(""));
-            cell5.setMinimumHeight(10f);
-            innertable5.addCell(cell5);
+                cell5 = new PdfPCell(new Phrase(item[0]));
+                innertable5.addCell(cell5);
+                cell5 = new PdfPCell(new Phrase(item[1]));
+                innertable5.addCell(cell5);
+                cell5 = new PdfPCell(new Phrase("     "));
+                innertable5.addCell(cell5);
+                PdfPTable nested4 = new PdfPTable(1);
+                nested4.addCell("R: " + item[3]);
+                nested4.addCell("A: " + gsco[1]);
+                PdfPCell nesthousing4 = new PdfPCell(nested4);
+                innertable5.addCell(nesthousing4);
+                PdfPTable nested5 = new PdfPTable(1);
+                nested5.addCell("R: " + item[2]);
+                nested5.addCell("A: " + gsco[0]);
+                PdfPCell nesthousing5 = new PdfPCell(nested5);
+                innertable5.addCell(nesthousing5);
+                amtbefore=amtbefore+(Double.parseDouble(item[4])*Double.parseDouble(item[5]));
+                cell5 = new PdfPCell(new Phrase("" + item[6]));
+                cell5.setMinimumHeight(10f);
+                innertable5.addCell(cell5);
+            }
             doc.add(innertable5);
-//}
+
             PdfPTable t = new PdfPTable(5);
             t.setWidthPercentage(100);
             t.setWidths(new int[]{14, 7, 7, 7, 7});
             PdfPCell ce = new PdfPCell(new Phrase("Total"));
             t.addCell(ce);
-            ce = new PdfPCell(new Phrase("0"));
+            ce = new PdfPCell(new Phrase(""+total));
             t.addCell(ce);
             ce = new PdfPCell(new Phrase("0"));
             t.addCell(ce);
@@ -263,11 +292,22 @@ public class Payment_Voucher {
 
             innertable7.addCell(nesthousing);
             PdfPTable nested2 = new PdfPTable(1);
-            nested2.addCell("0");
-            nested2.addCell("0");
-            nested2.addCell("0");
-            nested2.addCell("0");
-            nested2.addCell("0");
+
+            Double subtotalsgst=0.0,subtotalcgst=0.0,subtot=0.0;
+            for(int i=0;i<items.size();i++)
+            {
+                String item[]=items.get(i);
+                String gs[]=GST.get(i);
+                subtot=subtot+(Double.parseDouble(item[4])*Double.parseDouble(item[5]));
+                subtotalsgst=subtotalsgst+Double.parseDouble(gs[0]);
+                subtotalcgst=subtotalcgst+Double.parseDouble(gs[1]);
+
+            }
+            nested2.addCell(""+subtot);
+            nested2.addCell(""+subtotalcgst);
+            nested2.addCell(""+subtotalsgst);
+            nested2.addCell(""+subtotalcgst+subtotalsgst);
+            nested2.addCell(""+total);
             PdfPCell nesthousing2 = new PdfPCell(nested2);
             innertable7.addCell(nesthousing2);
 

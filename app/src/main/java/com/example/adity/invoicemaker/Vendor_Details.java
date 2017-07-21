@@ -62,7 +62,7 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
         pd.show();
         Read();
         adapter.setClickListener(this);
-
+pd.hide();
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.RIGHT ){
             @Override

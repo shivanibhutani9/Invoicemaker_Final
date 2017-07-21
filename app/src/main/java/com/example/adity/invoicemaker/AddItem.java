@@ -32,12 +32,12 @@ public class AddItem extends AppCompatActivity {
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         type=getIntent().getStringExtra("type");
-        if(type.contains("Intra"))
+        if(type.contains("Intra")||type.contains("Debit")||type.contains("Credit")||type.contains("Receipt")||type.contains("Payment"))
         {
             igst.setEnabled(false);
             igst.setHint("IGST Rate - 0%");
         }
-        else if(type.contains("Inter"))
+        else if(type.contains("Inter")||type.contains("Export"))
         {
             sgst.setEnabled(false);
             sgst.setHint("SGST Rate - 0%");
@@ -105,7 +105,7 @@ public class AddItem extends AppCompatActivity {
                     Double s=0.0,c=0.0,igg=0.0;
 
                     Double l = (quanti * Cost);
-                    if(type.contains("Intra")) {
+                    if(type.contains("Intra")||type.contains("Debit")||type.contains("Credit")||type.contains("Receipt")||type.contains("Payment")) {
                         sg = Double.parseDouble(Sgst);
                         cg = Double.parseDouble(Cgst);
                         s= l * (sg / 100);
@@ -113,7 +113,7 @@ public class AddItem extends AppCompatActivity {
                     }
 
 
-                    if(type.contains("Inter")) {
+                    if(type.contains("Inter")||type.contains("Export")) {
                         ig = Double.parseDouble(Igst);
                         igg = l * (ig / 100);
                     }
@@ -127,14 +127,14 @@ public class AddItem extends AppCompatActivity {
                     i.putExtra("description", description);
                     i.putExtra("HSNcode", HSNcode);
 
-                    if(type.contains("Intra")) {
+                    if(type.contains("Intra")||type.contains("Debit")||type.contains("Credit")||type.contains("Receipt")||type.contains("Payment")) {
                         i.putExtra("Sgst", Sgst);
                         i.putExtra("Cgst", Cgst);
                         i.putExtra("Sgstcost", s.toString());
                         i.putExtra("Cgstcost", c.toString());
                     }
 
-                    else if(type.contains("Inter")) {
+                    else if(type.contains("Inter")||type.contains("Export")) {
                         i.putExtra("Igst", Igst);
                         i.putExtra("Igstcost", igg.toString());
                     }

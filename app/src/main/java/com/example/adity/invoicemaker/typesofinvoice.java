@@ -30,13 +30,16 @@ public class typesofinvoice extends AppCompatActivity {
         HashMap<String, String> data1 = new HashMap<>();
         HashMap<String, String> data2 = new HashMap<>();
         HashMap<String, String> data3 = new HashMap<>();
-        HashMap<String, String> data4= new HashMap<>();
+        HashMap<String, String> data4=  new HashMap<>();
         HashMap<String, String> data5 = new HashMap<>();
         HashMap<String, String> data6 = new HashMap<>();
         HashMap<String, String> data7 = new HashMap<>();
         HashMap<String, String> data8 = new HashMap<>();
         HashMap<String, String> data9 = new HashMap<>();
-        HashMap<String, String> data10 = new HashMap<>();
+        HashMap<String, String> data10= new HashMap<>();
+        HashMap<String, String> data11= new HashMap<>();
+        HashMap<String, String> data12= new HashMap<>();
+
 
         data1.put("type","For Intra state");
         data1.put("description","(goods traveling within a state)");
@@ -78,6 +81,16 @@ public class typesofinvoice extends AppCompatActivity {
         data10.put("type","Invoice for Rcm");
         data10.put("description","()");
         INTERESTS.add(data10);
+
+        data11.put("type","Credit Note");
+        data11.put("description","()");
+        INTERESTS.add(data11);
+
+        data12.put("type","Debit Note");
+        data12.put("description","()");
+        INTERESTS.add(data12);
+
+
         ListView lv=(ListView)findViewById(R.id.listv);
 
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);

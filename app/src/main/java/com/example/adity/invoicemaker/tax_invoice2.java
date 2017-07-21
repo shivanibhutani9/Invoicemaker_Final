@@ -278,8 +278,7 @@ public class tax_invoice2 {
                 cell5.setMinimumHeight(10f);
                 innertable5.addCell(cell5);
 
-
-
+            Double am=0.0,subam=0.0;
 
          /*   for(int i=0;i<items.size();i++)
             {
@@ -289,7 +288,7 @@ public class tax_invoice2 {
                 String item[] = items.get(i);
                 String gsco[] = GST.get(i);
 
-                cell5 = new PdfPCell(new Phrase((i+1)));
+                cell5 = new PdfPCell(new Phrase((i + 1)));
                 innertable5.addCell(cell5);
                 cell5 = new PdfPCell(new Phrase(item[0]));
                 innertable5.addCell(cell5);
@@ -299,22 +298,27 @@ public class tax_invoice2 {
                 innertable5.addCell(cell5);
                 cell5 = new PdfPCell(new Phrase(item[3]));
                 innertable5.addCell(cell5);
-                cell5 = new PdfPCell(new Phrase(item[5]));
+
+                innertable5.addCell(cell5);
+                am = Double.parseDouble(item[3]) * Double.parseDouble(item[4]);
+                subam = subam + am;
+                cell5 = new PdfPCell(new Phrase(am.toString()));
                 innertable5.addCell(cell5);
                 cell5 = new PdfPCell(new Phrase(""));
                 innertable5.addCell(cell5);
                 cell5 = new PdfPCell(new Phrase("     "));
                 innertable5.addCell(cell5);
                 PdfPTable nested5 = new PdfPTable(1);
-                nested5.addCell("R: "+item[2]);
-                nested5.addCell("A: "+gsco[0]);
+                nested5.addCell("R: " + item[2]);
+                nested5.addCell("A: " + gsco[0]);
                 PdfPCell nesthousing5 = new PdfPCell(nested5);
                 innertable5.addCell(nesthousing5);
                 cell5 = new PdfPCell(new Phrase(item[5]));
                 cell5.setMinimumHeight(10f);
                 innertable5.addCell(cell5);
-                doc.add(innertable5);
             }
+                doc.add(innertable5);
+
 //}
             PdfPTable t = new PdfPTable(8);
             t.setWidthPercentage(100);
@@ -352,11 +356,17 @@ public class tax_invoice2 {
             cell6.setMinimumHeight(50f);
             PdfPTable nested = new PdfPTable(1);
             nested.addCell("Total Amount before tax:");
-            Double subtotal=0.0;
+
+            Double subtotal=0.0,tot=0.0,subtot=0.0;
             for(int i=0;i<items.size();i++)
             {
+                String item[]=items.get(i);
+                subtot=subtot+(Double.parseDouble(item[3])*Double.parseDouble(item[4]));
+
+                String to[]=items.get(i);
                 String gs[]=GST.get(i);
                 subtotal=subtotal+Double.parseDouble(gs[0]);
+                tot=tot+Double.parseDouble(to[5]);;
             }
             nested.addCell("Add: IGST");
             nested.addCell("Total Amount After Tax");
@@ -365,9 +375,9 @@ public class tax_invoice2 {
 
             innertable6.addCell(nesthousing);
             PdfPTable nested2 = new PdfPTable(1);
-            nested2.addCell("0");
+            nested2.addCell(""+subtot);
             nested2.addCell(""+subtotal);
-            nested2.addCell("0");
+            nested2.addCell(""+tot);
             nested2.addCell("0");
             PdfPCell nesthousing2 = new PdfPCell(nested2);
             innertable6.addCell(nesthousing2);
