@@ -135,6 +135,7 @@ String sms="";
                     final String name = b.getString("company_name");
                     mp.put("Company", b.getString("company_name"));
                     mp.put("Email", b.getString("Email"));
+                    mp.put("Password",pwd);
                     mp.put("Mobile number", b.getString("number"));
                     mp.put("contact person",b.getString("Contact_person"));
 
