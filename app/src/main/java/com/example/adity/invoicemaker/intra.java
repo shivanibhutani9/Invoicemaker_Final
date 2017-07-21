@@ -280,9 +280,9 @@ public intra( String invoice_id,String invoice_date,String user_com,String user_
             //doc.add(linebreak3);
 
 
-            PdfPTable innertable5 = new PdfPTable(11);
+            PdfPTable innertable5 = new PdfPTable(10);
             innertable5.setWidthPercentage(100);
-            innertable5.setWidths(new int[]{4,11,4,4,3,4,6,5,5,5,4});
+            innertable5.setWidths(new int[]{4,11,4,4,3,4,6,5,5,4});
             PdfPCell cell5 = new PdfPCell(new Phrase("S.No:"));
             innertable5.addCell(cell5);
             cell5 = new PdfPCell(new Phrase("Product Description"));
@@ -326,8 +326,6 @@ public intra( String invoice_id,String invoice_date,String user_com,String user_
 
             cell5 = new PdfPCell(new Phrase("CGST"));
             innertable5.addCell(cell5);
-            cell5 = new PdfPCell(new Phrase("IGST"));
-            innertable5.addCell(cell5);
 
 
             cell5 = new PdfPCell(new Phrase("Total"));
@@ -341,7 +339,7 @@ public intra( String invoice_id,String invoice_date,String user_com,String user_
             {
                 String item[]=items.get(i);
                 String gsco[]=GST.get(i);
-                cell5 = new PdfPCell(new Phrase("1"));
+                cell5 = new PdfPCell(new Phrase(i+1));
                 innertable5.addCell(cell5);
                 cell5 = new PdfPCell(new Phrase(item[0]));
                 innertable5.addCell(cell5);
@@ -349,9 +347,9 @@ public intra( String invoice_id,String invoice_date,String user_com,String user_
                 innertable5.addCell(cell5);
                 cell5 = new PdfPCell(new Phrase("     "));
                 innertable5.addCell(cell5);
-                cell5 = new PdfPCell(new Phrase(item[6]));
-                innertable5.addCell(cell5);
                 cell5 = new PdfPCell(new Phrase(item[5]));
+                innertable5.addCell(cell5);
+                cell5 = new PdfPCell(new Phrase(item[4]));
                 innertable5.addCell(cell5);
                 cell5 = new PdfPCell(new Phrase("      "));
                 innertable5.addCell(cell5);
@@ -372,12 +370,8 @@ public intra( String invoice_id,String invoice_date,String user_com,String user_
                 nested5.addCell("A: "+gsco[1]);
                 PdfPCell nesthousing5 = new PdfPCell(nested5);
                 innertable5.addCell(nesthousing5);
-                PdfPTable nested6 = new PdfPTable(1);
-                nested6.addCell("R:"+item[4]);
-                nested6.addCell("A:"+gsco[2]);
-                PdfPCell nesthousing6 = new PdfPCell(nested6);
-                innertable5.addCell(nesthousing6);
-                cell5 = new PdfPCell(new Phrase(item[7]));
+
+                cell5 = new PdfPCell(new Phrase(item[6]));
                 cell5.setMinimumHeight(10f);
                 innertable5.addCell(cell5);
 
