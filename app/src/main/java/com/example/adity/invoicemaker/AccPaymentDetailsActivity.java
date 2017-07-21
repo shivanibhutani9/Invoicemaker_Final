@@ -64,7 +64,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements onIt
 
 
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.RIGHT ){
+                ItemTouchHelper.RIGHT |ItemTouchHelper.LEFT){
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
 

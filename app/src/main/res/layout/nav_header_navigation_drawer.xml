@@ -28,7 +28,7 @@
     android:orientation="vertical"
     android:layout_weight=".5"
     android:padding="10dp"
-    android:layout_marginTop="15dp">
+   android:layout_marginTop="10dp" >
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,9 +39,9 @@
 
     <TextView
         android:id="@+id/EmailID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#fff"
-        android:text="android.studio@android.com" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="android.studio@android.com"
+        android:textColor="#fff" />
 </LinearLayout>
 </LinearLayout>

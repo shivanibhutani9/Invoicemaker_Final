@@ -1,10 +1,12 @@
 package com.example.adity.invoicemaker;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.AsyncTaskLoader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -74,7 +76,7 @@ String sms="";
                 }
 
                  if(test.equals("Success")) {
-                  new OTPVerificationThread().execute();
+ //                 new OTPVerificationThread().execute();
 
 
               }
@@ -83,7 +85,6 @@ String sms="";
             }
         });
         }
-
 
 
 
@@ -160,12 +161,12 @@ String sms="";
                                             db.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(mp, new DatabaseReference.CompletionListener() {
                                                 @Override
                                                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-                                                    /*if (databaseError == null) {
+                                                 /*   if (databaseError == null) {
                                                         Toast.makeText(signup.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
                                                     } else {
                                                         Toast.makeText(signup.this, "database error" + databaseError.toString(), Toast.LENGTH_SHORT).show();
                                                     }*/
-                                                }
+                                               }
                                             });
                                             pd.setMessage("Successfully Registered");
                                             pd.hide();

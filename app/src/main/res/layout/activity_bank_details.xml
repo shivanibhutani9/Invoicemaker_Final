@@ -22,12 +22,12 @@
             android:layout_below="@+id/linearLayout2">
 
             <EditText
+                android:id="@+id/bankname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:hint="Bank Name"
-                android:inputType="text"
-                android:id="@+id/bankname"
+                android:inputType="textCapCharacters"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 

@@ -32,16 +32,18 @@
                 android:text="Name"
                 android:textSize="15sp"
                 android:textStyle="bold" />
+
             <EditText
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:background="@android:color/transparent"
-                android:layout_height="wrap_content"
-                android:hint="Name"
                 android:id="@+id/clientname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="right"
+                android:hint="Name"
+                android:inputType="textPersonName"
                 android:padding="5dp"
-                android:textSize="15dp"
-                android:gravity="right"/>
+                android:textSize="15dp" />
 
 
         </LinearLayout>

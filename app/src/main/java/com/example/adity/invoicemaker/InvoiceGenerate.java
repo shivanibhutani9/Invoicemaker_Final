@@ -13,8 +13,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -330,10 +332,30 @@ public class InvoiceGenerate extends AppCompatActivity {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"),ADD_SEAL);
+
+                PopupMenu popup = new PopupMenu(InvoiceGenerate.this, image);
+
+                popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                       switch(item.getItemId())
+                       {
+                           case R.id.upload:
+                               Intent intent = new Intent();
+                               intent.setType("image/*");
+                               intent.setAction(Intent.ACTION_GET_CONTENT);
+                               startActivityForResult(Intent.createChooser(intent, "Select Picture"),ADD_SEAL);
+                               break;
+                           case R.id.draw:
+                               startActivity(new Intent(InvoiceGenerate.this,Signature_Activity.class));
+                       }
+                        return true;
+                    }
+                });
+
+                popup.show();//showing popup menu
             }
         });
     }
@@ -351,9 +373,11 @@ public class InvoiceGenerate extends AppCompatActivity {
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
-
+            String currentDate=setDateString(day,month,year);
+            dateString.setText(currentDate);
             // Create a new instance of DatePickerDialog and return it
             return new DatePickerDialog(getActivity(), this, year, month, day);
+
         }
 
         @Override
@@ -380,7 +404,7 @@ public class InvoiceGenerate extends AppCompatActivity {
             day = "0" + dayOfMonth;
 
         String s= day + "/" + mon + "/" + year;
-    return s;
+        return s;
     }
     private void showDatePickerDialog() {
         DialogFragment newFragment = new DatePickerFragment();

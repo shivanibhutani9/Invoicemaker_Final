@@ -64,7 +64,8 @@
             android:name=".typesofinvoice"
             android:parentActivityName=".NavigationDrawer"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".OTPCheck" />
+        <activity android:name=".OTPCheck"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Vendor_Details"
             android:label="@string/title_activity_vendor__details"
@@ -80,7 +81,8 @@
         <activity android:name=".VendorEDIT" />
         <activity android:name=".BankEdit" />
         <activity android:name=".ItemEdit" />
-        <activity android:name=".CanvasSign"></activity>
+        <activity android:name=".CanvasSign" />
+        <activity android:name=".Signature_Activity"></activity>
     </application>
 
 </manifest>
