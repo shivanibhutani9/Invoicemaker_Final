@@ -394,7 +394,7 @@ public class Debit_Note {
             innertable6.addCell(cell6);
             doc.add(innertable6);
 
-            File file1 = new File(Environment.getExternalStorageDirectory()+"/images.png");
+            File file1 = new File(Environment.getExternalStorageDirectory()+"/sign.png");
             //FileInputStream fileInputStream = new FileInputStream(file);
             //InputStream ims = getAssets().open("black-2189644_960_720.png");
             InputStream ims=new FileInputStream(file1);
