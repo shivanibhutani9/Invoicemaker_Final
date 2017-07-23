@@ -2,18 +2,45 @@
 package com.example.adity.invoicemaker;
 
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
  * These utilities will be used to communicate with the network.
  */
+
 public class NetworkUtils {
 
+    public static URL buildUrlCountry() {
+        URL url = null;
+        try {
+            url = new URL("http://api.geonames.org/countryInfoJSON?formatted=true&lang=en&style=full&username=shivanibh");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
+    }
+
+    public static URL buildUrlState(Integer id) {
+        URL url = null;
+        try {
+            url = new URL("http://api.geonames.org/childrenJSON?geonameId="+id.toString()+"&username=shivanibh");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
+    }
 
     public static URL buildUrl(String phonenumber) {
         URL url = null;
@@ -51,4 +78,42 @@ public class NetworkUtils {
             urlConnection.disconnect();
         }
         }
+    public static ObjectCountry parseJSON(String  Results) throws Exception
+    {       HashMap<String,Integer> hash=new HashMap<>();
+        ArrayList<String> s=new ArrayList<>();
+        String name=null;Integer id;
+        JSONObject json = new JSONObject(Results);
+        JSONArray jsonMainArr = json.getJSONArray("geonames");
+        for (int i = 0; i < jsonMainArr.length(); i++) {
+            JSONObject childJSONObject = jsonMainArr.getJSONObject(i);
+            name=childJSONObject.getString("countryName");
+            s.add(name);
+            hash.put(childJSONObject.getString("countryName"),Integer.parseInt(childJSONObject.getString("geonameId")));
+
+
+        }
+        return new ObjectCountry(hash,s);
+    }
+    public static ArrayList<String> parseJSONStates(String  Results) throws Exception
+    {   ArrayList<String> s=new ArrayList<>();
+        String name=null;
+        JSONObject json = new JSONObject(Results);
+        JSONArray jsonMainArr = json.getJSONArray("geonames");
+        for (int i = 0; i < jsonMainArr.length(); i++) {
+            JSONObject childJSONObject = jsonMainArr.getJSONObject(i);
+            name=childJSONObject.getString("name");
+            s.add(name);
+        }
+        return s;
+
+    }
+    public static class ObjectCountry{
+        public HashMap<String,Integer> hash;
+        public ArrayList<String> string;
+        ObjectCountry(HashMap<String,Integer> h ,ArrayList<String> s)
+        {
+            hash=h;
+            string=s;
+        }
+    }
     }

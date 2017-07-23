@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -110,7 +111,7 @@ public class InvoiceGenerate extends AppCompatActivity {
     File file;
     DatabaseReference db;
     TextView invoice;
-    ImageView image;
+    static ImageView image;
     String in="";
     int i=1;
     ArrayList<String[]> items;
@@ -249,6 +250,7 @@ public class InvoiceGenerate extends AppCompatActivity {
         preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ProgressDialog pd=new ProgressDialog(InvoiceGenerate.this);
                 String companyname=FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
                 pd.setMessage("Generating Invoice ...");
                 pd.show();
@@ -401,7 +403,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                                break;
                            case R.id.draw:
                                startActivityForResult(new Intent(InvoiceGenerate.this,Signature_Activity.class),99);
-
+                                image.postInvalidate();
                        }
                         return true;
                     }
@@ -442,6 +444,11 @@ public class InvoiceGenerate extends AppCompatActivity {
         }
 
 
+        @Override
+        public void onResume() {
+            image.postInvalidate();
+            super.onResume();
+        }
     }
     private static String setDateString(int dayOfMonth, int monthOfYear, int year) {
 
@@ -467,7 +474,8 @@ public class InvoiceGenerate extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         if(resultCode==99)
-        {   File f=new File(data.getStringExtra("image"));
+        {
+            File f=new File(data.getStringExtra("image"));
             /*Bitmap bmp = null;
             try {
                 FileInputStream is = this.openFileInput(Environment.getExternalStorageDirectory()+ File.separator+"sign.png");
@@ -484,7 +492,10 @@ public class InvoiceGenerate extends AppCompatActivity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }*/
+           image.setImageBitmap(null);
             Picasso.with(getApplicationContext()).load(f).into(image);
+            image.postInvalidate();
+
             /*Bitmap bitmap = Bitmap.createBitmap(
                     image.getWidth(),image.getHeight(),
                     Bitmap.Config.ARGB_8888);
@@ -495,7 +506,6 @@ public class InvoiceGenerate extends AppCompatActivity {
             image.setImageBitmap(bitmap);
             image.setScaleType(ImageView.ScaleType.FIT_XY);
 */
-
 
         }
             if (resultCode == 1) {
@@ -519,7 +529,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
                 if(type.contains("Intra")||type.contains("Debit")||type.contains("Credit")||type.contains("Receipt")||type.contains("Payment"))
                 {
-                    sgst=data.getStringExtra("Sgst");
+                   sgst=data.getStringExtra("Sgst");
                     cgst=data.getStringExtra("Cgst");
                     gstcost[0]=data.getStringExtra("Sgstcost");
                     gstcost[1]=data.getStringExtra("Cgstcost");

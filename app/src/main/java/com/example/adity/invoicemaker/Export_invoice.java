@@ -63,7 +63,7 @@ public class Export_invoice {
 
     public void pdfcreate(File file) {
 
-        com.itextpdf.text.Document doc = new com.itextpdf.text.Document(PageSize.A4.rotate(), 0f, 0f, 0f, 0f);
+        com.itextpdf.text.Document doc = new com.itextpdf.text.Document(PageSize.A4, 0f, 0f, 0f, 0f);
         String outPath = file.getPath();
 
         try {

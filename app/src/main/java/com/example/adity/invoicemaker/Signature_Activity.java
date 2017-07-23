@@ -91,7 +91,6 @@ public class Signature_Activity extends AppCompatActivity {
         Canvas canvas = new Canvas(bitmap);
         v.draw(canvas);
         File file = new File(Environment.getExternalStorageDirectory() +File.separator + "sign.png");
-
         FileOutputStream fout=new FileOutputStream(file,false);
 
         bitmap.compress(Bitmap.CompressFormat.PNG, 100,fout );
