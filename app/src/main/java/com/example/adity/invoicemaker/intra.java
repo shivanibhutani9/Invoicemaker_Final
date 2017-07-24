@@ -1,9 +1,12 @@
 package com.example.adity.invoicemaker;
 
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
-
+import android.provider.MediaStore;
+import android.content.Context;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -55,7 +58,7 @@ public intra( String invoice_id,String invoice_date,String user_com,String user_
     this.total=total;
 }
 
-    public void createpdf(File f)
+    public void createpdf(File f,Uri path,boolean p)
     {
         com.itextpdf.text.Document doc=new com.itextpdf.text.Document(PageSize.A4, 0f, 0f, 0f, 0f); //creating document
         String outPath=f.getPath();
@@ -393,12 +396,15 @@ public intra( String invoice_id,String invoice_date,String user_com,String user_
             //Chunk linebreak4 = new Chunk(new LineSeparator());
             //doc.add(linebreak4);
 
-            File file1 = new File(Environment.getExternalStorageDirectory()+"/sign.png");
+          /*  File file1 = new File(Environment.getExternalStorageDirectory()+"/sign.png");
             //FileInputStream fileInputStream = new FileInputStream(file);
             //InputStream ims = getAssets().open("black-2189644_960_720.png");
             InputStream ims=new FileInputStream(file1);
             Bitmap bmp = BitmapFactory.decodeStream(ims);
+            */
+           Bitmap bmp=BitmapFactory.decodeFile(path.toString());
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
             bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
             Image image = Image.getInstance(stream.toByteArray());
             image.scaleToFit(50,50);

@@ -4,6 +4,7 @@ package com.example.adity.invoicemaker;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -63,7 +64,7 @@ public class tax_invoice1 {
 
 
 
-    public void pdfcreate(File file) {
+    public void pdfcreate(File file,Uri path) {
 
        // ProgressDialog pd=new ProgressDialog();
         com.itextpdf.text.Document doc = new com.itextpdf.text.Document(PageSize.A4, 0f, 0f, 0f, 0f);
@@ -409,11 +410,14 @@ public class tax_invoice1 {
             cell6.setBorder(Rectangle.NO_BORDER);
             innertable6.addCell(cell6);
             doc.add(innertable6);
-            File file1 = new File(Environment.getExternalStorageDirectory()+"/sign.png");
+            /*File file1 = new File(Environment.getExternalStorageDirectory()+"/sign.png");
             //FileInputStream fileInputStream = new FileInputStream(file);
             //InputStream ims = getAssets().open("black-2189644_960_720.png");
             InputStream ims=new FileInputStream(file1);
             Bitmap bmp = BitmapFactory.decodeStream(ims);
+            */
+            //InputStream ims=new FileInputStream(path.getPath());
+            Bitmap bmp=BitmapFactory.decodeFile(path.toString());
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
             Image image = Image.getInstance(stream.toByteArray());

@@ -73,6 +73,16 @@
 
 
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No Vendor selected yet."
+            android:textSize="15sp"
+            android:textColor="#f00"
+            android:gravity="left"
+            android:id="@+id/noclient"
+            android:padding="5dp"
+            android:visibility="visible"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:id="@+id/clients"
@@ -81,41 +91,54 @@
             android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:weightSum="2">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="5dp"
+                android:layout_width="match_parent"
                 android:text="Company "
                 android:textStyle="bold"
                 android:layout_height="wrap_content" />
                 <TextView
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:id="@+id/com"
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:weightSum="2">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:paddingLeft="5dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:text="GSTIN"
                 android:textStyle="bold"
                 android:layout_height="wrap_content" />
                 <TextView
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:id="@+id/gst"
                     android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
             <TextView
-                android:layout_width="wrap_content"
+                android:paddingLeft="5dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:text="PAN No"
                 android:textStyle="bold"
                 android:layout_height="wrap_content" />
                     <TextView
+                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:id="@+id/pan"
                         android:layout_height="wrap_content" />
@@ -149,16 +172,26 @@
 
 
         </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No Items added yet."
+                android:textSize="15sp"
+                android:textColor="#f00"
+                android:gravity="left"
+                android:id="@+id/noitem"
+                android:padding="5dp"
+                android:visibility="visible"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/itemlist"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </android.support.v7.widget.RecyclerView>
-</LinearLayout>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/itemlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -283,7 +316,7 @@
 
 
             </LinearLayout>
-            <LinearLayout
+           <!-- <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -298,7 +331,7 @@
                     android:layout_marginRight="16dp"
                     android:gravity="right"
                     android:hint="Due on receipt" />
-            </LinearLayout>
+            </LinearLayout>-->
         </LinearLayout>
 
         <LinearLayout
@@ -310,14 +343,30 @@
             android:background="#cbeae7"
             android:orientation="horizontal"
             android:weightSum="2">
-            <ImageView
-               android:layout_weight="1"
+            <RelativeLayout
+
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
                 android:id="@+id/SEAL"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#fff">
                 </ImageView>
-              <LinearLayout
+
+                <TextView
+                    android:id="@+id/uploadSign"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="#fafafa"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="Upload Your Signature"
+                    android:textColor="#afafaf" />
+            </RelativeLayout>
+            <!--  <LinearLayout
                 android:id="@+id/linearLayout7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -356,7 +405,27 @@
                     android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
+--><RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp">
+            <ImageView
+                android:id="@+id/STAMP"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fff"/>
 
+            <TextView
+                android:id="@+id/uploadStamp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="#fafafa"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="Upload Your Stamp"
+                android:textColor="#afafaf" />
+        </RelativeLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -367,7 +436,7 @@
             android:layout_below="@+id/linearLayout10"
             android:id="@+id/linearLayout8"
             >
-            <TextView
+         <!--   <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Mark Paid"
@@ -375,15 +444,16 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:textColor="@color/colorPrimary"
-                />
+                />-->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Save"
                 android:gravity="center"
                 android:id="@+id/saveinvoice"
-
+                android:textStyle="bold"
                 android:padding="5dp"
+                android:textColor="@color/colorPrimary"
                 />
             </LinearLayout>
         <Button

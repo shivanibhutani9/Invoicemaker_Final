@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -14,7 +15,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -85,6 +88,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -93,8 +97,10 @@ import java.util.List;
 import java.util.Map;
 
 
+
 public class InvoiceGenerate extends AppCompatActivity {
  static TextView dateString;
+
     int ADD_SEAL=99;
     ProgressDialog pd;
     String bank,ifsccode,accholder,accno;
@@ -120,6 +126,9 @@ public class InvoiceGenerate extends AppCompatActivity {
     ArrayList<String[]> GST;
     Map<String,String> mp;
     ImageButton cal;
+    Uri path;
+    TextView noclient,noitem,uploadSign,uploadStamp;
+    LinearLayout clients;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,10 +136,13 @@ public class InvoiceGenerate extends AppCompatActivity {
         dateString=(TextView)findViewById(R.id.textdate);
         bank_details=(TextView)findViewById(R.id.bank);
         image=(ImageView)findViewById(R.id.SEAL);
-    cal=(ImageButton)findViewById(R.id.calendar);
+        cal=(ImageButton)findViewById(R.id.calendar);
         type=getIntent().getExtras().getString("type");
-
-
+        uploadSign=(TextView)findViewById(R.id.uploadSign);
+        uploadStamp=(TextView)findViewById(R.id.uploadStamp);
+        noitem=(TextView)findViewById(R.id.noitem);
+        clients=(LinearLayout)findViewById(R.id.clients);
+         noclient=(TextView)findViewById(R.id.noclient);
         items=new ArrayList<>();
         GST=new ArrayList<>();
 
@@ -151,6 +163,10 @@ public class InvoiceGenerate extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         currentDate=setDateString(day,month,year);
         dateString.setText(currentDate);
+        if(clients.getVisibility()==View.INVISIBLE)
+        {
+                noclient.setVisibility(View.VISIBLE);
+        }
         db=FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -188,14 +204,6 @@ public class InvoiceGenerate extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
-
-
 
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         bank_details.setOnClickListener(new View.OnClickListener() {
@@ -267,11 +275,11 @@ public class InvoiceGenerate extends AppCompatActivity {
                 String companyname=FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
                 pd.setMessage("Generating Invoice ...");
                 pd.show();
-                String path=Environment.getExternalStorageDirectory()+ File.separator+invoice.getText().toString()+"temp.pdf";
-                file=new File(path);
+                String path1=Environment.getExternalStorageDirectory()+ File.separator+invoice.getText().toString()+"temp.pdf";
+                file=new File(path1);
                 if(type.contains("Intra")) {
                     tax_invoice1 in = new tax_invoice1(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp,user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(),accno,ifsccode);
-                    in.pdfcreate(file);
+                    in.pdfcreate(file,path);
                     pd.hide();
                     startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
                 }
@@ -488,9 +496,12 @@ public class InvoiceGenerate extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         if(resultCode==99)
-        {
+        {   uploadSign.setVisibility(View.GONE);
             File f=new File(data.getStringExtra("image"));
+            path=Uri.parse(f.getPath());
+            Toast.makeText(this, path.toString(), Toast.LENGTH_SHORT).show();
             Picasso.with(getApplicationContext()).load(f).memoryPolicy(MemoryPolicy.NO_CACHE).into(image);
+
 
 
         }
@@ -522,7 +533,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                 }
 
                 if(type.contains("Inter")||type.contains("Export"))
-                {
+                    {
                     igst=data.getStringExtra("Igst");
                     gstcost[0]=data.getStringExtra("Igstcost");
                 }
@@ -537,6 +548,10 @@ public class InvoiceGenerate extends AppCompatActivity {
 
 
                 adapter.notifyDataSetChanged();
+                if(adapter.getItemCount()>0)
+                {
+                    noitem.setVisibility(View.GONE);
+                }
                 String invoiceid = invoice.getText().toString();
 
 
@@ -579,7 +594,6 @@ public class InvoiceGenerate extends AppCompatActivity {
                 Address = data.getStringExtra("address1")+"\n"+data.getStringExtra("address2")+"\n";
                 Gstin=data.getStringExtra("gstin");
                 Pan_no=data.getStringExtra("pan");
-
                 state=data.getStringExtra("State");
                 zip=data.getStringExtra("Zip");
 
@@ -592,8 +606,9 @@ public class InvoiceGenerate extends AppCompatActivity {
                 gst.setText(Gstin);
                 pan.setText(Pan_no);
 
-                LinearLayout clients=(LinearLayout)findViewById(R.id.clients);
+
                 clients.setVisibility(View.VISIBLE);
+                noclient.setVisibility(View.GONE);
 
             }
             else if(resultCode==5)
@@ -614,8 +629,12 @@ public class InvoiceGenerate extends AppCompatActivity {
                 switch (resultCode) {
 
                     case  Activity.RESULT_OK:
-                            Picasso.with(this).load(data.getData()).into(image);
-                            break;
+                        uploadSign.setVisibility(View.GONE);
+                        //path=(data.getData());
+                        Picasso.with(this).load(data.getData()).into(image);
+                        //path=Uri.parse(getRealPathFromURI(data.getData()));
+                        //Toast.makeText(this, path.toString(), Toast.LENGTH_SHORT).show();
+                        break;
                         case  Activity.RESULT_CANCELED:
                          Log.e("", "Selecting picture cancelled");
                             break;
@@ -655,8 +674,8 @@ public class InvoiceGenerate extends AppCompatActivity {
         file=new File(Environment.getExternalStorageDirectory()+ File.separator+invoice.getText().toString()+".pdf");
 
         if(type.contains("Intra")) {
-            intra in = new intra(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, Name, Address, state, zip, Gstin, items, GST, total.getText().toString());
-            in.createpdf(file);
+            tax_invoice1 in = new tax_invoice1(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp,user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(),accno,ifsccode);
+            in.pdfcreate(file,path);
         }
         else if(type.contains("Inter"))
         {
@@ -693,6 +712,26 @@ public class InvoiceGenerate extends AppCompatActivity {
 
 
 
+
+    public String getRealPathFromURI(Uri contentUri) {
+        ProgressDialog p=new ProgressDialog(this);
+        p.show();
+        String[] proj = { MediaStore.Images.Media.DATA };
+
+        //This method was deprecated in API level 11
+        //Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+
+        CursorLoader cursorLoader = new CursorLoader(
+                this,
+                contentUri, proj, null, null, null);
+        Cursor cursor = cursorLoader.loadInBackground();
+
+        int column_index =
+                cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        p.hide();
+        return cursor.getString(column_index);
+    }
 
 
 

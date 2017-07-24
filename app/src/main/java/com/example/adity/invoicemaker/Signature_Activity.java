@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.PorterDuff;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -26,6 +29,9 @@ import java.io.IOException;
 public class Signature_Activity extends AppCompatActivity {
     Button save,preview;
     View v;ImageView v1;
+    Button rotate;
+    float angle=0;Canvas canvas;
+    Bitmap bitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +40,8 @@ public class Signature_Activity extends AppCompatActivity {
         v1=(ImageView)findViewById(R.id.pSign);
         v.setVisibility(View.VISIBLE);
         v1.setVisibility(View.INVISIBLE);
+        rotate=(Button)findViewById(R.id.ROTATE);
+        rotate.setVisibility(View.GONE);
         Button save=(Button)findViewById(R.id.saveSignature);
         Button preview=(Button)findViewById(R.id.previewSignature);
         int permissionCheck1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -48,13 +56,28 @@ public class Signature_Activity extends AppCompatActivity {
         preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bitmap bitmap = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
-                Canvas canvas = new Canvas(bitmap);
+                bitmap = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
+                canvas = new Canvas(bitmap);
                 v.draw(canvas);
                 v1.setImageBitmap(bitmap);
                 v.setVisibility(View.INVISIBLE);
                 v1.setVisibility(View.VISIBLE);
                 Toast.makeText(Signature_Activity.this, "Preview...", Toast.LENGTH_SHORT).show();
+                rotate.setVisibility(View.VISIBLE);
+                rotate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(angle==360)
+                        {angle=0;}
+                        angle=angle+45;
+                        Matrix matrix = new Matrix();
+                        matrix.setRotate(angle);
+                        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                        v1.setImageBitmap(rotatedBitmap);
+                        v1.postInvalidate();
+
+                    }
+                });
             }
 
         });
@@ -68,6 +91,8 @@ public class Signature_Activity extends AppCompatActivity {
                 }
             }
         });
+
+
 
     }
 
@@ -89,9 +114,9 @@ public class Signature_Activity extends AppCompatActivity {
     void convertToImage() throws IOException {
         ProgressDialog p=new ProgressDialog(this);
         p.show();
-        Bitmap bitmap = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(v1.getWidth(), v1.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        v.draw(canvas);
+        v1.draw(canvas);
         File file = new File(Environment.getExternalStorageDirectory() +File.separator + "sign.png");
         FileOutputStream fout=new FileOutputStream(file,false);
         bitmap.compress(Bitmap.CompressFormat.PNG, 100,fout );

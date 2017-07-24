@@ -100,6 +100,7 @@ import java.util.Map;
 public class InvoiceEdit extends AppCompatActivity {
     static TextView dateString;
     int ADD_SEAL=99;
+    Uri path;
     ProgressDialog pd;
     String bank,ifsccode,accholder,accno;
     String type;
@@ -236,11 +237,11 @@ public class InvoiceEdit extends AppCompatActivity {
                     String companyname = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
                     pd.setMessage("Generating Invoice ...");
                     pd.show();
-                    String path = Environment.getExternalStorageDirectory() + File.separator + invoice.getText().toString() + "temp.pdf";
-                    file = new File(path);
+                    String path1 = Environment.getExternalStorageDirectory() + File.separator + invoice.getText().toString() + "temp.pdf";
+                    file = new File(path1);
                     if (type.contains("Intra")) {
                         tax_invoice1 in = new tax_invoice1(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
-                        in.pdfcreate(file);
+                        in.pdfcreate(file,path);
                         pd.hide();
                         startActivity(new Intent(InvoiceEdit.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
                     } else if (type.contains("Inter")) {
@@ -413,6 +414,7 @@ public class InvoiceEdit extends AppCompatActivity {
         if(resultCode==99)
         {
             File f=new File(data.getStringExtra("image"));
+          path=Uri.parse(f.getPath());
             Picasso.with(getApplicationContext()).load(f).memoryPolicy(MemoryPolicy.NO_CACHE).into(image);
 
         }
@@ -535,6 +537,7 @@ public class InvoiceEdit extends AppCompatActivity {
                 switch (resultCode) {
 
                     case  Activity.RESULT_OK:
+                        path=data.getData();
                         Picasso.with(this).load(data.getData()).into(image);
                         break;
                     case  Activity.RESULT_CANCELED:
@@ -576,9 +579,9 @@ public class InvoiceEdit extends AppCompatActivity {
         file=new File(Environment.getExternalStorageDirectory()+ File.separator+invoice.getText().toString()+".pdf");
 
         if(type.contains("Intra")) {
-            intra in = new intra(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, Name, Address, state, zip, Gstin, items, GST, total.getText().toString());
-            in.createpdf(file);
-        }
+            tax_invoice1 in = new tax_invoice1(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
+            in.pdfcreate(file,path);
+            }
         else if(type.contains("Inter"))
         {
             tax_invoice2 in = new tax_invoice2(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(),accno,ifsccode);
