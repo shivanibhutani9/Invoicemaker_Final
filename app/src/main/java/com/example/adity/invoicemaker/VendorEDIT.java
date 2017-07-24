@@ -2,27 +2,40 @@ package com.example.adity.invoicemaker;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class VendorEDIT extends AppCompatActivity {
-
-    EditText name,phone,email,addline,addline2,state,zip,GSTIN,PAN_NO;
-    String Name,Phone,Email,add1,add2,zp,st,pan_no,gstin;
+    AutoCompleteTextView country,state;
+    EditText name,phone,email,addline,addline2,zip,GSTIN,PAN_NO;
+    String Name,Phone,Email,add1,add2,zp,st,pan_no,gstin,Country;
     Map<String,String> mp;
     ProgressDialog pd;
+    URL url,State ;
+    NetworkResponse.ObjectCountry obj;
+    HashMap<String,Integer> hash=new HashMap<>();
+    ArrayList<String> str=new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +47,15 @@ public class VendorEDIT extends AppCompatActivity {
         email=(EditText)findViewById(R.id.clientemail);
         addline=(EditText)findViewById(R.id.Address1);
         addline2=(EditText)findViewById(R.id.Address2);
-        state=(EditText)findViewById(R.id.Address3);
+        state=(AutoCompleteTextView) findViewById(R.id.Address3);
         zip=(EditText)findViewById(R.id.zip);
         GSTIN=(EditText)findViewById(R.id.gst);
         PAN_NO=(EditText)findViewById(R.id.pan);
+        name.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+        country=(AutoCompleteTextView)findViewById(R.id.Country);
+        url=NetworkResponse.buildUrlCountry();
+        obj=new NetworkResponse.ObjectCountry(hash,str);
+        new  BackGround().execute();
 
         Bundle extras = this.getIntent().getExtras();
         if(extras!=null){
@@ -50,6 +68,27 @@ public class VendorEDIT extends AppCompatActivity {
             zip.setText(extras.getString("Zip"));
             state.setText(extras.getString("State"));
             PAN_NO.setText(extras.getString("pan"));}
+        country.setText(extras.getString("Country"));
+
+        state.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b)
+
+                {   String s = country.getText().toString().trim();
+                    if(!s.equals("")) {
+                        Integer id = obj.hash.get(s);
+                        //Toast.makeText(VendorEDIT.this, id.toString(), Toast.LENGTH_SHORT).show();
+                        State = NetworkResponse.buildUrlState(id);
+                        new BackGroundState().execute();
+                    }
+                    else
+                    {
+                        state.setError("Please enter the country first.");
+                    }
+                }
+            }
+        });
 
         Button save=(Button)findViewById(R.id.buttonclient) ;
         save.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +104,7 @@ public class VendorEDIT extends AppCompatActivity {
                 add2=addline2.getText().toString();
                 st=state.getText().toString();
                 zp=zip.getText().toString();
-
+                Country=country.getText().toString();
 
                 mp=new HashMap<>();
 
@@ -119,7 +158,7 @@ public class VendorEDIT extends AppCompatActivity {
                     mp.put("Email", Email);
                     mp.put("Pan no", pan_no);
                     mp.put("Gstin", gstin);
-
+                    mp.put("Country",Country);
 
                     DatabaseReference db = FirebaseDatabase.getInstance().getReference("Company");
                     db.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Name).setValue(mp, new DatabaseReference.CompletionListener() {
@@ -136,6 +175,73 @@ public class VendorEDIT extends AppCompatActivity {
         });
 
     }
+    public class BackGround extends AsyncTask<Void, Void, String> {
+
+
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            String s=null;
+            try {
+                s = NetworkResponse.getResponseFromHttpUrl(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return s;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                obj = NetworkResponse.parseJSON(result);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+//            Toast.makeText(MainActivity.this, ""+Countries.get(0), Toast.LENGTH_SHORT).show();
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(VendorEDIT.this, android.R.layout.simple_expandable_list_item_1, obj.string);
+            country.setAdapter(adapter);
+
+        }
+
+    }
+    public class BackGroundState extends AsyncTask<Void, Void, String> {
+        ProgressDialog p;
+        @Override
+        protected void onPreExecute() {
+            p=new ProgressDialog(VendorEDIT.this);
+            p.setMessage("Retrieving States");
+            p.show();
+        }
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            String s=null;
+            try {
+                s = NetworkResponse.getResponseFromHttpUrl(State);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return s;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            ArrayList<String> states=new ArrayList<>();
+            try {
+                states = NetworkResponse.parseJSONStates(result);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+//            Toast.makeText(MainActivity.this, ""+Countries.get(0), Toast.LENGTH_SHORT).show();
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(VendorEDIT.this, android.R.layout.simple_expandable_list_item_1,states);
+            state.setAdapter(adapter);
+            p.hide();
+        }
+    }
+
+
     @Nullable
     @Override
     public Intent getSupportParentActivityIntent() {

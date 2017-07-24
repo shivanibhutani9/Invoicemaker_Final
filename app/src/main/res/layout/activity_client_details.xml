@@ -41,7 +41,7 @@
                 android:background="@android:color/transparent"
                 android:gravity="right"
                 android:hint="Name"
-                android:inputType="textCapWords"
+                android:inputType="textCapWords|textPersonName"
                 android:padding="5dp"
                 android:textSize="15dp" />
 

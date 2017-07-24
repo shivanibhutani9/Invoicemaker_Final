@@ -1,6 +1,7 @@
 package com.example.adity.invoicemaker;
 
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -63,6 +64,8 @@ public class tax_invoice1 {
 
 
     public void pdfcreate(File file) {
+
+       // ProgressDialog pd=new ProgressDialog();
         com.itextpdf.text.Document doc = new com.itextpdf.text.Document(PageSize.A4, 0f, 0f, 0f, 0f);
 
         String outPath =file.getPath();

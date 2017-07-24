@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -30,17 +31,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.example.adity.invoicemaker.InvoiceListFragment.drawableToBitmap;
 
 public class Vendor_Details extends AppCompatActivity implements onItemTouchListener{
 
+
     Vendor_Adapter adapter;
     RecyclerView rv;
     FloatingActionButton fab;
     ArrayList<ObjectVendor> arrayList;
-    String name,email,gstin,pan,add1,add2,zip,state,number;
+    String name,email,gstin,pan,add1,add2,zip,state,number,country;
     ProgressDialog pd;
     onItemTouchListener onItemTouchListener;
     private Paint p=new Paint();
@@ -64,7 +68,7 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
         pd.show();
         Read();
         adapter.setClickListener(this);
-pd.hide();
+
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.RIGHT|ItemTouchHelper.LEFT ){
             @Override
@@ -117,7 +121,7 @@ pd.hide();
                    i.putExtra("Zip",obj.v_zip);
                    i.putExtra("gstin",obj.v_gstin);
                    i.putExtra("pan",obj.v_pan);
-
+                   i.putExtra("Country",obj.v_country);
                    startActivity(i);
                    adapter.notifyDataSetChanged();
                }
@@ -146,9 +150,9 @@ pd.hide();
                         p.setColor(Color.parseColor("#D32F2F"));
                         RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX,(float) itemView.getBottom());
                         c.drawRect(background,p);
-                        Drawable d=getResources().getDrawable(R.drawable.ic_delete_white);
-                        icon = drawableToBitmap(d);
-                        //icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_menu_send);
+                        ///Drawable d=getResources().getDrawable(R.drawable.ic_delete_white);
+                        //icon = drawableToBitmap(d);
+                        icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_delete_white);
                         RectF icon_dest = new RectF((float) itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width);
                         c.drawBitmap(icon,null,icon_dest,p);
 
@@ -178,8 +182,8 @@ pd.hide();
 
 
     public static class ObjectVendor{
-        public String v_name,v_email,v_gstin,v_pan,v_add1,v_add2,v_state,v_zip,v_phone;
-        ObjectVendor(String name,String mail,String gstin,String pan,String add1,String add2,String state,String zip,String phone){
+        public String v_name,v_email,v_gstin,v_pan,v_add1,v_add2,v_state,v_zip,v_phone,v_country;
+        ObjectVendor(String name,String mail,String gstin,String pan,String add1,String add2,String state,String zip,String phone,String country){
 
             v_name=name;
             v_email=mail;
@@ -190,6 +194,7 @@ pd.hide();
             v_zip=zip;
             v_state=state;
             v_phone=phone;
+            v_country=country;
         }
 
     }
@@ -215,7 +220,7 @@ pd.hide();
                 i.putExtra("Zip",ob.v_zip);
                 i.putExtra("gstin",ob.v_gstin);
                 i.putExtra("pan",ob.v_pan);
-
+                i.putExtra("Country",ob.v_country);
                setResult(3,i);
                finish();
 
@@ -272,9 +277,13 @@ pd.hide();
                         {
                             number=ds.getValue(String.class);
                         }
+                        if(ds.getKey().equals("Country"))
+                        {
+                            country=ds.getValue(String.class);
+                        }
 
                     }
-                    ObjectVendor obj=new ObjectVendor(name,email,gstin,pan,add1,add2,state,zip,number);
+                    ObjectVendor obj=new ObjectVendor(name,email,gstin,pan,add1,add2,state,zip,number,country);
                     arrayList.add(obj);
                     adapter.notifyDataSetChanged();
 

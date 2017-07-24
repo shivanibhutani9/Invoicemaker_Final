@@ -54,7 +54,8 @@
         <activity
             android:name=".ClientDetails"
             android:label="Vendor Details"
-            android:parentActivityName=".Vendor_Details" />
+            android:parentActivityName=".Vendor_Details"
+            android:screenOrientation="portrait"/>
         <!-- android:parentActivityName=".InvoiceGenerate" -->
         <activity
             android:name=".AccPaymentDetailsActivity"
@@ -80,7 +81,8 @@
             android:parentActivityName=".NavigationDrawer" />
         <activity android:name=".edit" />
         <activity android:name=".InvoiceEdit" />
-        <activity android:name=".VendorEDIT" />
+        <activity android:name=".VendorEDIT"
+            android:screenOrientation="portrait"/>
         <activity android:name=".BankEdit"
             android:parentActivityName=".AccPaymentDetailsActivity"/>
         <activity android:name=".ItemEdit" />

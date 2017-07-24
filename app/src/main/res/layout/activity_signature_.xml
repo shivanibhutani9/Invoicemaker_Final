@@ -17,10 +17,13 @@
     android:layout_height="match_parent"
     android:id="@+id/Signed"
     android:layout_weight="0.2"/>
+
      <ImageView
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:id="@+id/pSign"/>
+         android:id="@+id/pSign"
+         android:layout_width="275dp"
+         android:layout_height="175dp"
+         android:layout_centerVertical="true"
+         android:layout_centerHorizontal="true" />
  </RelativeLayout>
 
     <LinearLayout

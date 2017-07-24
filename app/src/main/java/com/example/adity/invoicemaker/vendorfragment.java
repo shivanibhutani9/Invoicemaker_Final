@@ -42,7 +42,7 @@ public class vendorfragment extends Fragment implements onItemTouchListener{
     RecyclerView rv;
     FloatingActionButton fab;
     ArrayList<Vendor_Details.ObjectVendor> arrayList;
-    String name,email,gstin,pan,add1,add2,zip,state,number;
+    String name,email,gstin,pan,add1,add2,zip,state,number,country;
     ProgressDialog pd;
     onItemTouchListener onItemTouchListener;
     private  Paint p=new Paint();
@@ -132,7 +132,7 @@ public class vendorfragment extends Fragment implements onItemTouchListener{
                     i.putExtra("Zip",obj.v_zip);
                     i.putExtra("gstin",obj.v_gstin);
                     i.putExtra("pan",obj.v_pan);
-
+                    i.putExtra("Country",obj.v_country);
                     startActivity(i);
                     adapter.notifyDataSetChanged();
                 }
@@ -201,8 +201,8 @@ public class vendorfragment extends Fragment implements onItemTouchListener{
 
 
     public static class ObjectVendor{
-        public String v_name,v_email,v_gstin,v_pan,v_add1,v_add2,v_state,v_zip,v_phone;
-        ObjectVendor(String name,String mail,String gstin,String pan,String add1,String add2,String state,String zip,String phone){
+        public String v_name,v_email,v_gstin,v_pan,v_add1,v_add2,v_state,v_zip,v_phone,v_country;
+        ObjectVendor(String name,String mail,String gstin,String pan,String add1,String add2,String state,String zip,String phone,String country){
 
             v_name=name;
             v_email=mail;
@@ -213,6 +213,7 @@ public class vendorfragment extends Fragment implements onItemTouchListener{
             v_zip=zip;
             v_state=state;
             v_phone=phone;
+            v_country=country;
         }
 
     }
@@ -238,6 +239,7 @@ public class vendorfragment extends Fragment implements onItemTouchListener{
                 i.putExtra("Zip",ob.v_zip);
                 i.putExtra("gstin",ob.v_gstin);
                 i.putExtra("pan",ob.v_pan);
+                i.putExtra("Country",ob.v_country);
 
 
 
@@ -295,8 +297,12 @@ public class vendorfragment extends Fragment implements onItemTouchListener{
                             number=ds.getValue(String.class);
                         }
 
+                        if(ds.getKey().equals("Country"))
+                        {
+                            country=ds.getValue(String.class);
+                        }
                     }
-                    Vendor_Details.ObjectVendor obj=new Vendor_Details.ObjectVendor(name,email,gstin,pan,add1,add2,state,zip,number);
+                    Vendor_Details.ObjectVendor obj=new Vendor_Details.ObjectVendor(name,email,gstin,pan,add1,add2,state,zip,number,country);
                     arrayList.add(obj);
                     adapter.notifyDataSetChanged();
 

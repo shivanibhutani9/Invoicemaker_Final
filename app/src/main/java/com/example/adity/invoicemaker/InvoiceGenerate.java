@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -25,12 +26,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import android.Manifest;
 import android.content.Intent;
@@ -79,6 +80,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
@@ -96,6 +98,7 @@ public class InvoiceGenerate extends AppCompatActivity {
     int ADD_SEAL=99;
     ProgressDialog pd;
     String bank,ifsccode,accholder,accno;
+     String currentDate;
     String type;
     String state,zip;
     String description,HSNcode,unitcost,quantity,amount;
@@ -110,12 +113,13 @@ public class InvoiceGenerate extends AppCompatActivity {
     File file;
     DatabaseReference db;
     TextView invoice;
-    ImageView image;
+    static ImageView image;
     String in="";
     int i=1;
     ArrayList<String[]> items;
     ArrayList<String[]> GST;
     Map<String,String> mp;
+    ImageButton cal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,20 +127,30 @@ public class InvoiceGenerate extends AppCompatActivity {
         dateString=(TextView)findViewById(R.id.textdate);
         bank_details=(TextView)findViewById(R.id.bank);
         image=(ImageView)findViewById(R.id.SEAL);
-
+    cal=(ImageButton)findViewById(R.id.calendar);
         type=getIntent().getExtras().getString("type");
 
 
         items=new ArrayList<>();
         GST=new ArrayList<>();
 
-
-
         in="";
+        cal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePickerDialog();
+            }
+        });
         adapter=new listadapt(InvoiceGenerate.this,items,type);
         pd  =new ProgressDialog(InvoiceGenerate.this);
         pd.setMessage("please wait ....");
         pd.show();
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        currentDate=setDateString(day,month,year);
+        dateString.setText(currentDate);
         db=FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -249,6 +263,7 @@ public class InvoiceGenerate extends AppCompatActivity {
         preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ProgressDialog pd=new ProgressDialog(InvoiceGenerate.this);
                 String companyname=FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
                 pd.setMessage("Generating Invoice ...");
                 pd.show();
@@ -304,6 +319,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                     pd.hide();
 
                     startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+
                 }
 
 
@@ -387,7 +403,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                 PopupMenu popup = new PopupMenu(InvoiceGenerate.this, image);
 
                 popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
-
+               // image.invalidate();
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
@@ -400,8 +416,9 @@ public class InvoiceGenerate extends AppCompatActivity {
                                startActivityForResult(Intent.createChooser(intent, "Select Picture"),ADD_SEAL);
                                break;
                            case R.id.draw:
-                               startActivityForResult(new Intent(InvoiceGenerate.this,Signature_Activity.class),99);
 
+                               startActivityForResult(new Intent(InvoiceGenerate.this,Signature_Activity.class),99);
+                                image.postInvalidate();
                        }
                         return true;
                     }
@@ -425,21 +442,25 @@ public class InvoiceGenerate extends AppCompatActivity {
             int year = c.get(Calendar.YEAR);
             int month = c.get(Calendar.MONTH);
             int day = c.get(Calendar.DAY_OF_MONTH);
-            String currentDate=setDateString(day,month,year);
-            dateString.setText(currentDate);
+    //        currentDate=setDateString(day,month,year);
             // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
+            DatePickerDialog datePickerDialog= new DatePickerDialog(getActivity(), this, year, month, day);
+          //  datePickerDialog.getDatePicker().setCalendarViewShown(false);
 
+            datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+            return datePickerDialog;
         }
 
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
+
            String date;
             date=setDateString(dayOfMonth, monthOfYear, year);
 
             dateString.setText(date);
         }
+
 
 
     }
@@ -467,34 +488,9 @@ public class InvoiceGenerate extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
         if(resultCode==99)
-        {   File f=new File(data.getStringExtra("image"));
-            /*Bitmap bmp = null;
-            try {
-                FileInputStream is = this.openFileInput(Environment.getExternalStorageDirectory()+ File.separator+"sign.png");
-                bmp = BitmapFactory.decodeStream(is);
-                is.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }*/
-          // File file = new File(Environment.getExternalStorageDirectory()+ File.separator+"sign.png");
-           /* ParcelFileDescriptor fileDescriptor = null;
-            try {
-                fileDescriptor = ParcelFileDescriptor.open(
-                        file, ParcelFileDescriptor.MODE_READ_ONLY);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }*/
-            Picasso.with(getApplicationContext()).load(f).into(image);
-            /*Bitmap bitmap = Bitmap.createBitmap(
-                    image.getWidth(),image.getHeight(),
-                    Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bitmap);
-            View v=new View(this);
-            v.draw(canvas);
-
-            image.setImageBitmap(bitmap);
-            image.setScaleType(ImageView.ScaleType.FIT_XY);
-*/
+        {
+            File f=new File(data.getStringExtra("image"));
+            Picasso.with(getApplicationContext()).load(f).memoryPolicy(MemoryPolicy.NO_CACHE).into(image);
 
 
         }
@@ -519,7 +515,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
                 if(type.contains("Intra")||type.contains("Debit")||type.contains("Credit")||type.contains("Receipt")||type.contains("Payment"))
                 {
-                    sgst=data.getStringExtra("Sgst");
+                   sgst=data.getStringExtra("Sgst");
                     cgst=data.getStringExtra("Cgst");
                     gstcost[0]=data.getStringExtra("Sgstcost");
                     gstcost[1]=data.getStringExtra("Cgstcost");
