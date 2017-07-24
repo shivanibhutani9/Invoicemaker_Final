@@ -63,7 +63,7 @@
         <activity
             android:name=".typesofinvoice"
             android:parentActivityName=".NavigationDrawer"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity android:name=".OTPCheck"
             android:screenOrientation="portrait"/>
         <activity

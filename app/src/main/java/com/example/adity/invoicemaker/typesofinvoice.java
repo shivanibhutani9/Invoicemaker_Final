@@ -93,9 +93,9 @@ public class typesofinvoice extends AppCompatActivity {
 
         ListView lv=(ListView)findViewById(R.id.listv);
 
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar a=getSupportActionBar();
+        a.setTitle("List Of Invoices");
+        a.setDisplayHomeAsUpEnabled(true);
         ListAdapter adapter=new SimpleAdapter(typesofinvoice.this,INTERESTS,R.layout.listitem,new String[]{"type","description"},new int[]{R.id.type,R.id.description});
         lv.setAdapter(adapter);
 
