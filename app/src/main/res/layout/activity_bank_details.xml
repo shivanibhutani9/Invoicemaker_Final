@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:hint="Bank Name"
-                android:inputType="text|textCapCharacters"
+                android:inputType="textCapCharacters"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
