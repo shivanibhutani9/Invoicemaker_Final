@@ -125,10 +125,11 @@ public class InvoiceListFragment extends Fragment {
             }
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-               if(direction==ItemTouchHelper.RIGHT)
-               {final int pos=viewHolder.getAdapterPosition();
+                final int pos=viewHolder.getAdapterPosition();
                 ObjectInv obj=mValues.get(pos);
-                AlertDialog DeletionDialogBox =new AlertDialog.Builder(getActivity())
+
+                if(direction==ItemTouchHelper.RIGHT)
+               {AlertDialog DeletionDialogBox =new AlertDialog.Builder(getActivity())
                         //set message, title, and icon
                         .setTitle("Delete")
                         .setMessage("Do you really want to delete the following invoice?\n\n"+"\t\tInvoice Number -"+obj.inv_no+"\n\t\tVendor Name -"
@@ -158,7 +159,12 @@ public class InvoiceListFragment extends Fragment {
             }
             else
                {
-                   startActivity(new Intent(getActivity(),InvoiceEdit.class));
+                   Intent i=new Intent(getActivity(),InvoiceEdit.class);
+                   i.putExtra("amount",obj.inv_amt);
+                   i.putExtra("date",obj.inv_date);
+                   i.putExtra("no",obj.inv_no);
+                   i.putExtra("vname",obj.inv_vname);
+                   startActivity(i);
                    adapter.notifyDataSetChanged();
                 //   Toast.makeText(getActivity(), "EDITINGGG", Toast.LENGTH_SHORT).show();
                }
@@ -265,7 +271,6 @@ public class InvoiceListFragment extends Fragment {
                                 {
                                     inv_date=details.getValue(String.class);
                                 }
-
 
                             }
                         }

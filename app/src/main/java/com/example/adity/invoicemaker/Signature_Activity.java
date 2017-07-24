@@ -1,5 +1,6 @@
 package com.example.adity.invoicemaker;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -86,13 +87,13 @@ public class Signature_Activity extends AppCompatActivity {
         return true;
     }
     void convertToImage() throws IOException {
-
+        ProgressDialog p=new ProgressDialog(this);
+        p.show();
         Bitmap bitmap = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         v.draw(canvas);
         File file = new File(Environment.getExternalStorageDirectory() +File.separator + "sign.png");
         FileOutputStream fout=new FileOutputStream(file,false);
-
         bitmap.compress(Bitmap.CompressFormat.PNG, 100,fout );
         Toast.makeText(this, "File Saved...", Toast.LENGTH_SHORT).show();
         fout.flush();
@@ -100,5 +101,6 @@ public class Signature_Activity extends AppCompatActivity {
         Intent i=new Intent();
         i.putExtra("image",file.getPath());
         setResult(99,i);
+        p.hide();
         finish();
     }}

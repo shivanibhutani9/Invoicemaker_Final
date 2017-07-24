@@ -1,6 +1,8 @@
-
 package com.example.adity.invoicemaker;
 
+/**
+ * Created by shivani on 23/7/17.
+ */
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,11 +16,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-/**
- * These utilities will be used to communicate with the network.
- */
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-public class NetworkUtils {
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class NetworkResponse{
 
     public static URL buildUrlCountry() {
         URL url = null;
@@ -77,7 +87,7 @@ public class NetworkUtils {
         } finally {
             urlConnection.disconnect();
         }
-        }
+    }
     public static ObjectCountry parseJSON(String  Results) throws Exception
     {       HashMap<String,Integer> hash=new HashMap<>();
         ArrayList<String> s=new ArrayList<>();
@@ -116,4 +126,5 @@ public class NetworkUtils {
             string=s;
         }
     }
-    }
+}
+

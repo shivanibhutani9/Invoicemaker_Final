@@ -41,7 +41,7 @@
                 android:background="@android:color/transparent"
                 android:gravity="right"
                 android:hint="Name"
-                android:inputType="textCapWords|textPersonName"
+                android:inputType="textCapCharacters"
                 android:padding="5dp"
                 android:textSize="15dp" />
 
@@ -199,6 +199,55 @@
             android:orientation="horizontal"
             >
 
+            <AutoCompleteTextView
+                android:id="@+id/Country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:hint="Country"
+                android:padding="5dp"
+                android:textSize="15dp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/Address3"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:hint="State"
+                android:padding="5dp"
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/zip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="left"
+                android:hint="Zip Code"
+                android:inputType="number"
+                android:padding="5dp"
+                android:textSize="15dp" />
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
             <EditText
                 android:id="@+id/Address1"
                 android:layout_width="match_parent"
@@ -226,36 +275,6 @@
                 android:hint="Address Line 2"
                 android:padding="5dp"
                 android:textSize="15dp" />
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-
-            <EditText
-                android:id="@+id/Address3"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:gravity="left"
-                android:hint="State"
-                android:padding="5dp"
-                android:textSize="15dp" />
-
-            <EditText
-                android:id="@+id/zip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:gravity="left"
-                android:hint="Zip Code"
-                android:inputType="number"
-                android:padding="5dp"
-                android:textSize="15dp" />
-
 
 
         </LinearLayout>

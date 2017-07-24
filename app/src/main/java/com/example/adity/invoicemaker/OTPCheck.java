@@ -58,7 +58,7 @@ String sms="";
         phoneNumber=b.getString("number");
 
         editText=(EditText)findViewById(R.id.OTP);
-        url= NetworkUtils.buildUrl(phoneNumber);
+        url= NetworkResponse.buildUrl(phoneNumber);
         new SendOTP().execute();
         Button submit=(Button)findViewById(R.id.submit);
 
@@ -78,7 +78,6 @@ String sms="";
                  if(test.equals("Success")) {
                  new OTPVerificationThread().execute();
 
-
               }
 
 
@@ -95,7 +94,7 @@ String sms="";
         protected String doInBackground(Void... params) {
 
             try {
-                String Results = NetworkUtils.getResponseFromHttpUrl(urlverify);
+                String Results = NetworkResponse.getResponseFromHttpUrl(urlverify);
                 return Results;
              } catch (IOException e) {
                 e.printStackTrace();
@@ -211,7 +210,7 @@ String sms="";
         protected String doInBackground(Void... params) {
 
             try {
-                String Results = NetworkUtils.getResponseFromHttpUrl(url);
+                String Results = NetworkResponse.getResponseFromHttpUrl(url);
                 return Results;
             } catch (IOException e) {
                 e.printStackTrace();
