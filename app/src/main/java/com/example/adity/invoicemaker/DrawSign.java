@@ -41,12 +41,16 @@ public class DrawSign extends View{
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
 
     }
+public void clear()
+{   path.reset();
+    postInvalidate();
 
+
+}
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawPath(path, drawPaint);
     }
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float pointX = event.getX();

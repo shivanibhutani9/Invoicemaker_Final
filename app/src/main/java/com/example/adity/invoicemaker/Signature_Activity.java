@@ -29,7 +29,7 @@ import java.io.IOException;
 
 public class Signature_Activity extends AppCompatActivity {
     Button save,preview;
-    View v;ImageView v1;
+    DrawSign v;ImageView v1;
     Button rotate;
     float angle=0;Canvas canvas;
     Bitmap bitmap;
@@ -38,7 +38,7 @@ public class Signature_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signature_);
-        v=(View)findViewById(R.id.Signed);
+        v=(DrawSign) findViewById(R.id.Signed);
         v1=(ImageView)findViewById(R.id.pSign);
         v.setVisibility(View.VISIBLE);
         v1.setVisibility(View.INVISIBLE);
@@ -112,7 +112,11 @@ public class Signature_Activity extends AppCompatActivity {
         switch(item.getItemId())
         {
             case R.id.clear:
-             recreate();   break;
+                v1.setVisibility(View.INVISIBLE);
+                v.setVisibility(View.VISIBLE);
+                rotate.setVisibility(View.INVISIBLE);
+             v.clear();
+                break;
         }
         return true;
     }
