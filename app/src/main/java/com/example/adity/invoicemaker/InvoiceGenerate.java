@@ -126,7 +126,7 @@ public class InvoiceGenerate extends AppCompatActivity {
     ArrayList<String[]> GST;
     Map<String,String> mp;
     ImageButton cal;
-    Uri path;
+    Uri path=null;
     TextView noclient,noitem,uploadSign,uploadStamp;
     LinearLayout clients;
     @Override
@@ -272,63 +272,55 @@ public class InvoiceGenerate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ProgressDialog pd=new ProgressDialog(InvoiceGenerate.this);
-                String companyname=FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-                pd.setMessage("Generating Invoice ...");
-                pd.show();
-                String path1=Environment.getExternalStorageDirectory()+ File.separator+invoice.getText().toString()+"temp.pdf";
-                file=new File(path1);
-                if(type.contains("Intra")) {
-                    tax_invoice1 in = new tax_invoice1(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp,user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(),accno,ifsccode);
-                    in.pdfcreate(file,path);
-                    pd.hide();
-                    startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
-                }
-                else if(type.contains("Inter"))
-                {
-                    tax_invoice2 in = new tax_invoice2(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(),accno,ifsccode);
-                    in.pdfcreate(file);
-                    pd.hide();
-                    startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
-                }
-                if(type.contains("Credit")) {
-                    Credit_Note in = new Credit_Note(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp,user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(),accno,ifsccode);
-                    in.pdfcreate(file);
-                    pd.hide();
+                    String companyname = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+                    pd.setMessage("Generating Invoice ...");
+                    pd.show();
+                    String path1 = Environment.getExternalStorageDirectory() + File.separator + invoice.getText().toString() + "temp.pdf";
+                    file = new File(path1);
+                    if (type.contains("Intra")) {
+                        tax_invoice1 in = new tax_invoice1(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
+                        in.pdfcreate(file, path);
+                        pd.hide();
+                        startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+                    } else if (type.contains("Inter")) {
+                        tax_invoice2 in = new tax_invoice2(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
+                        in.pdfcreate(file);
+                        pd.hide();
+                        startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+                    }
+                    if (type.contains("Credit")) {
+                        Credit_Note in = new Credit_Note(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
+                        in.pdfcreate(file);
+                        pd.hide();
 
-                    startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
-                }
-                if(type.contains("Debit")) {
-                    Debit_Note in = new Debit_Note(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp,user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(),accno,ifsccode);
-                    in.pdfcreate(file);
-                    pd.hide();
+                        startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+                    }
+                    if (type.contains("Debit")) {
+                        Debit_Note in = new Debit_Note(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
+                        in.pdfcreate(file);
+                        pd.hide();
 
-                    startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
-                }
-                else if(type.contains("Receipt"))
-                {
-                    Receipt_Voucher in = new Receipt_Voucher(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp,user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(),accno,ifsccode);
-                    in.pdfcreate(file);
-                    pd.hide();
+                        startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+                    } else if (type.contains("Receipt")) {
+                        Receipt_Voucher in = new Receipt_Voucher(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
+                        in.pdfcreate(file);
+                        pd.hide();
 
-                    startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
-                }
-                else if(type.contains("Payment"))
-                {
-                    Payment_Voucher in = new Payment_Voucher(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp,user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(),accno,ifsccode);
-                    in.pdfcreate(file);
-                    pd.hide();
+                        startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+                    } else if (type.contains("Payment")) {
+                        Payment_Voucher in = new Payment_Voucher(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
+                        in.pdfcreate(file);
+                        pd.hide();
 
-                    startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
-                }
-                else if (type.contains("Export"))
-                {
-                    Export_invoice in = new Export_invoice(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp,user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(),accno,ifsccode);
-                    in.pdfcreate(file);
-                    pd.hide();
+                        startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+                    } else if (type.contains("Export")) {
+                        Export_invoice in = new Export_invoice(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
+                        in.pdfcreate(file);
+                        pd.hide();
 
-                    startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+                        startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
 
-                }
+                    }
 
 
             }
@@ -499,7 +491,7 @@ public class InvoiceGenerate extends AppCompatActivity {
         {   uploadSign.setVisibility(View.GONE);
             File f=new File(data.getStringExtra("image"));
             path=Uri.parse(f.getPath());
-            Toast.makeText(this, path.toString(), Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(this, path.toString(), Toast.LENGTH_SHORT).show();
             Picasso.with(getApplicationContext()).load(f).memoryPolicy(MemoryPolicy.NO_CACHE).into(image);
 
 
@@ -647,7 +639,6 @@ public class InvoiceGenerate extends AppCompatActivity {
         public void uploadInvoice()
         {
 
-
              db= FirebaseDatabase.getInstance().getReference("Invoice");
 
 
@@ -732,7 +723,6 @@ public class InvoiceGenerate extends AppCompatActivity {
         p.hide();
         return cursor.getString(column_index);
     }
-
 
 
 }

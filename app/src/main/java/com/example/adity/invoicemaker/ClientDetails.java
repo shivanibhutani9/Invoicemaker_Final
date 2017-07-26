@@ -43,7 +43,6 @@ public class ClientDetails extends AppCompatActivity {
         setContentView(R.layout.activity_client_details);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         pd=new ProgressDialog(ClientDetails.this);
-
         url=NetworkResponse.buildUrlCountry();
         obj=new NetworkResponse.ObjectCountry(hash,str);
         new BackGround().execute();
@@ -57,7 +56,6 @@ public class ClientDetails extends AppCompatActivity {
         GSTIN=(EditText)findViewById(R.id.gst);
         PAN_NO=(EditText)findViewById(R.id.pan);
         Country=(AutoCompleteTextView)findViewById(R.id.Country);
-
         name.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
         STATE.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

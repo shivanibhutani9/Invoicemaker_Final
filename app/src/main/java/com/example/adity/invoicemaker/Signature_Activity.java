@@ -32,6 +32,7 @@ public class Signature_Activity extends AppCompatActivity {
     Button rotate;
     float angle=0;Canvas canvas;
     Bitmap bitmap;
+    boolean bool=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +43,10 @@ public class Signature_Activity extends AppCompatActivity {
         v1.setVisibility(View.INVISIBLE);
         rotate=(Button)findViewById(R.id.ROTATE);
         rotate.setVisibility(View.GONE);
-        Button save=(Button)findViewById(R.id.saveSignature);
-        Button preview=(Button)findViewById(R.id.previewSignature);
+        save=(Button)findViewById(R.id.saveSignature);
+        preview=(Button)findViewById(R.id.previewSignature);
         int permissionCheck1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int permissionCheck2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-
         if (permissionCheck1 != PackageManager.PERMISSION_GRANTED&&permissionCheck2 != PackageManager.PERMISSION_GRANTED ) {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,  android.Manifest.permission.READ_EXTERNAL_STORAGE
@@ -56,6 +56,7 @@ public class Signature_Activity extends AppCompatActivity {
         preview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bool=true;
                 bitmap = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
                 canvas = new Canvas(bitmap);
                 v.draw(canvas);
@@ -78,12 +79,14 @@ public class Signature_Activity extends AppCompatActivity {
 
                     }
                 });
+                save.setEnabled(true);
             }
 
         });
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 try {
                     convertToImage();
                   } catch (IOException e) {
@@ -114,9 +117,19 @@ public class Signature_Activity extends AppCompatActivity {
     void convertToImage() throws IOException {
         ProgressDialog p=new ProgressDialog(this);
         p.show();
-        Bitmap bitmap = Bitmap.createBitmap(v1.getWidth(), v1.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        v1.draw(canvas);
+        Bitmap bitmap=null;
+        Canvas canvas;
+        if(bool) {
+           bitmap = Bitmap.createBitmap(v1.getWidth(), v1.getHeight(), Bitmap.Config.ARGB_8888);
+            canvas = new Canvas(bitmap);
+            v1.draw(canvas);
+        }
+        else{
+
+            bitmap = Bitmap.createBitmap(v.getWidth(), v.getHeight(), Bitmap.Config.ARGB_8888);
+            canvas = new Canvas(bitmap);
+            v.draw(canvas);
+        }
         File file = new File(Environment.getExternalStorageDirectory() +File.separator + "sign.png");
         FileOutputStream fout=new FileOutputStream(file,false);
         bitmap.compress(Bitmap.CompressFormat.PNG, 100,fout );
@@ -128,4 +141,6 @@ public class Signature_Activity extends AppCompatActivity {
         setResult(99,i);
         p.hide();
         finish();
-    }}
+    }
+}
+

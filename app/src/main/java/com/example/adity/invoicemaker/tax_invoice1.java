@@ -416,13 +416,16 @@ public class tax_invoice1 {
             InputStream ims=new FileInputStream(file1);
             Bitmap bmp = BitmapFactory.decodeStream(ims);
             */
-            //InputStream ims=new FileInputStream(path.getPath());
-            Bitmap bmp=BitmapFactory.decodeFile(path.toString());
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
-            Image image = Image.getInstance(stream.toByteArray());
-            image.scaleToFit(50,50);
 
+            //InputStream ims=new FileInputStream(path.getPath());
+            Image image=null;
+            if(path!=null) {
+    Bitmap bmp = BitmapFactory.decodeFile(path.toString());
+    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+    bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
+  image= Image.getInstance(stream.toByteArray());
+    image.scaleToFit(50, 50);
+}
 
             PdfPTable innertable7 = new PdfPTable(3);
             innertable7.setWidthPercentage(100);
@@ -439,7 +442,12 @@ public class tax_invoice1 {
             cell7.setVerticalAlignment(Element.ALIGN_BOTTOM);
             innertable7.addCell(cell7);
             PdfPTable nested4 = new PdfPTable(1);
-            nested4.addCell(image);
+            if(path!=null)
+            {  nested4.addCell(image);}
+            else
+            {
+                nested4.addCell("");
+            }
             nested4.addCell("Authorised Signatory");
             PdfPCell nesthousing4 = new PdfPCell(nested4);
 

@@ -9,12 +9,15 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adity.invoicemaker.com.sms.OnSmsCatchListener;
+import com.example.adity.invoicemaker.com.sms.SmsVerifyCatcher;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -32,9 +35,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
-public class OTPCheck extends AppCompatActivity   {
+public class OTPCheck extends AppCompatActivity{
    // private static final int GITHUB_SEARCH_LOADER = 22;
 
 String sms="";
@@ -49,6 +54,7 @@ String sms="";
     Bundle b;
     FirebaseAuth mAuth=FirebaseAuth.getInstance();
     Map<String,String> mp=new HashMap<>();
+    SmsVerifyCatcher smsVerifyCatcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +62,26 @@ String sms="";
         setContentView(R.layout.activity_otpcheck);
         b=getIntent().getExtras();
         phoneNumber=b.getString("number");
-
         editText=(EditText)findViewById(R.id.OTP);
         url= NetworkResponse.buildUrl(phoneNumber);
         new SendOTP().execute();
         Button submit=(Button)findViewById(R.id.submit);
+        Button resend=(Button)findViewById(R.id.resend);
 
-
-
+        smsVerifyCatcher = new SmsVerifyCatcher(OTPCheck.this, new OnSmsCatchListener<String>() {
+            @Override
+            public void onSmsCatch(String message) {
+                String code = parseCode(message);//Parse verification code
+                Toast.makeText(OTPCheck.this,message, Toast.LENGTH_SHORT).show();
+                editText.setText(code);//set code in edit text
+            }
+        });
+        resend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new SendOTP().execute();
+            }
+        });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,6 +104,27 @@ String sms="";
         }
 
 
+    private String parseCode(String message) {
+        Pattern p = Pattern.compile("\\b\\d{6}\\b");
+        Matcher m = p.matcher(message);
+        String code = "";
+        while (m.find()) {
+            code = m.group(0);
+        }
+        return code;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        smsVerifyCatcher.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        smsVerifyCatcher.onStop();
+    }
 
     public class OTPVerificationThread extends AsyncTask<Void, Void, String> {
 
@@ -107,7 +146,7 @@ String sms="";
             // do something with result
 
             if (result== null) {
-                Toast.makeText(OTPCheck.this, "ERROR", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OTPCheck.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
             }  else {
                 try {
                     JSONObject json = new JSONObject(result);
@@ -191,8 +230,8 @@ String sms="";
                     });
 
                 }else if(Details1.equals("OTP Expired")){
-                    new SendOTP().execute();
-                    Toast.makeText(OTPCheck.this, Details1+"\nOTP RESENT!", Toast.LENGTH_SHORT).show();
+                   // new SendOTP().execute();
+                    Toast.makeText(OTPCheck.this, Details1, Toast.LENGTH_SHORT).show();
 
                 }
                 else {
@@ -223,7 +262,7 @@ String sms="";
             // do something with result
 
             if (result== null) {
-                Toast.makeText(OTPCheck.this, "ERROR", Toast.LENGTH_SHORT).show();
+                Toast.makeText(OTPCheck.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
             }  else {
                 try {
                     JSONObject json = new JSONObject(result);
@@ -263,12 +302,17 @@ String sms="";
 
                 .setNegativeButton("Back to SignUp", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                       startActivity(new Intent(OTPCheck.this,signup.class));;
-
+                       //startActivity(new Intent(OTPCheck.this,signup.class));
+                        OTPCheck.super.onBackPressed();
                     }
                 })
                 .create();
         BacktoSignupDialogBox.show();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
 
