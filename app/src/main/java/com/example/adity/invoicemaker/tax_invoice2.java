@@ -35,12 +35,13 @@ import java.util.ArrayList;
 public class tax_invoice2 {
 
 
-    String invoice_id,invoice_date,user_com,user_add,user_gst,user_cp,client_com,client_add,client_state,client_zip,client_gst,total,accno,ifsc;
+    String num_to_words,invoice_id,invoice_date,user_com,user_add,user_gst,user_cp,client_com,client_add,client_state,client_zip,client_gst,total,accno,ifsc;
         ArrayList<String[]> items;
         ArrayList<String[]> GST;
 
-        public tax_invoice2(String invoice_id, String invoice_date, String user_com, String user_add, String user_gst, String user_cp, String client_com, String client_add, String client_state, String client_zip, String client_gst, ArrayList<String[]> items, ArrayList<String[]> gsts, String total,String accno,String ifsc)
+        public tax_invoice2(String num_to_words,String invoice_id, String invoice_date, String user_com, String user_add, String user_gst, String user_cp, String client_com, String client_add, String client_state, String client_zip, String client_gst, ArrayList<String[]> items, ArrayList<String[]> gsts, String total,String accno,String ifsc)
         {
+            this.num_to_words=num_to_words;
             this.invoice_id=invoice_id;
             this.invoice_date=invoice_date;
             this.user_com=user_com;
@@ -359,7 +360,7 @@ public class tax_invoice2 {
             PdfPTable innertable6 = new PdfPTable(3);
             innertable6.setWidths(new int[]{40, 20, 20});
             innertable6.setWidthPercentage(100);
-            PdfPCell cell6 = new PdfPCell(new Phrase("Total Amount Paid (In Words:):"));
+            PdfPCell cell6 = new PdfPCell(new Phrase("Total Amount Paid (In Words:): \n"+num_to_words));
             cell6.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable6.addCell(cell6);
             cell6.setMinimumHeight(50f);

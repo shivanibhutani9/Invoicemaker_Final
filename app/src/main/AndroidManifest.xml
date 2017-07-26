@@ -8,13 +8,11 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
-    <uses-permission-sdk-23 android:name="android.permission.SEND_SMS"/>
-
+    <uses-permission-sdk-23 android:name="android.permission.SEND_SMS" />
     <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
-
     <uses-permission-sdk-23 android:name="android.permission.READ_SMS" />
     <uses-permission-sdk-23 android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission-sdk-23 android:name="android.permission.SEND_SMS"/>
+    <uses-permission-sdk-23 android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -63,7 +61,7 @@
             android:name=".ClientDetails"
             android:label="Vendor Details"
             android:parentActivityName=".Vendor_Details"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <!-- android:parentActivityName=".InvoiceGenerate" -->
         <activity
             android:name=".AccPaymentDetailsActivity"
@@ -71,35 +69,38 @@
             android:parentActivityName=".InvoiceGenerate" />
         <activity
             android:name=".typesofinvoice"
-            android:parentActivityName=".NavigationDrawer"
-            />
-        <activity android:name=".OTPCheck"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:parentActivityName=".NavigationDrawer" />
+        <activity
+            android:name=".OTPCheck"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Vendor_Details"
             android:label="@string/title_activity_vendor__details"
             android:parentActivityName=".InvoiceGenerate"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".pdfreader"
-            android:parentActivityName=".InvoiceGenerate"/>
-        <activity android:name=".Discount"
-            android:parentActivityName=".InvoiceGenerate"/>
+        <activity
+            android:name=".pdfreader"
+            android:parentActivityName=".InvoiceGenerate" />
+        <activity
+            android:name=".Discount"
+            android:parentActivityName=".InvoiceGenerate" />
         <activity
             android:name=".persondetails"
             android:parentActivityName=".NavigationDrawer" />
         <activity android:name=".edit" />
-        <activity android:name=".InvoiceEdit" />
-        <activity android:name=".VendorEDIT"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".BankEdit"
-            android:parentActivityName=".AccPaymentDetailsActivity"/>
+        <activity
+            android:name=".VendorEDIT"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BankEdit"
+            android:parentActivityName=".AccPaymentDetailsActivity" />
         <activity android:name=".ItemEdit" />
         <activity android:name=".CanvasSign" />
-        <activity android:name=".Signature_Activity"
+        <activity
+            android:name=".Signature_Activity"
             android:parentActivityName=".InvoiceGenerate" />
-
+        <activity android:name=".explorer"
+            android:parentActivityName=".InvoiceGenerate"></activity>
     </application>
 
 </manifest>

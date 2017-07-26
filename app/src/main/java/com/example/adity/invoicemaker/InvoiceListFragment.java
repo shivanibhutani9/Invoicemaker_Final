@@ -159,12 +159,12 @@ public class InvoiceListFragment extends Fragment {
             }
             else
                {
-                   Intent i=new Intent(getActivity(),InvoiceEdit.class);
+                  /* Intent i=new Intent(getActivity(),InvoiceEdit.class);
                    i.putExtra("amount",obj.inv_amt);
                    i.putExtra("date",obj.inv_date);
                    i.putExtra("no",obj.inv_no);
                    i.putExtra("vname",obj.inv_vname);
-                   startActivity(i);
+                   startActivity(i);*/
                    adapter.notifyDataSetChanged();
                 //   Toast.makeText(getActivity(), "EDITINGGG", Toast.LENGTH_SHORT).show();
                }

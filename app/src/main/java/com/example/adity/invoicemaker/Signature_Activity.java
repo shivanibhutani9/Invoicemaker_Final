@@ -1,6 +1,7 @@
 package com.example.adity.invoicemaker;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -12,12 +13,15 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -31,6 +35,7 @@ public class Signature_Activity extends AppCompatActivity {
     Button save,preview;
     DrawSign v;ImageView v1;
     Button rotate;
+    String filename=null;
     float angle=0;Canvas canvas;
     Bitmap bitmap;
     boolean bool=false;
@@ -91,7 +96,10 @@ public class Signature_Activity extends AppCompatActivity {
             public void onClick(View view) {
 
                 try {
-                    convertToImage();
+                    showInputDialog();
+                    if(filename!=null) {
+                        convertToImage();
+                    }
                   } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -101,6 +109,45 @@ public class Signature_Activity extends AppCompatActivity {
 
 
     }
+
+    protected void showInputDialog() {
+
+        // get prompts.xml view
+        LayoutInflater layoutInflater = LayoutInflater.from(Signature_Activity.this);
+        View promptView = layoutInflater.inflate(R.layout.diag, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Signature_Activity.this);
+        alertDialogBuilder.setView(promptView);
+
+        final EditText editText = (EditText) promptView.findViewById(R.id.edittext);
+        // setup a dialog window
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        filename=editText.getText().toString();
+                        try {
+                                convertToImage();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create an alert dialog
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+    }
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -136,17 +183,32 @@ public class Signature_Activity extends AppCompatActivity {
             canvas = new Canvas(bitmap);
             v.draw(canvas);
         }
-        File file = new File(Environment.getExternalStorageDirectory() +File.separator + "sign.png");
-        FileOutputStream fout=new FileOutputStream(file,false);
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100,fout );
-        Toast.makeText(this, "File Saved...", Toast.LENGTH_SHORT).show();
-        fout.flush();
-        fout.close();
-        Intent i=new Intent();
-        i.putExtra("image",file.getPath());
-        setResult(99,i);
-        p.hide();
-        finish();
+
+        File file = new File(Environment.getExternalStorageDirectory() +File.separator +"Signature");
+        if(!file.exists())
+        {
+            file.mkdir();
+        }
+
+        file=new File(file.getPath()+File.separator+""+filename+".png");
+        if(file.exists())
+        {
+            Toast.makeText(this, "File already exists", Toast.LENGTH_LONG).show();
+            p.hide();
+        }
+        else {
+            FileOutputStream fout = new FileOutputStream(file, false);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fout);
+            Toast.makeText(this, "File Saved...", Toast.LENGTH_SHORT).show();
+            fout.flush();
+            fout.close();
+            Intent i = new Intent();
+            i.putExtra("image", file.getPath());
+            setResult(99, i);
+            p.hide();
+            finish();
+
+        }
     }
 
 

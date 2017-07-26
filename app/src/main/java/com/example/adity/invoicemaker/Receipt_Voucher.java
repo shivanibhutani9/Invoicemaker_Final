@@ -35,12 +35,13 @@ import java.util.ArrayList;
 public class Receipt_Voucher {
 
 
-    String invoice_id,invoice_date,user_phone,user_com,user_add,user_gst,user_cp,client_com,client_add,client_state,client_zip,client_gst,total,accno,ifsc;
+    String num_to_words,invoice_id,invoice_date,user_phone,user_com,user_add,user_gst,user_cp,client_com,client_add,client_state,client_zip,client_gst,total,accno,ifsc;
     ArrayList<String[]> items;
     ArrayList<String[]> GST;
 
-    public Receipt_Voucher(String invoice_id, String invoice_date, String user_com, String user_add, String user_gst, String user_cp, String user_phone,String client_com, String client_add, String client_state, String client_zip, String client_gst, ArrayList<String[]> items, ArrayList<String[]> gsts, String total,String accno,String ifsc)
+    public Receipt_Voucher(String num_to_words,String invoice_id, String invoice_date, String user_com, String user_add, String user_gst, String user_cp, String user_phone,String client_com, String client_add, String client_state, String client_zip, String client_gst, ArrayList<String[]> items, ArrayList<String[]> gsts, String total,String accno,String ifsc)
     {
+        this.num_to_words=num_to_words;
         this.invoice_id=invoice_id;
         this.invoice_date=invoice_date;
         this.user_com=user_com;
@@ -279,7 +280,7 @@ public class Receipt_Voucher {
             cell6.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable6.addCell(cell6);
             cell6.setMinimumHeight(50f);
-            cell6 = new PdfPCell(new Phrase("dfskmdkmkmlldskmf"));
+            cell6 = new PdfPCell(new Phrase(""+num_to_words));
             cell6.setPaddingLeft(20);
             innertable6.addCell(cell6);
             cell6.setMinimumHeight(10f);
