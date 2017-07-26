@@ -64,7 +64,7 @@ public class tax_invoice1 {
 
 
 
-    public void pdfcreate(File file,Uri path) {
+    public void pdfcreate(File file,Uri path,Uri stamp) {
 
        // ProgressDialog pd=new ProgressDialog();
         com.itextpdf.text.Document doc = new com.itextpdf.text.Document(PageSize.A4, 0f, 0f, 0f, 0f);
@@ -418,15 +418,21 @@ public class tax_invoice1 {
             */
 
             //InputStream ims=new FileInputStream(path.getPath());
-            Image image=null;
+            Image image=null,image2=null;
             if(path!=null) {
-    Bitmap bmp = BitmapFactory.decodeFile(path.toString());
-    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-    bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
-  image= Image.getInstance(stream.toByteArray());
-    image.scaleToFit(50, 50);
+     Bitmap bmp = BitmapFactory.decodeFile(path.toString());
+     ByteArrayOutputStream stream = new ByteArrayOutputStream();
+     bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
+     image= Image.getInstance(stream.toByteArray());
+                image.scaleToFit(50, 50);
 }
-
+            if(stamp!=null) {
+                Bitmap bmp = BitmapFactory.decodeFile(stamp.toString());
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
+                image2= Image.getInstance(stream.toByteArray());
+                image2.scaleToFit(50, 50);
+            }
             PdfPTable innertable7 = new PdfPTable(3);
             innertable7.setWidthPercentage(100);
             //innertable6.setWidths(new int[]{20,20,20});
@@ -437,11 +443,23 @@ public class tax_invoice1 {
             nested3.addCell("Terms And Conditions");
             PdfPCell nesthousing3 = new PdfPCell(nested3);
             innertable7.addCell(nesthousing3);
-            PdfPCell cell7 = new PdfPCell(new Phrase("Common Seal"));
-            cell7.setMinimumHeight(100f);
+          //  PdfPCell cell7 = new PdfPCell(new Phrase("Common Seal"));
+            PdfPTable nested5 = new PdfPTable(1);
+            if(stamp!=null)
+            {  nested5.addCell(image2);}
+            else
+            {
+                nested5.addCell("");
+            }
+            nested5.addCell("Common Seal");
+            PdfPCell nesthousing5 = new PdfPCell(nested5);
+
+            innertable7.addCell(nesthousing5);
+
+          /*  cell7.setMinimumHeight(100f);
             cell7.setVerticalAlignment(Element.ALIGN_BOTTOM);
             innertable7.addCell(cell7);
-            PdfPTable nested4 = new PdfPTable(1);
+            */PdfPTable nested4 = new PdfPTable(1);
             if(path!=null)
             {  nested4.addCell(image);}
             else
@@ -452,8 +470,6 @@ public class tax_invoice1 {
             PdfPCell nesthousing4 = new PdfPCell(nested4);
 
             innertable7.addCell(nesthousing4);
-
-
             doc.add(innertable7);
             doc.close();
         } catch (DocumentException e) {

@@ -97,7 +97,8 @@
             android:parentActivityName=".AccPaymentDetailsActivity"/>
         <activity android:name=".ItemEdit" />
         <activity android:name=".CanvasSign" />
-        <activity android:name=".Signature_Activity"/>
+        <activity android:name=".Signature_Activity"
+            android:parentActivityName=".InvoiceGenerate" />
 
     </application>
 

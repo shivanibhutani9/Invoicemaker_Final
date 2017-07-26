@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -45,6 +46,8 @@ public class Signature_Activity extends AppCompatActivity {
         rotate.setVisibility(View.GONE);
         save=(Button)findViewById(R.id.saveSignature);
         preview=(Button)findViewById(R.id.previewSignature);
+       //getActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         int permissionCheck1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int permissionCheck2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
         if (permissionCheck1 != PackageManager.PERMISSION_GRANTED&&permissionCheck2 != PackageManager.PERMISSION_GRANTED ) {
@@ -104,7 +107,6 @@ public class Signature_Activity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.sign,menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId())
@@ -142,5 +144,8 @@ public class Signature_Activity extends AppCompatActivity {
         p.hide();
         finish();
     }
+
+
+
 }
 

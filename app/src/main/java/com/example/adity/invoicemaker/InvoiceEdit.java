@@ -241,7 +241,7 @@ public class InvoiceEdit extends AppCompatActivity {
                     file = new File(path1);
                     if (type.contains("Intra")) {
                         tax_invoice1 in = new tax_invoice1(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
-                        in.pdfcreate(file,path);
+                      //  in.pdfcreate(file,path,StampPath);
                         pd.hide();
                         startActivity(new Intent(InvoiceEdit.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
                     } else if (type.contains("Inter")) {
@@ -580,7 +580,7 @@ public class InvoiceEdit extends AppCompatActivity {
 
         if(type.contains("Intra")) {
             tax_invoice1 in = new tax_invoice1(invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
-            in.pdfcreate(file,path);
+            //in.pdfcreate(file,path);
             }
         else if(type.contains("Inter"))
         {

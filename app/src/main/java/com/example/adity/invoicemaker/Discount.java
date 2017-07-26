@@ -38,4 +38,10 @@ public class Discount extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        onBackPressed();
+        return null;
+    }
+
 }
