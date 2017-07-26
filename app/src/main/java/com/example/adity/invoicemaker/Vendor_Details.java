@@ -9,7 +9,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -23,6 +22,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.adity.invoicemaker.Listener.onItemTouchListener;
+import com.example.adity.invoicemaker.adapter.Vendor_Adapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,13 +32,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import static com.example.adity.invoicemaker.InvoiceListFragment.drawableToBitmap;
+import static com.example.adity.invoicemaker.Fragments.InvoiceListFragment.drawableToBitmap;
 
-public class Vendor_Details extends AppCompatActivity implements onItemTouchListener{
+public class Vendor_Details extends AppCompatActivity implements com.example.adity.invoicemaker.Listener.onItemTouchListener {
 
 
     Vendor_Adapter adapter;
@@ -183,7 +182,7 @@ public class Vendor_Details extends AppCompatActivity implements onItemTouchList
 
     public static class ObjectVendor{
         public String v_name,v_email,v_gstin,v_pan,v_add1,v_add2,v_state,v_zip,v_phone,v_country;
-        ObjectVendor(String name,String mail,String gstin,String pan,String add1,String add2,String state,String zip,String phone,String country){
+        public ObjectVendor(String name, String mail, String gstin, String pan, String add1, String add2, String state, String zip, String phone, String country){
 
             v_name=name;
             v_email=mail;

@@ -1,17 +1,15 @@
 package com.example.adity.invoicemaker;
 
-import android.*;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.example.adity.invoicemaker.Login.MainActivity;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.

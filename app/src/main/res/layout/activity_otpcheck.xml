@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-    tools:context="com.example.adity.invoicemaker.OTPCheck">
+    tools:context="com.example.adity.invoicemaker.Login.OTPCheck">
 
 
     <!--  <TextView

@@ -1,4 +1,4 @@
-package com.example.adity.invoicemaker;
+package com.example.adity.invoicemaker.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -8,13 +8,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,9 +20,14 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.adity.invoicemaker.ClientDetails;
+import com.example.adity.invoicemaker.Listener.onItemTouchListener;
+import com.example.adity.invoicemaker.R;
+import com.example.adity.invoicemaker.VendorEDIT;
+import com.example.adity.invoicemaker.Vendor_Details;
+import com.example.adity.invoicemaker.adapter.Vendor_Adapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,9 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static com.example.adity.invoicemaker.InvoiceListFragment.drawableToBitmap;
-
-public class vendorfragment extends Fragment implements onItemTouchListener{
+public class vendorfragment extends Fragment implements com.example.adity.invoicemaker.Listener.onItemTouchListener {
 
     Vendor_Adapter adapter;
     RecyclerView rv;
@@ -153,7 +154,7 @@ public class vendorfragment extends Fragment implements onItemTouchListener{
                         RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(),(float) itemView.getRight(), (float) itemView.getBottom());
                         c.drawRect(background,p);
                         Drawable d=getResources().getDrawable(R.drawable.ic_edit_white);
-                        icon = drawableToBitmap(d);
+                        icon = InvoiceListFragment.drawableToBitmap(d);
                         RectF icon_dest = new RectF((float) itemView.getRight() - 2*width ,(float) itemView.getTop() + width,(float) itemView.getRight() - width,(float)itemView.getBottom() - width);
                         c.drawBitmap(icon,null,icon_dest,p);
                     }
@@ -163,7 +164,7 @@ public class vendorfragment extends Fragment implements onItemTouchListener{
                         RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX,(float) itemView.getBottom());
                         c.drawRect(background,p);
                         Drawable d=getResources().getDrawable(R.drawable.ic_delete_white);
-                        icon = drawableToBitmap(d);
+                        icon = InvoiceListFragment.drawableToBitmap(d);
                         //icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_menu_send);
                         RectF icon_dest = new RectF((float) itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width);
                         c.drawBitmap(icon,null,icon_dest,p);

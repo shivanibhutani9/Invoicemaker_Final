@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
-import static android.R.attr.filter;
+import com.example.adity.invoicemaker.Listener.SmsListener;
 
 /**
  * Created by shivani on 25/7/17.

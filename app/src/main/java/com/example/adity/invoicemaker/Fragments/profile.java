@@ -1,4 +1,4 @@
-package com.example.adity.invoicemaker;
+package com.example.adity.invoicemaker.Fragments;
 
 
 import android.app.Activity;
@@ -20,17 +20,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.example.adity.invoicemaker.bank_activity.AccPaymentDetailsActivity;
+import com.example.adity.invoicemaker.Login.MainActivity;
+import com.example.adity.invoicemaker.R;
+import com.example.adity.invoicemaker.adapter.CustomListAdapter;
+import com.example.adity.invoicemaker.persondetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

@@ -1,6 +1,5 @@
-package com.example.adity.invoicemaker;
+package com.example.adity.invoicemaker.Login;
 
-import android.*;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,7 +14,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.adity.invoicemaker.Fragments.NavigationDrawer;
+import com.example.adity.invoicemaker.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

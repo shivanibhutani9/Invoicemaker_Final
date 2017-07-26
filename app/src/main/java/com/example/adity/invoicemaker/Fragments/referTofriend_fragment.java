@@ -1,4 +1,4 @@
-package com.example.adity.invoicemaker;
+package com.example.adity.invoicemaker.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.adity.invoicemaker.R;
 
 /**
  * Created by shivani on 9/7/17.

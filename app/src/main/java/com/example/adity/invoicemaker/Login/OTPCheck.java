@@ -1,21 +1,21 @@
-package com.example.adity.invoicemaker;
+package com.example.adity.invoicemaker.Login;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.AsyncTaskLoader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adity.invoicemaker.Fragments.NavigationDrawer;
+import com.example.adity.invoicemaker.NetworkResponse;
+import com.example.adity.invoicemaker.R;
 import com.example.adity.invoicemaker.com.sms.OnSmsCatchListener;
 import com.example.adity.invoicemaker.com.sms.SmsVerifyCatcher;
 import com.google.android.gms.tasks.OnCompleteListener;

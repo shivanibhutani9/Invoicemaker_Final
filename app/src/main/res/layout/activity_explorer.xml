@@ -9,7 +9,10 @@
 
 
 
-
+    <ListView
+        android:layout_width="match_parent"
+        android:id="@+id/list"
+        android:layout_height="match_parent"/>
     <GridView
         android:layout_width="match_parent"
         android:columnWidth="200dp"

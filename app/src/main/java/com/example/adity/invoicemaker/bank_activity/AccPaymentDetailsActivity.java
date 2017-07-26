@@ -1,7 +1,6 @@
-package com.example.adity.invoicemaker;
+package com.example.adity.invoicemaker.bank_activity;
 
 import android.app.ProgressDialog;
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,6 +19,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.adity.invoicemaker.Listener.onItemTouchListener;
+import com.example.adity.invoicemaker.R;
+import com.example.adity.invoicemaker.adapter.bankDetailsAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,10 +32,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static com.example.adity.invoicemaker.InvoiceListFragment.drawableToBitmap;
+import static com.example.adity.invoicemaker.Fragments.InvoiceListFragment.drawableToBitmap;
 
 
-public class AccPaymentDetailsActivity extends AppCompatActivity implements onItemTouchListener{
+public class AccPaymentDetailsActivity extends AppCompatActivity implements com.example.adity.invoicemaker.Listener.onItemTouchListener {
 
     bankDetailsAdapter adapter;
     RecyclerView rv;

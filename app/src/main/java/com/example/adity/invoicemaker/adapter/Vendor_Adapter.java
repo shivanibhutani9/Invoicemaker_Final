@@ -1,14 +1,15 @@
-package com.example.adity.invoicemaker;
+package com.example.adity.invoicemaker.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.adity.invoicemaker.R;
+import com.example.adity.invoicemaker.Vendor_Details;
+import com.example.adity.invoicemaker.Listener.onItemTouchListener;
 
 import java.util.ArrayList;
 
@@ -18,9 +19,9 @@ import java.util.ArrayList;
 
 public class Vendor_Adapter extends RecyclerView.Adapter<Vendor_Adapter.ViewHolder> {
     public  Context mContext;
-    private onItemTouchListener onItemTouchListener;
+    private com.example.adity.invoicemaker.Listener.onItemTouchListener onItemTouchListener;
     ArrayList<Vendor_Details.ObjectVendor> objects;
-    Vendor_Adapter(Context mContext, ArrayList<Vendor_Details.ObjectVendor> objects, onItemTouchListener listener)
+    public Vendor_Adapter(Context mContext, ArrayList<Vendor_Details.ObjectVendor> objects, onItemTouchListener listener)
     {
         this.mContext=mContext;
         this.objects=objects;

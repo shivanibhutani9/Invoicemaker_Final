@@ -21,10 +21,10 @@
         android:roundIcon="@mipmap/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
+        <activity android:name=".Login.MainActivity" />
         <activity
-            android:name=".signup"
-            android:parentActivityName=".MainActivity" />
+            android:name=".Login.signup"
+            android:parentActivityName=".Login.MainActivity" />
         <activity
             android:name=".splash"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -37,13 +37,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NavigationDrawer"
+            android:name=".Fragments.NavigationDrawer"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".BankDetails"
+            android:name=".bank_activity.BankDetails"
             android:label="Bank Details"
-            android:parentActivityName=".AccPaymentDetailsActivity" />
+            android:parentActivityName=".bank_activity.AccPaymentDetailsActivity" />
         <activity
             android:name=".AddItem"
             android:label="Add Item"
@@ -64,14 +64,14 @@
             android:screenOrientation="portrait" />
         <!-- android:parentActivityName=".InvoiceGenerate" -->
         <activity
-            android:name=".AccPaymentDetailsActivity"
+            android:name=".bank_activity.AccPaymentDetailsActivity"
             android:label="Payment Details"
             android:parentActivityName=".InvoiceGenerate" />
         <activity
             android:name=".typesofinvoice"
-            android:parentActivityName=".NavigationDrawer" />
+            android:parentActivityName=".Fragments.NavigationDrawer" />
         <activity
-            android:name=".OTPCheck"
+            android:name=".Login.OTPCheck"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Vendor_Details"
@@ -86,14 +86,15 @@
             android:parentActivityName=".InvoiceGenerate" />
         <activity
             android:name=".persondetails"
-            android:parentActivityName=".NavigationDrawer" />
-        <activity android:name=".edit" />
+            android:parentActivityName=".Fragments.NavigationDrawer" />
+        <activity android:name=".edit"
+            android:parentActivityName=".persondetails"/>
         <activity
             android:name=".VendorEDIT"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BankEdit"
-            android:parentActivityName=".AccPaymentDetailsActivity" />
+            android:name=".bank_activity.BankEdit"
+            android:parentActivityName=".bank_activity.AccPaymentDetailsActivity" />
         <activity android:name=".ItemEdit" />
         <activity android:name=".CanvasSign" />
         <activity

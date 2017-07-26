@@ -1,14 +1,15 @@
-package com.example.adity.invoicemaker;
+package com.example.adity.invoicemaker.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.adity.invoicemaker.bank_activity.AccPaymentDetailsActivity;
+import com.example.adity.invoicemaker.R;
+import com.example.adity.invoicemaker.Listener.onItemTouchListener;
 
 import java.util.ArrayList;
 
@@ -18,9 +19,9 @@ import java.util.ArrayList;
 
 public class bankDetailsAdapter extends RecyclerView.Adapter<bankDetailsAdapter.ViewHolder> {
    public  Context mContext;
-    private onItemTouchListener onItemTouchListener;
-    ArrayList<AccPaymentDetailsActivity.ObjectAcc> objects;
-    bankDetailsAdapter(Context mContext, ArrayList<AccPaymentDetailsActivity.ObjectAcc> objects, onItemTouchListener listener
+    public onItemTouchListener onItemTouchListener;
+    public ArrayList<AccPaymentDetailsActivity.ObjectAcc> objects;
+   public bankDetailsAdapter(Context mContext, ArrayList<AccPaymentDetailsActivity.ObjectAcc> objects, onItemTouchListener listener
     ){
         this.mContext=mContext;
         this.objects=objects;
