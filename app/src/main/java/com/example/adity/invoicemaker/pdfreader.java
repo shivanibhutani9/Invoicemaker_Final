@@ -27,6 +27,8 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -45,7 +47,7 @@ public class pdfreader extends AppCompatActivity {
      private Button next, previous;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,14 +90,14 @@ public class pdfreader extends AppCompatActivity {
      */
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
     private void openPDF() throws IOException {
-        File file = new File(Environment.getExternalStorageDirectory()+ File.separator+getIntent().getStringExtra("inv")+"temp.pdf");
+      File file = new File(Environment.getExternalStorageDirectory()+ File.separator+getIntent().getStringExtra("inv")+"temp.pdf");
         ParcelFileDescriptor fileDescriptor = null;
         fileDescriptor = ParcelFileDescriptor.open(
                 file, ParcelFileDescriptor.MODE_READ_ONLY);
 
-        //min. API Level 21
+       //min. API Level 21
         PdfRenderer pdfRenderer = null;
         pdfRenderer = new PdfRenderer(fileDescriptor);
 
@@ -117,7 +119,7 @@ public class pdfreader extends AppCompatActivity {
 
         imageView.setImageBitmap(bitmap);
      //   imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-       PhotoViewAttacher photoView= new PhotoViewAttacher(imageView);
+        PhotoViewAttacher photoView= new PhotoViewAttacher(imageView);
         photoView.update();
        // imageView.setRotation(90);
         imageView.invalidate();
@@ -125,6 +127,8 @@ public class pdfreader extends AppCompatActivity {
 
         pdfRenderer.close();
         fileDescriptor.close();
+
+
     }
 
     @Override

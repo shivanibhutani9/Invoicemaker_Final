@@ -3,6 +3,7 @@ package com.example.adity.invoicemaker;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -62,7 +63,7 @@ public class Receipt_Voucher {
 
 
 
-    public void pdfcreate(File f) {
+    public void pdfcreate(File f, Uri path, Uri stamp) {
         com.itextpdf.text.Document doc = new com.itextpdf.text.Document(PageSize.A4, 0f, 0f, 0f, 0f);
 
 
@@ -289,16 +290,22 @@ public class Receipt_Voucher {
             innertable6.addCell(cell6);
             doc.add(innertable6);
 
-            File file1 = new File(Environment.getExternalStorageDirectory()+"/sign.png");
-            //FileInputStream fileInputStream = new FileInputStream(file);
-            //InputStream ims = getAssets().open("black-2189644_960_720.png");
-            InputStream ims=new FileInputStream(file1);
-            Bitmap bmp = BitmapFactory.decodeStream(ims);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
-            Image image = Image.getInstance(stream.toByteArray());
-            image.scaleToFit(50,50);
 
+            Image image=null,image2=null;
+            if(path!=null) {
+                Bitmap bmp = BitmapFactory.decodeFile(path.toString());
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
+                image= Image.getInstance(stream.toByteArray());
+                image.scaleToFit(50, 50);
+            }
+            if(stamp!=null) {
+                Bitmap bmp = BitmapFactory.decodeFile(stamp.toString());
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
+                image2= Image.getInstance(stream.toByteArray());
+                image2.scaleToFit(50, 50);
+            }
 
             PdfPTable innertable7 = new PdfPTable(4);
             innertable7.setWidthPercentage(100);
@@ -309,10 +316,17 @@ public class Receipt_Voucher {
             PdfPCell nesthousing4 = new PdfPCell(nested4);
 
             innertable7.addCell(nesthousing4);
-            PdfPCell cell7 = new PdfPCell(new Phrase("Common Seal"));
-            cell7.setMinimumHeight(100f);
-            cell7.setVerticalAlignment(Element.ALIGN_BOTTOM);
-            innertable7.addCell(cell7);
+            PdfPTable nested5 = new PdfPTable(1);
+            if(stamp!=null)
+            {  nested5.addCell(image2);}
+            else
+            {
+                nested5.addCell("");
+            }
+            nested5.addCell("Common Seal");
+            PdfPCell nesthousing5 = new PdfPCell(nested5);
+
+            innertable7.addCell(nesthousing5);
 
             PdfPTable nested = new PdfPTable(1);
             nested.addCell("Total Amount before tax:");
