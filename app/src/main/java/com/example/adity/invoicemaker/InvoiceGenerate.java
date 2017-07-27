@@ -60,7 +60,7 @@ import java.util.Map;
 
 public class InvoiceGenerate extends AppCompatActivity {
  static TextView dateString;
-Uri logopath;
+Uri logopath=null;
     int ADD_SEAL=99,ADD_STAMP=101;
     ProgressDialog pd;
     String bank,ifsccode,accholder,accno;
@@ -71,7 +71,6 @@ Uri logopath;
     String c,ad,cp,user_gst,user_pan,user_phone;
     listadapt adapter;
     RecyclerView rv;
-    File file4;
     String Name,Phone,Email,Address,Gstin,Pan_no,sgst,cgst,igst;
     TextView subtotal, dis,Discount1,total;
     Double sub=0.0,discount=0.0,tot=0.0;
@@ -92,6 +91,7 @@ Uri logopath;
     Uri path=null,StampPath=null;
     TextView noclient,noitem,uploadSign,uploadStamp;
     LinearLayout clients;
+    ProgressDialog po;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,11 +131,17 @@ Uri logopath;
         {
                 noclient.setVisibility(View.VISIBLE);
         }
+
         DatabaseReference db=FirebaseDatabase.getInstance().getReference("defaultsign/"+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Default");
-        db.addListenerForSingleValueEvent(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener()
+        {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-              file4=new File(dataSnapshot.getValue(String.class));
+                File file4 = new File(dataSnapshot.getValue(String.class));
+                if (file != null) {
+                    uploadSign.setVisibility(View.GONE);
+                    Picasso.with(getApplicationContext()).load(file4).memoryPolicy(MemoryPolicy.NO_CACHE).into(image);
+                }
             }
 
             @Override
@@ -143,8 +149,6 @@ Uri logopath;
 
             }
         });
-
-        Picasso.with(getApplicationContext()).load(file4).memoryPolicy(MemoryPolicy.NO_CACHE).into(image);
 
 
 
@@ -207,7 +211,14 @@ Uri logopath;
         db2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                        logopath= Uri.parse(dataSnapshot.getValue(String.class));
+
+                String f=dataSnapshot.getValue(String.class);
+
+                if(f!=null)
+                {
+                    logopath=Uri.parse(f);
+                }
+
                 }
 
                                                @Override

@@ -121,8 +121,16 @@ public class explorer2 extends AppCompatActivity  {
                 }
             });
         }
-        else if(item.getTitle()=="SMS"){
-            Toast.makeText(getApplicationContext(),"sending sms code",Toast.LENGTH_LONG).show();
+        else if(item.getTitle()=="Delete"){
+
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            int index = info.position;
+
+            File f=new File(img[index]);
+            f.delete();
+
+
+
         }else{
             return false;
         }
