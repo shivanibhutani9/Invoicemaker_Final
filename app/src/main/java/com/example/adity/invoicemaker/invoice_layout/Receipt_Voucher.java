@@ -64,7 +64,7 @@ public class Receipt_Voucher {
 
 
 
-    public void pdfcreate(File f, Uri path, Uri stamp) {
+    public void pdfcreate(File f, Uri path, Uri stamp,Uri logopath) {
         com.itextpdf.text.Document doc = new com.itextpdf.text.Document(PageSize.A4, 0f, 0f, 0f, 0f);
 
 
@@ -74,40 +74,106 @@ public class Receipt_Voucher {
             PdfWriter.getInstance(doc, new FileOutputStream(outPath));
             doc.open();
             doc.setMargins(0, 0, 0, 0);           // setting margin
-            PdfPTable innertable = new PdfPTable(1);  //first table
+            PdfPTable innertable = new PdfPTable(3);  //first table
             innertable.setWidthPercentage(100);
 
             //  innertable.setWidths(new int[]{40});
+            Image image=null,image2=null,image3=null;
+            if(path!=null) {
+                Bitmap bmp = BitmapFactory.decodeFile(path.toString());
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
+                image= Image.getInstance(stream.toByteArray());
+                image.scaleToFit(50, 50);
+            }
+            if(stamp!=null) {
+                Bitmap bmp = BitmapFactory.decodeFile(stamp.toString());
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
+                image2= Image.getInstance(stream.toByteArray());
+                image2.scaleToFit(50, 50);
+            }
+            if(logopath!=null)
+            {
+                Bitmap bmp = BitmapFactory.decodeFile(logopath.toString());
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
+                image3= Image.getInstance(stream.toByteArray());
+                image3.scaleToFit(50, 50);
+            }
 
-            PdfPCell cell = new PdfPCell(new Paragraph(""+user_com, FontFactory.getFont(FontFactory.TIMES_BOLD, 17, Font.NORMAL, BaseColor.BLACK)));
+            PdfPCell cell=new PdfPCell();
+            cell.setBorder(Rectangle.NO_BORDER);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            innertable.addCell(cell);
+            cell = new PdfPCell(new Paragraph(""+user_com, FontFactory.getFont(FontFactory.TIMES_BOLD, 17, Font.NORMAL, BaseColor.BLACK)));
+            cell.setBorder(Rectangle.NO_BORDER);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            innertable.addCell(cell);
+            cell=new PdfPCell();
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable.addCell(cell);
 
 // column 3
 
-
+            if(logopath!=null)
+            {  cell=new PdfPCell(image3);}
+            else
+            {
+                cell=new PdfPCell(new Phrase(""));
+            }
+            cell.setBorder(Rectangle.NO_BORDER);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            innertable.addCell(cell);
             cell = new PdfPCell(new Paragraph(""+user_add, FontFactory.getFont(FontFactory.TIMES_BOLD, 17, Font.NORMAL, BaseColor.BLACK)));
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable.addCell(cell);
-
+            cell=new PdfPCell();
+            cell.setBorder(Rectangle.NO_BORDER);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            innertable.addCell(cell);
 // column 4
 
-
+            cell=new PdfPCell();
+            cell.setBorder(Rectangle.NO_BORDER);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            innertable.addCell(cell);
             cell = new PdfPCell(new Paragraph(""+user_phone, FontFactory.getFont(FontFactory.TIMES_BOLD, 17, Font.NORMAL, BaseColor.BLACK)));
             //cell.setPaddingLeft(2);
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable.addCell(cell);
+            cell=new PdfPCell();
+            cell.setBorder(Rectangle.NO_BORDER);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            innertable.addCell(cell);
 
-
+            cell=new PdfPCell();
+            cell.setBorder(Rectangle.NO_BORDER);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            innertable.addCell(cell);
             cell = new PdfPCell(new Paragraph("GSTIN "+user_gst, FontFactory.getFont(FontFactory.TIMES_BOLD, 17, Font.NORMAL, BaseColor.BLACK)));
             //cell.setPaddingLeft(2);
             cell.setBorder(Rectangle.NO_BORDER);
             cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             innertable.addCell(cell);
+            cell=new PdfPCell();
+            cell.setBorder(Rectangle.NO_BORDER);
+            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            innertable.addCell(cell);
 // spacing
+            cell = new PdfPCell();
+            cell.setColspan(5);
+            cell.setFixedHeight(6);
+            cell.setBorder(Rectangle.NO_BORDER);
+            innertable.addCell(cell);
+            cell = new PdfPCell();
+            cell.setColspan(5);
+            cell.setFixedHeight(6);
+            cell.setBorder(Rectangle.NO_BORDER);
+            innertable.addCell(cell);
             cell = new PdfPCell();
             cell.setColspan(5);
             cell.setFixedHeight(6);
@@ -291,22 +357,6 @@ public class Receipt_Voucher {
             innertable6.addCell(cell6);
             doc.add(innertable6);
 
-
-            Image image=null,image2=null;
-            if(path!=null) {
-                Bitmap bmp = BitmapFactory.decodeFile(path.toString());
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
-                image= Image.getInstance(stream.toByteArray());
-                image.scaleToFit(50, 50);
-            }
-            if(stamp!=null) {
-                Bitmap bmp = BitmapFactory.decodeFile(stamp.toString());
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
-                image2= Image.getInstance(stream.toByteArray());
-                image2.scaleToFit(50, 50);
-            }
 
             PdfPTable innertable7 = new PdfPTable(4);
             innertable7.setWidthPercentage(100);

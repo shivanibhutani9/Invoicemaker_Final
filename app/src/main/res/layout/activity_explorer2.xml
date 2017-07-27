@@ -13,8 +13,21 @@
     <GridView
         android:layout_width="match_parent"
         android:columnWidth="200dp"
-        android:id="@+id/gd"
+        android:id="@+id/gd1"
         android:numColumns="2"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
     </GridView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatb"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@color/colorPrimaryDark"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="20dp"
+        app:srcCompat="@drawable/plus" />
+
+
+
 </RelativeLayout>

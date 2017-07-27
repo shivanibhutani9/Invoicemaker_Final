@@ -87,8 +87,10 @@
         <activity
             android:name=".persondetails"
             android:parentActivityName=".Fragments.NavigationDrawer" />
+
         <activity android:name=".Edits.PersonalEdit"
             android:parentActivityName=".persondetails"/>
+
         <activity
             android:name=".Edits.VendorEDIT"
             android:screenOrientation="portrait" />
@@ -102,6 +104,12 @@
             android:parentActivityName=".InvoiceGenerate" />
         <activity android:name=".explorer"
             android:parentActivityName=".InvoiceGenerate"></activity>
+
+        <activity android:name=".Credentials"
+            android:parentActivityName=".Fragments.NavigationDrawer"></activity>
+
+        <activity android:name=".explorer2"
+            android:parentActivityName=".Credentials"></activity>
     </application>
 
 </manifest>
