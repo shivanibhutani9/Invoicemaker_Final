@@ -52,7 +52,7 @@ public class profile extends Fragment {
     ListView lv;
 
     String[] items={"Company Details","Payment Details","Company Credentials","Verify Email","Change Password","Change Email Address","Logout"};
-    Integer[] imgid={R.drawable.personal,R.drawable.ic_menu_manage,R.drawable.payment,R.drawable.verify,R.drawable.password ,R.drawable.resetemail,R.drawable.lo};  FirebaseAuth auth = FirebaseAuth.getInstance();
+    Integer[] imgid={R.drawable.personal,R.drawable.payment,R.drawable.credentials,R.drawable.verify,R.drawable.password ,R.drawable.resetemail,R.drawable.lo};  FirebaseAuth auth = FirebaseAuth.getInstance();
     final FirebaseUser user=auth.getCurrentUser();
 
 
