@@ -73,7 +73,7 @@ String sms="";
             public void onSmsCatch(String message) {
                 String code = parseCode(message);//Parse verification code
                 Toast.makeText(OTPCheck.this,message, Toast.LENGTH_SHORT).show();
-                editText.setText(code);//set code in edit text
+                editText.setText(code);//set code in PersonalEdit text
             }
         });
         resend.setOnClickListener(new View.OnClickListener() {

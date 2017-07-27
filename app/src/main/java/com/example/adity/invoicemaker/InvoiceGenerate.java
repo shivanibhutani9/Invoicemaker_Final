@@ -378,7 +378,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                                 AlertDialog BackToInvoice =new AlertDialog.Builder(InvoiceGenerate.this)
                                         //set message, title, and icon
                                         .setTitle("Successful")
-                                        .setMessage("Do you want to further edit the invoice?")
+                                        .setMessage("Do you want to further PersonalEdit the invoice?")
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                                             public void onClick(DialogInterface dialog, int whichButton) {

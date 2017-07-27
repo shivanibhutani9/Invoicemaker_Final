@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class edit extends AppCompatActivity {
+public class PersonalEdit extends AppCompatActivity {
 
     EditText person,phone,email,gstin,pan,address1,address2,address3;
     ProgressDialog pd;
