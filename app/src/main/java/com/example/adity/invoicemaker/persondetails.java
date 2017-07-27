@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.adity.invoicemaker.Edits.edit;
+import com.example.adity.invoicemaker.Edits.PersonalEdit;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -141,7 +141,7 @@ public class persondetails extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.edit) {
 
-            startActivity(new Intent(persondetails.this,edit.class));
+            startActivity(new Intent(persondetails.this,PersonalEdit.class));
             return true;
         }
 
