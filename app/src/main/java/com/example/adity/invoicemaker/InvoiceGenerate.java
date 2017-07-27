@@ -132,15 +132,27 @@ Uri logopath=null;
                 noclient.setVisibility(View.VISIBLE);
         }
 
-        DatabaseReference db=FirebaseDatabase.getInstance().getReference("defaultsign/"+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Default");
+        DatabaseReference db=FirebaseDatabase.getInstance().getReference("defaultsign/");
         db.addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                File file4 = new File(dataSnapshot.getValue(String.class));
-                if (file != null) {
-                    uploadSign.setVisibility(View.GONE);
-                    Picasso.with(getApplicationContext()).load(file4).memoryPolicy(MemoryPolicy.NO_CACHE).into(image);
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (ds.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                    {
+                        for(DataSnapshot ds1:ds.getChildren()) {
+                            if (ds1.getKey().equals("Default"))
+                            {
+                                File file4 = new File(ds1.getValue(String.class));
+                                if(file4.exists())
+                                {
+                                    uploadSign.setVisibility(View.GONE);
+                                    Picasso.with(getApplicationContext()).load(file4).memoryPolicy(MemoryPolicy.NO_CACHE).into(image);
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -455,7 +467,7 @@ Uri logopath=null;
                                break;
                            case R.id.draw:
 
-                               startActivityForResult(new Intent(InvoiceGenerate.this,Signature_Activity.class),99);
+                               startActivityForResult(new Intent(InvoiceGenerate.this,Signature_Activity.class).putExtra("from",""),99);
                                image.postInvalidate();
                        }
                         return true;

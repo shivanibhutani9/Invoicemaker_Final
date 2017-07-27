@@ -70,29 +70,26 @@ public class AddItem extends AppCompatActivity {
                 {HSN.setError("Please enter the HSN code");
                     HSN.requestFocus();
                 }
-                else if(sgst.isEnabled()&&Sgst.isEmpty())
+                else if(sgst.isEnabled()&&(Sgst.isEmpty()||validate(sgst.getText().toString())))
                 {
                     sgst.setError("Please enter the SGST Rate");
                     sgst.requestFocus();
-
                 }
-                else if(cgst.isEnabled()&&Cgst.isEmpty())
+                else if(cgst.isEnabled()&&(Cgst.isEmpty()||validate(cgst.getText().toString())))
                 {
                     cgst.setError("Please enter the CGST Rate");
                     cgst.requestFocus();
 
                 }
-                else if(igst.isEnabled()&&Igst.isEmpty())
-                {
+                else if(igst.isEnabled()&&(Igst.isEmpty()||validate(igst.getText().toString()))) {
                     igst.setError("Please enter the IGST Rate");
                     igst.requestFocus();
-
                 }
-                else if(unitcost.isEmpty())
+                else if(unitcost.isEmpty()||validate(unitcost))
                 {cost.setError("Please enter the Unit Cost");
                     cost.requestFocus();
                 }
-                else if(quantity.isEmpty())
+                else if(quantity.isEmpty()||validate(quantity))
                 {quant.setError("Please enter the Quantity");
                     quant.requestFocus();
                 }
