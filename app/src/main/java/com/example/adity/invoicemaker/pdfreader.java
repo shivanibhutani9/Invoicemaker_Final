@@ -44,8 +44,6 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  */
 public class pdfreader extends AppCompatActivity {
    private PDFView imageView;
-     private int currentPage = 0;
-     private Button next, previous;
 
 
 
@@ -56,23 +54,6 @@ public class pdfreader extends AppCompatActivity {
         imageView = (PDFView) findViewById(R.id.pdfview);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Invoice Preview");
-
-      // next = (Button) findViewById(R.id.next);
-     /*   previous = (Button) findViewById(R.id.previous);
-
-
-
-
-        previous.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                currentPage--;
-                render();
-            }
-        });
-
-        render();*/
 
         try {
             openPDF();
@@ -94,52 +75,13 @@ public class pdfreader extends AppCompatActivity {
 
     private void openPDF() throws IOException {
       File file = new File(Environment.getExternalStorageDirectory()+ File.separator+getIntent().getStringExtra("inv")+"temp.pdf");
-        ParcelFileDescriptor fileDescriptor = null;
-        fileDescriptor = ParcelFileDescriptor.open(
-                file, ParcelFileDescriptor.MODE_READ_ONLY);
         imageView.fromFile(file);
-
-
         imageView.fromFile(file)
                 .defaultPage(1)
                 .showMinimap(false)
                 .enableSwipe(true)
                 .swipeVertical(true)
-//                .onLoad(onLoadCompleteListener)
-  //              .onPageChange(onPageChangeListener)
                 .load();
-       //min. API Level 21
-     /*   PdfRenderer pdfRenderer = null;
-        pdfRenderer = new PdfRenderer(fileDescriptor);
-
-        final int pageCount = pdfRenderer.getPageCount();
-      //  Toast.makeText(this,
-             //   "pageCount = " + pageCount,
-               // Toast.LENGTH_LONG).show();
-
-        //Display page 0
-        PdfRenderer.Page rendererPage = pdfRenderer.openPage(0);
-        int rendererPageWidth = rendererPage.getWidth();
-        int rendererPageHeight = rendererPage.getHeight();
-        Bitmap bitmap = Bitmap.createBitmap(
-                rendererPageWidth,
-                rendererPageHeight,
-                Bitmap.Config.ARGB_8888);
-        rendererPage.render(bitmap, null, null,
-                PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
-
-        imageView.setImageBitmap(bitmap);
-     //   imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        PhotoViewAttacher photoView= new PhotoViewAttacher(imageView);
-        photoView.update();
-       // imageView.setRotation(90);
-        imageView.invalidate();
-        rendererPage.close();
-
-        pdfRenderer.close();
-        fileDescriptor.close();
-
-*/
     }
 
     @Override
@@ -148,42 +90,6 @@ public class pdfreader extends AppCompatActivity {
         File file = new File(Environment.getExternalStorageDirectory()+ File.separator+getIntent().getStringExtra("inv")+"temp.pdf");
             file.delete();
     }
-
-    /*
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void render() {
-        try{
-            imageView = (ImageView) findViewById(R.id.image);
-            int REQ_WIDTH = imageView.getWidth();
-            int REQ_HEIGHT = imageView.getHeight();
-
-            Bitmap bitmap = Bitmap.createBitmap(REQ_WIDTH, REQ_HEIGHT, Bitmap.Config.ARGB_4444);
-            File file = new File(Environment.getExternalStorageDirectory()+"/mypdf.pdf");
-            PdfRenderer renderer = new PdfRenderer(ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY));
-
-            if(currentPage < 0) {
-                currentPage = 0;
-            } else if(currentPage > renderer.getPageCount()) {
-                currentPage = renderer.getPageCount() - 1;
-            }
-
-            Matrix m = imageView.getImageMatrix();
-            Rect rect = new Rect(0, 0, REQ_WIDTH, REQ_HEIGHT);
-            renderer.openPage(currentPage).render(bitmap, rect, m, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
-            imageView.setImageMatrix(m);
-            imageView.setImageBitmap(bitmap);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
-            PhotoViewAttacher photoView= new PhotoViewAttacher(imageView);
-            photoView.update();
-            imageView.invalidate();
-
-        } catch(Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Failed"+e.getMessage(), Toast.LENGTH_SHORT).show();
-        }
-    }*/
 
     @Nullable
     @Override
