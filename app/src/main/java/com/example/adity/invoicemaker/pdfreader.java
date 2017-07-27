@@ -27,6 +27,7 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.joanzapata.pdfview.PDFView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
@@ -42,7 +43,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  *
  */
 public class pdfreader extends AppCompatActivity {
-   private ImageView imageView;
+   private PDFView imageView;
      private int currentPage = 0;
      private Button next, previous;
 
@@ -52,7 +53,7 @@ public class pdfreader extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdfreader);
-        imageView = (ImageView) findViewById(R.id.image);
+        imageView = (PDFView) findViewById(R.id.pdfview);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Invoice Preview");
 
@@ -96,9 +97,19 @@ public class pdfreader extends AppCompatActivity {
         ParcelFileDescriptor fileDescriptor = null;
         fileDescriptor = ParcelFileDescriptor.open(
                 file, ParcelFileDescriptor.MODE_READ_ONLY);
+        imageView.fromFile(file);
 
+
+        imageView.fromFile(file)
+                .defaultPage(1)
+                .showMinimap(false)
+                .enableSwipe(true)
+                .swipeVertical(true)
+//                .onLoad(onLoadCompleteListener)
+  //              .onPageChange(onPageChangeListener)
+                .load();
        //min. API Level 21
-        PdfRenderer pdfRenderer = null;
+     /*   PdfRenderer pdfRenderer = null;
         pdfRenderer = new PdfRenderer(fileDescriptor);
 
         final int pageCount = pdfRenderer.getPageCount();
@@ -128,7 +139,7 @@ public class pdfreader extends AppCompatActivity {
         pdfRenderer.close();
         fileDescriptor.close();
 
-
+*/
     }
 
     @Override

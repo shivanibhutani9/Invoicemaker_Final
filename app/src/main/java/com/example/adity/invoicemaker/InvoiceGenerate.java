@@ -5,11 +5,13 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
@@ -25,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adity.invoicemaker.Fragments.NavigationDrawer;
 import com.example.adity.invoicemaker.adapter.listadapt;
 import com.example.adity.invoicemaker.bank_activity.AccPaymentDetailsActivity;
 import com.example.adity.invoicemaker.invoice_layout.Credit_Note;
@@ -354,8 +357,30 @@ public class InvoiceGenerate extends AppCompatActivity {
                         handler.postDelayed(new Runnable() {
                             public void run() {
                                 pd.hide();
+                                AlertDialog BackToInvoice =new AlertDialog.Builder(InvoiceGenerate.this)
+                                        //set message, title, and icon
+                                        .setTitle("Successful")
+                                        .setMessage("Do you want to further edit the invoice?")
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                                            public void onClick(DialogInterface dialog, int whichButton) {
+                                                //your deleting code
+                                                dialog.dismiss();
+                                            }
+
+                                        })
+
+                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                startActivity(new Intent(InvoiceGenerate.this, NavigationDrawer.class));
+
+                                            }
+                                        })
+                                        .create();
+                                BackToInvoice.show();
                             }
                         }, 2000);
+
                     }
                     else
                     {

@@ -120,7 +120,7 @@ public class NetworkResponse{
     public static class ObjectCountry{
         public HashMap<String,Integer> hash;
         public ArrayList<String> string;
-        ObjectCountry(HashMap<String,Integer> h ,ArrayList<String> s)
+        public ObjectCountry(HashMap<String, Integer> h, ArrayList<String> s)
         {
             hash=h;
             string=s;

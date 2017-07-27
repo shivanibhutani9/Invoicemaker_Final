@@ -20,7 +20,7 @@ public class listadapt extends RecyclerView.Adapter<listadapt.ViewHolder> {
     public  Context mContext;
     ArrayList<String[]> objects;
     String type;
-    listadapt(Context mContext, ArrayList<String[]> objects,String type){
+    public listadapt(Context mContext, ArrayList<String[]> objects, String type){
         this.mContext=mContext;
         this.objects=objects;
         this.type=type;

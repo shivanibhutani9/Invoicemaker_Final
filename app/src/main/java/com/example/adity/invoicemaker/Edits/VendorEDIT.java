@@ -1,4 +1,4 @@
-package com.example.adity.invoicemaker;
+package com.example.adity.invoicemaker.Edits;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -12,8 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.example.adity.invoicemaker.NetworkResponse;
+import com.example.adity.invoicemaker.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

@@ -51,8 +51,9 @@ public class Signature_Activity extends AppCompatActivity {
         rotate.setVisibility(View.GONE);
         save=(Button)findViewById(R.id.saveSignature);
         preview=(Button)findViewById(R.id.previewSignature);
-       //getActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Create Signature");
+
         int permissionCheck1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int permissionCheck2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
         if (permissionCheck1 != PackageManager.PERMISSION_GRANTED&&permissionCheck2 != PackageManager.PERMISSION_GRANTED ) {
@@ -157,12 +158,14 @@ public class Signature_Activity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId())
-        {
-            case R.id.clear:
+        {   case R.id.clear:
                 v1.setVisibility(View.INVISIBLE);
                 v.setVisibility(View.VISIBLE);
                 rotate.setVisibility(View.INVISIBLE);
              v.clear();
+                break;
+            case android.R.id.home:
+                onBackPressed();
                 break;
         }
         return true;
@@ -213,5 +216,9 @@ public class Signature_Activity extends AppCompatActivity {
 
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
 

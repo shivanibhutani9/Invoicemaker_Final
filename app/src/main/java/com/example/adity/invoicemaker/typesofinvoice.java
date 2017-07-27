@@ -30,13 +30,8 @@ public class typesofinvoice extends AppCompatActivity {
         HashMap<String, String> data1 = new HashMap<>();
         HashMap<String, String> data2 = new HashMap<>();
         HashMap<String, String> data3 = new HashMap<>();
-        HashMap<String, String> data4=  new HashMap<>();
-        HashMap<String, String> data5 = new HashMap<>();
-        HashMap<String, String> data6 = new HashMap<>();
         HashMap<String, String> data7 = new HashMap<>();
-        HashMap<String, String> data8 = new HashMap<>();
         HashMap<String, String> data9 = new HashMap<>();
-        HashMap<String, String> data10= new HashMap<>();
         HashMap<String, String> data11= new HashMap<>();
         HashMap<String, String> data12= new HashMap<>();
 
@@ -50,37 +45,19 @@ public class typesofinvoice extends AppCompatActivity {
         INTERESTS.add(data2);
 
         data3.put("type","For Export");
-        data3.put("description","()");
+        data3.put("description","(Supply Meant for Export Under Bond Or Letter of Undertaking Without Payment Of Integrated Tax (IGST))");
         INTERESTS.add(data3);
 
-        data4.put("type","For Exempt Supply");
-        data4.put("description","(goods or services or both which attracts nil rate of tax)");
-        INTERESTS.add(data4);
-
-        data5.put("type","Sales Returns");
-        data5.put("description","()");
-        INTERESTS.add(data5);
-
-        data6.put("type","For Charging Extra");
-        data6.put("description","()");
-        INTERESTS.add(data6);
 
         data7.put("type","Receipt Voucher");
         data7.put("description","()");
         INTERESTS.add(data7);
 
 
-        data8.put("type","Refund Voucher");
-        data8.put("description","()");
-        INTERESTS.add(data8);
-
         data9.put("type","Payment Voucher");
         data9.put("description","()");
         INTERESTS.add(data9);
 
-        data10.put("type","Invoice for Rcm");
-        data10.put("description","()");
-        INTERESTS.add(data10);
 
         data11.put("type","Credit Note");
         data11.put("description","()");

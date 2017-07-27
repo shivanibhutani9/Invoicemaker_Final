@@ -45,8 +45,8 @@ public class profile extends Fragment {
     ImageView iv;
     ListView lv;
 
-    String[] items={"Personal Details","Payment Details","Verify Email","Change Password","Change Email Address","Logout"};
-    Integer[] imgid={R.drawable.personal,R.drawable.payment,R.drawable.verify,R.drawable.password ,R.drawable.resetemail,R.drawable.lo,};  FirebaseAuth auth = FirebaseAuth.getInstance();
+    String[] items={"Company Details","Payment Details","Company Credentials","Verify Email","Change Password","Change Email Address","Logout"};
+    Integer[] imgid={R.drawable.personal,R.drawable.ic_menu_manage,R.drawable.payment,R.drawable.verify,R.drawable.password ,R.drawable.resetemail,R.drawable.lo};  FirebaseAuth auth = FirebaseAuth.getInstance();
     final FirebaseUser user=auth.getCurrentUser();
 
 
@@ -134,7 +134,7 @@ public class profile extends Fragment {
                 if(position==1)
                 {   startActivity(new Intent(getActivity(),AccPaymentDetailsActivity.class).putExtra("from","profile"));
                 }
-                else if(position==2)
+                else if(position==3)
                 {
                     if(!user.isEmailVerified())
                     {
@@ -142,15 +142,15 @@ public class profile extends Fragment {
                     }
 
                 }
-                else if(position==3)
+                else if(position==4)
                 {
                    resetPassword();
                 }
-                else if(position==4)
+                else if(position==5)
                 {
                    // changeemail();
                 }
-                else if(position==5)
+                else if(position==6)
                 {
                     pd.setMessage("Logging Out");
                     pd.show();

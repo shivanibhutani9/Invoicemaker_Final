@@ -1,4 +1,4 @@
-package com.example.adity.invoicemaker.bank_activity;
+package com.example.adity.invoicemaker.Edits;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

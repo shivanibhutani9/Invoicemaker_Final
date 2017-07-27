@@ -87,15 +87,15 @@
         <activity
             android:name=".persondetails"
             android:parentActivityName=".Fragments.NavigationDrawer" />
-        <activity android:name=".edit"
+        <activity android:name=".Edits.edit"
             android:parentActivityName=".persondetails"/>
         <activity
-            android:name=".VendorEDIT"
+            android:name=".Edits.VendorEDIT"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".bank_activity.BankEdit"
+            android:name=".Edits.BankEdit"
             android:parentActivityName=".bank_activity.AccPaymentDetailsActivity" />
-        <activity android:name=".ItemEdit" />
+        <activity android:name=".Edits.ItemEdit" />
         <activity android:name=".CanvasSign" />
         <activity
             android:name=".Signature_Activity"

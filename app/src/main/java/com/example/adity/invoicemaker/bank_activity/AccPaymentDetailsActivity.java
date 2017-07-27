@@ -19,6 +19,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.adity.invoicemaker.Edits.BankEdit;
 import com.example.adity.invoicemaker.Listener.onItemTouchListener;
 import com.example.adity.invoicemaker.R;
 import com.example.adity.invoicemaker.adapter.bankDetailsAdapter;

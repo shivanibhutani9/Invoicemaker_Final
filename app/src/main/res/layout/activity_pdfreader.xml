@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<ImageView android:background="#71acf2e5"
-    android:id="@+id/image"
+<com.joanzapata.pdfview.PDFView android:id="@+id/pdfview"
     android:layout_width="match_parent"
+    android:background="#a5a39f9f"
     android:layout_height="match_parent"
-    android:scaleType="fitXY"
     xmlns:android="http://schemas.android.com/apk/res/android" />

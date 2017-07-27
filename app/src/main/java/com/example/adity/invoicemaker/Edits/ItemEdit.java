@@ -1,7 +1,9 @@
-package com.example.adity.invoicemaker;
+package com.example.adity.invoicemaker.Edits;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.adity.invoicemaker.R;
 
 public class ItemEdit extends AppCompatActivity {
 

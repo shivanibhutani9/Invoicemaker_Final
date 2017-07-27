@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.example.adity.invoicemaker.ClientDetails;
 import com.example.adity.invoicemaker.Listener.onItemTouchListener;
 import com.example.adity.invoicemaker.R;
-import com.example.adity.invoicemaker.VendorEDIT;
+import com.example.adity.invoicemaker.Edits.VendorEDIT;
 import com.example.adity.invoicemaker.Vendor_Details;
 import com.example.adity.invoicemaker.adapter.Vendor_Adapter;
 import com.google.firebase.auth.FirebaseAuth;

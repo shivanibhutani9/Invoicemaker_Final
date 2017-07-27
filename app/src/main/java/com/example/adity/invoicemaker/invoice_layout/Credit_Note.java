@@ -370,6 +370,7 @@ public class Credit_Note {
             nested.addCell("Total Tax Amount ");
             nested.addCell("Total Amount After Tax");
             PdfPCell nesthousing = new PdfPCell(nested);
+            innertable6.addCell(nesthousing);
 
             Double subtotalsgst=0.0,subtotalcgst=0.0,subtot=0.0;
             for(int i=0;i<items.size();i++)
@@ -382,7 +383,7 @@ public class Credit_Note {
 
             }
 
-            innertable6.addCell(nesthousing);
+           // innertable6.addCell(nesthousing);
             PdfPTable nested2 = new PdfPTable(1);
             nested2.addCell(""+subtot);
             nested2.addCell(""+subtotalcgst);
@@ -434,14 +435,13 @@ public class Credit_Note {
             }
             nested5.addCell("Common Seal");
             PdfPCell nesthousing5 = new PdfPCell(nested5);
-
             innertable7.addCell(nesthousing5);
             PdfPTable nested4 = new PdfPTable(1);
             nested4.addCell(image);
             nested4.addCell("Authorised Signatory");
             PdfPCell nesthousing4 = new PdfPCell(nested4);
-
             innertable7.addCell(nesthousing4);
+            doc.add(innertable7);
             doc.close();
         } catch (DocumentException e) {
             e.printStackTrace();
