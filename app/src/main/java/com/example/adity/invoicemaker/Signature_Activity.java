@@ -205,11 +205,19 @@ public class Signature_Activity extends AppCompatActivity {
             Toast.makeText(this, "File Saved...", Toast.LENGTH_SHORT).show();
             fout.flush();
             fout.close();
-            Intent i = new Intent();
-            i.putExtra("image", file.getPath());
-            setResult(99, i);
-            p.hide();
-            finish();
+
+            if(getIntent().getStringExtra("from").equals("exp2"))
+            {
+                super.onBackPressed();
+                finish();
+            }
+            else {
+                Intent i = new Intent();
+                i.putExtra("image", file.getPath());
+                setResult(99, i);
+                p.hide();
+                finish();
+            }
 
         }
     }

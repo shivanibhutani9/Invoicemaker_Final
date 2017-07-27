@@ -20,10 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.example.adity.invoicemaker.Credentials;
 import com.example.adity.invoicemaker.bank_activity.AccPaymentDetailsActivity;
 import com.example.adity.invoicemaker.Login.MainActivity;
 import com.example.adity.invoicemaker.R;
 import com.example.adity.invoicemaker.adapter.CustomListAdapter;
+import com.example.adity.invoicemaker.explorer2;
 import com.example.adity.invoicemaker.persondetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -46,7 +48,8 @@ public class profile extends Fragment {
     ListView lv;
 
     String[] items={"Company Details","Payment Details","Company Credentials","Verify Email","Change Password","Change Email Address","Logout"};
-    Integer[] imgid={R.drawable.personal,R.drawable.ic_menu_manage,R.drawable.payment,R.drawable.verify,R.drawable.password ,R.drawable.resetemail,R.drawable.lo};  FirebaseAuth auth = FirebaseAuth.getInstance();
+    Integer[] imgid={R.drawable.personal,R.drawable.payment,R.drawable.ic_menu_manage,R.drawable.verify,R.drawable.password ,R.drawable.resetemail,R.drawable.lo};
+    FirebaseAuth auth = FirebaseAuth.getInstance();
     final FirebaseUser user=auth.getCurrentUser();
 
 
@@ -107,7 +110,7 @@ public class profile extends Fragment {
 
         if(user.isEmailVerified())
         {
-         items[2]="Email Verified \t\t\t (✔)";
+         items[3]="Email Verified \t\t\t (✔)";
         }
 
 
@@ -131,8 +134,12 @@ public class profile extends Fragment {
                 {
                     startActivity(new Intent(getActivity(),persondetails.class));
                 }
-                if(position==1)
+                else if(position==1)
                 {   startActivity(new Intent(getActivity(),AccPaymentDetailsActivity.class).putExtra("from","profile"));
+                }
+                else if(position==2)
+                {
+                    startActivity(new Intent(getActivity(),Credentials.class));
                 }
                 else if(position==3)
                 {
