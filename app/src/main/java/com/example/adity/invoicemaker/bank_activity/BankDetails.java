@@ -48,20 +48,20 @@ public class BankDetails extends AppCompatActivity {
                 ifsccode = ifsc.getText().toString();
                 accholder = accholdername.getText().toString();
                 accno = accnumber.getText().toString();
-                if(bank.isEmpty())
+                if(bank.isEmpty() || bank.toLowerCase().contains("test"))
                 {
                     bankname.setError("Please enter the Bank Name");
                     bankname.requestFocus();
                 }
-                else if(ifsccode.isEmpty())
+                else if(ifsccode.isEmpty() || ifsccode.toLowerCase().contains("test"))
                 {ifsc.setError("Please enter the Ifsc Code");
                     ifsc.requestFocus();
                 }
-                else if(accholder.isEmpty())
+                else if(accholder.isEmpty()|| accholder.toLowerCase().contains("test"))
                 { accholdername.setError("Please enter the Account Holder Name");
                     accholdername.requestFocus();
                 }
-                else if(accno.isEmpty()) {
+                else if(accno.isEmpty()|| accno.toLowerCase().contains("test")) {
                     accnumber.setError("Please enter the Account No");
                     accnumber.requestFocus();
                 }

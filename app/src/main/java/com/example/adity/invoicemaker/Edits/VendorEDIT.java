@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import com.example.adity.invoicemaker.NetworkResponse;
 import com.example.adity.invoicemaker.R;
+import com.example.adity.invoicemaker.Vendor_Details;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -77,11 +78,15 @@ public class VendorEDIT extends AppCompatActivity {
                 if(b)
 
                 {   String s = country.getText().toString().trim();
-                    if(!s.equals("")) {
+
+                    if(!(s.equals("")||s.contains("test"))) {
+                        if(s.equals("New Delhi"))
+                        {  s="NCT";}
                         Integer id = obj.hash.get(s);
+                        if(id!=null)
                         //Toast.makeText(VendorEDIT.this, id.toString(), Toast.LENGTH_SHORT).show();
-                        State = NetworkResponse.buildUrlState(id);
-                        new BackGroundState().execute();
+                        {State = NetworkResponse.buildUrlState(id);
+                         new BackGroundState().execute();}
                     }
                     else
                     {
@@ -109,36 +114,36 @@ public class VendorEDIT extends AppCompatActivity {
 
                 mp=new HashMap<>();
 
-                if(Name.isEmpty())
+                if(Name.isEmpty() || validate(Name))
                 {
                     name.setError("Please enter the Company Name");
                     name.requestFocus();
                 }
-                else if(Phone.isEmpty())
+                else if(Phone.isEmpty() )
                 {phone.setError("Please enter the Phone number");
                     phone.requestFocus();
                 }
-                else if(Email.isEmpty())
+                else if(Email.isEmpty() || validate(Email))
                 { email.setError("Please enter the Email");
                     email.requestFocus();
                 }
-                else if(gstin.isEmpty())
+                else if(gstin.isEmpty() || validate(gstin))
                 {   GSTIN.setError("Please enter the GSTIN");
                     GSTIN.requestFocus();
                 }
-                else if(pan_no.isEmpty())
+                else if(pan_no.isEmpty()||validate(pan_no))
                 {PAN_NO.setError("Please enter the Pan No");
                     PAN_NO.requestFocus();
                 }
-                else if(add1.isEmpty())
+                else if(add1.isEmpty() ||validate(add1))
                 {   addline.setError("Please enter the Address");
                     addline.requestFocus();
                 }
-                else if(add2.isEmpty())
+                else if(add2.isEmpty() || validate(add2))
                 {   addline2.setError("Please enter the Address");
                     addline2.requestFocus();
                 }
-                else if(st.isEmpty())
+                else if(st.isEmpty() || validate(st))
                 {   state.setError("Please enter the State");
                     state.requestFocus();
                 }
@@ -177,8 +182,13 @@ public class VendorEDIT extends AppCompatActivity {
 
     }
     public class BackGround extends AsyncTask<Void, Void, String> {
+ProgressDialog p=new ProgressDialog(VendorEDIT.this);
 
-
+        @Override
+        protected void onPreExecute() {
+            p.show();
+            super.onPreExecute();
+        }
 
         @Override
         protected String doInBackground(Void... voids) {
@@ -202,7 +212,7 @@ public class VendorEDIT extends AppCompatActivity {
 //            Toast.makeText(MainActivity.this, ""+Countries.get(0), Toast.LENGTH_SHORT).show();
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(VendorEDIT.this, android.R.layout.simple_expandable_list_item_1, obj.string);
             country.setAdapter(adapter);
-
+            p.hide();
         }
 
     }
@@ -249,4 +259,9 @@ public class VendorEDIT extends AppCompatActivity {
         onBackPressed();
         return null;
     }
+    boolean validate(String s)
+    {
+        return s.toLowerCase().contains("test");
+    }
+
 }

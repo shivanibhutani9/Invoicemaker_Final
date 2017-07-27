@@ -112,6 +112,8 @@ public class NetworkResponse{
         for (int i = 0; i < jsonMainArr.length(); i++) {
             JSONObject childJSONObject = jsonMainArr.getJSONObject(i);
             name=childJSONObject.getString("name");
+            if(name.equals("NCT"))
+            {name="New Delhi";}
             s.add(name);
         }
         return s;

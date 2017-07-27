@@ -63,12 +63,15 @@ public class ClientDetails extends AppCompatActivity {
                 if(b)
 
                 {   String s = Country.getText().toString().trim();
-                    if(!s.equals("")) {
+                    if(!(s.equals("")||s.contains("test"))) {
+                        if(s.equals("New Delhi"))
+                        {  s="NCT";}
                         Integer id = obj.hash.get(s);
-                     //   Toast.makeText(ClientDetails.this, id.toString(), Toast.LENGTH_SHORT).show();
-                        State = NetworkResponse.buildUrlState(id);
+                        //   Toast.makeText(ClientDetails.this, id.toString(), Toast.LENGTH_SHORT).show();
+                        if(id!=null)
+                        { State = NetworkResponse.buildUrlState(id);
                         new BackGroundState().execute();
-                    }
+                    }}
                     else
                     {
                         STATE.setError("Please enter the country first.");
@@ -96,7 +99,7 @@ public class ClientDetails extends AppCompatActivity {
 
                 mp=new HashMap<>();
 
-                if(Name.isEmpty())
+                if(Name.isEmpty() || Name.toLowerCase().contains("test"))
                 {
                     name.setError("Please enter the Company Name");
                 name.requestFocus();
@@ -105,32 +108,32 @@ public class ClientDetails extends AppCompatActivity {
                 {phone.setError("Please enter the Phone number");
                     phone.requestFocus();
                 }
-                else if(Email.isEmpty())
+                else if(Email.isEmpty() || Email.toLowerCase().contains("test"))
                 { email.setError("Please enter the Email");
                     email.requestFocus();
                 }
-                else if(gstin.isEmpty())
+                else if(gstin.isEmpty()|| gstin.toLowerCase().contains("test"))
                 {   GSTIN.setError("Please enter the GSTIN");
                     GSTIN.requestFocus();
                 }
-                else if(pan_no.isEmpty())
+                else if(pan_no.isEmpty() || pan_no.toLowerCase().contains("test"))
                 {PAN_NO.setError("Please enter the Pan No");
                     PAN_NO.requestFocus();
                 }
-                else if(add1.isEmpty())
+                else if(add1.isEmpty() || add1.toLowerCase().contains("test"))
                 {   addline.setError("Please enter the Address");
                     addline.requestFocus();
                 }
-                else if(add2.isEmpty())
+                else if(add2.isEmpty() || add2.toLowerCase().contains("test"))
                 {   addline2.setError("Please enter the Address");
                     addline2.requestFocus();
                 }
-                else if(country.isEmpty())
+                else if(country.isEmpty() || country.toLowerCase().contains("test"))
                 {
                   Country.setError("Please enter the Country");
                     Country.requestFocus();
                 }
-                else if(st.isEmpty())
+                else if(st.isEmpty() || st.toLowerCase().contains("test"))
                 {   STATE.setError("Please enter the State");
                     STATE.requestFocus();
                 }

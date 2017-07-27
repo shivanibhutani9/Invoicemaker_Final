@@ -114,32 +114,32 @@ public class PersonalEdit extends AppCompatActivity {
                 add2=address2.getText().toString();
                 add3=address3.getText().toString();
 
-                if(per.isEmpty())
+                if(per.isEmpty() || validate(per))
                 {
                     person.setError("Please enter the Contact Person Name");
                     person.requestFocus();
                 }
-                else if(pho.isEmpty())
+                else if(pho.isEmpty() || validate(pho))
                 {phone.setError("Please enter the Phone number");
                     phone.requestFocus();
                 }
-                else if(em.isEmpty())
+                else if(em.isEmpty() || validate(em))
                 { email.setError("Please enter the Email");
                     email.requestFocus();
                 }
-                else if(gin.isEmpty())
+                else if(gin.isEmpty() || validate(gin))
                 {   gstin.setError("Please enter the GSTIN");
                     gstin.requestFocus();
                 }
-                else if(pn.isEmpty())
+                else if(pn.isEmpty() || validate(pn))
                 {pan.setError("Please enter the Pan No");
                     pan.requestFocus();
                 }
-                else if(add1.isEmpty())
+                else if(add1.isEmpty() || validate(add1))
                 {   address1.setError("Please enter the address");
                     address1.requestFocus();
                 }
-                else if(add2.isEmpty())
+                else if(add2.isEmpty() ||  validate(add2))
                 {   address2.setError("Please enter the address");
                     address2.requestFocus();
                 }
@@ -174,5 +174,9 @@ public class PersonalEdit extends AppCompatActivity {
     public Intent getSupportParentActivityIntent() {
         onBackPressed();
         return super.getSupportParentActivityIntent();
+    }
+    boolean validate(String s)
+    {
+        return s.toLowerCase().contains("test");
     }
 }

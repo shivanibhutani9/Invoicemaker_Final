@@ -49,20 +49,20 @@ public class BankEdit extends AppCompatActivity {
                 ifsccode = ifsc.getText().toString();
                 accholder = accholdername.getText().toString();
                 accno = accnumber.getText().toString();
-                if(bank.isEmpty())
+                if(bank.isEmpty() || validate(bank))
                 {
                     bankname.setError("Please enter the Bank Name");
                     bankname.requestFocus();
                 }
-                else if(ifsccode.isEmpty())
+                else if(ifsccode.isEmpty() || validate(ifsccode))
                 {ifsc.setError("Please enter the Ifsc Code");
                     ifsc.requestFocus();
                 }
-                else if(accholder.isEmpty())
+                else if(accholder.isEmpty() || validate(accholder))
                 { accholdername.setError("Please enter the Account Holder Name");
                     accholdername.requestFocus();
                 }
-                else if(accno.isEmpty()) {
+                else if(accno.isEmpty()|| validate(accno)) {
                     accnumber.setError("Please enter the Account No");
                     accnumber.requestFocus();
                 }
@@ -85,9 +85,9 @@ public class BankEdit extends AppCompatActivity {
 
 
 
-
-
-
-
+        }
+        boolean validate(String s)
+        {
+            return s.toLowerCase().contains("test");
         }
 }
