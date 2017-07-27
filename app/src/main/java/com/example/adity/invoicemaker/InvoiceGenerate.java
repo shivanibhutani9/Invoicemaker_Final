@@ -64,13 +64,14 @@ public class InvoiceGenerate extends AppCompatActivity {
     int ADD_SEAL=99,ADD_STAMP=101;
     ProgressDialog pd;
     String bank,ifsccode,accholder,accno;
-     String currentDate;
+    String currentDate;
     String type;
     String state,zip;
     String description,HSNcode,unitcost,quantity,amount;
     String c,ad,cp,user_gst,user_pan,user_phone;
     listadapt adapter;
     RecyclerView rv;
+    File file4;
     String Name,Phone,Email,Address,Gstin,Pan_no,sgst,cgst,igst;
     TextView subtotal, dis,Discount1,total;
     Double sub=0.0,discount=0.0,tot=0.0;
@@ -130,6 +131,23 @@ public class InvoiceGenerate extends AppCompatActivity {
         {
                 noclient.setVisibility(View.VISIBLE);
         }
+        DatabaseReference db=FirebaseDatabase.getInstance().getReference("defaultsign/"+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Default");
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+              file4=new File(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        Picasso.with(getApplicationContext()).load(file4).memoryPolicy(MemoryPolicy.NO_CACHE).into(image);
+
+
+
         db=FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

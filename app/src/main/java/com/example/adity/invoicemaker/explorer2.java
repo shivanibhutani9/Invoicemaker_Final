@@ -10,13 +10,19 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 import com.example.adity.invoicemaker.adapter.gridadapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class explorer2 extends AppCompatActivity  {
 
@@ -69,6 +75,7 @@ public class explorer2 extends AppCompatActivity  {
                             android.Manifest.permission.READ_EXTERNAL_STORAGE},123);
         }
 
+        registerForContextMenu(gridView);
         FloatingActionButton flo=(FloatingActionButton)findViewById(R.id.floatb);
 
         flo.setOnClickListener(new View.OnClickListener() {
@@ -86,4 +93,41 @@ public class explorer2 extends AppCompatActivity  {
         super.onBackPressed();
         return null;
     }
+
+
+    @Override
+    public void onCreateContextMenu(android.view.ContextMenu menu, View v, android.view.ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Select option");
+        menu.add(0,v.getId(),0,"Make Default");
+        menu.add(0,v.getId(),0,"Delete");
+
+    }
+
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        if(item.getTitle()=="Make Default"){
+            DatabaseReference db=FirebaseDatabase.getInstance().getReference("defaultsign/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+            HashMap<String,String>mp=new HashMap<>();
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            int index = info.position;
+
+            mp.put("Default",img[index]);
+            db.setValue(mp, new DatabaseReference.CompletionListener() {
+                @Override
+                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+
+                }
+            });
+        }
+        else if(item.getTitle()=="SMS"){
+            Toast.makeText(getApplicationContext(),"sending sms code",Toast.LENGTH_LONG).show();
+        }else{
+            return false;
+        }
+        return true;
+    }
+
+
 }
