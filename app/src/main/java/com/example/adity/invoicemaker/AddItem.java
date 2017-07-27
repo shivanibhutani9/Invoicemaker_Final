@@ -61,12 +61,12 @@ public class AddItem extends AppCompatActivity {
                 quantity = quant.getText().toString();
 
 
-                if(description.isEmpty())
+                if(description.isEmpty() || validate(description))
                 {
                     descrip.setError("Please enter the Item Description");
                     descrip.requestFocus();
                 }
-                else if(HSNcode.isEmpty())
+                else if(HSNcode.isEmpty() || validate(HSNcode))
                 {HSN.setError("Please enter the HSN code");
                     HSN.requestFocus();
                 }
@@ -166,5 +166,9 @@ public class AddItem extends AppCompatActivity {
         onBackPressed();
 
         return newIntent;
+    }
+   boolean validate(String s)
+    {
+        return s.toLowerCase().contains("test");
     }
 }
