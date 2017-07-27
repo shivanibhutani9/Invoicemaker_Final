@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.example.adity.invoicemaker.GetURI;
 import com.example.adity.invoicemaker.bank_activity.AccPaymentDetailsActivity;
 import com.example.adity.invoicemaker.Login.MainActivity;
 import com.example.adity.invoicemaker.R;
@@ -29,6 +30,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -187,8 +193,13 @@ public class profile extends Fragment {
 
                 case 123:
                     if (resultCode == Activity.RESULT_OK) {
-                        Picasso.with(getActivity()).load(data.getData()).into(iv);
-                        break;
+                        Picasso.with(getActivity()).load(data.getData()).memoryPolicy(MemoryPolicy.NO_CACHE).into(iv);
+                        String path= GetURI.getPath(getActivity(),data.getData());
+                        DatabaseReference db= FirebaseDatabase.getInstance().getReference("CompanyLogo/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        HashMap<String,String> mp=new HashMap<>();
+                        mp.put("Companylogo",path);
+                        db.setValue(mp);
+                                    break;
                     } else if (resultCode == Activity.RESULT_CANCELED) {
                         Log.e("", "Selecting picture cancelled");
                     }
