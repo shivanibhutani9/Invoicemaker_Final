@@ -1,15 +1,21 @@
 package com.example.adity.invoicemaker.adapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.adity.invoicemaker.Fragments.InvoiceListFragment;
 import com.example.adity.invoicemaker.Fragments.InvoiceListFragment.OnListFragmentInteractionListener;
 import com.example.adity.invoicemaker.R;
+import com.example.adity.invoicemaker.pdfreader;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -17,13 +23,14 @@ import java.util.ArrayList;
  * specified {@link OnListFragmentInteractionListener}.
  */
 public class MyInvoiceRecyclerViewAdapter extends RecyclerView.Adapter<MyInvoiceRecyclerViewAdapter.ViewHolder> {
-
+    private final Context mContext;
     private final ArrayList<InvoiceListFragment.ObjectInv> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyInvoiceRecyclerViewAdapter(ArrayList<InvoiceListFragment.ObjectInv> items, OnListFragmentInteractionListener listener) {
+    public MyInvoiceRecyclerViewAdapter(Context c ,ArrayList<InvoiceListFragment.ObjectInv> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+        mContext=c;
     }
 
     @Override
@@ -43,12 +50,20 @@ public class MyInvoiceRecyclerViewAdapter extends RecyclerView.Adapter<MyInvoice
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(obj);
+                File file = new File(Environment.getExternalStorageDirectory() + File.separator + obj.inv_no+ ".pdf");
+                if(file.exists()) {
+
+                    mContext.startActivity(new Intent(mContext, pdfreader.class).putExtra("inv", obj.inv_no).putExtra("from", "fragment"));
                 }
-            }
+                else 
+                {
+                    Toast.makeText(mContext, "File not Found", Toast.LENGTH_SHORT).show();
+                }
+                 //   mListener.onListFragmentInteraction(obj);
+                }
+        //    }
         });
     }
 

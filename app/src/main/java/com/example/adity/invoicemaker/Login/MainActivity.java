@@ -40,23 +40,18 @@ public class MainActivity extends AppCompatActivity {
         forgot=(TextView) findViewById(R.id.forgot);
         int permissionCheck1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int permissionCheck2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
-
-        if (permissionCheck1 != PackageManager.PERMISSION_GRANTED&&permissionCheck2 != PackageManager.PERMISSION_GRANTED ) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,  android.Manifest.permission.READ_EXTERNAL_STORAGE
-                    },123);
-        }
-
         int permissionCheck3 = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS);
         int permissionCheck4 = ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS);
         int permissionCheck5 = ContextCompat.checkSelfPermission(this, Manifest.permission.BROADCAST_SMS);
 
-
-        if (permissionCheck3 != PackageManager.PERMISSION_GRANTED&&permissionCheck4 != PackageManager.PERMISSION_GRANTED&&permissionCheck5 != PackageManager.PERMISSION_GRANTED ) {
+        if (permissionCheck1 != PackageManager.PERMISSION_GRANTED&&permissionCheck2 != PackageManager.PERMISSION_GRANTED &&permissionCheck3 != PackageManager.PERMISSION_GRANTED&&permissionCheck4 != PackageManager.PERMISSION_GRANTED&& permissionCheck5 != PackageManager.PERMISSION_GRANTED ) {
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_SMS,  Manifest.permission.RECEIVE_SMS,Manifest.permission.BROADCAST_SMS
-                    },456);
+                    new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,  android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.READ_SMS, android.Manifest.permission.RECEIVE_SMS,android.Manifest.permission.BROADCAST_SMS
+                    },123);
         }
+
+
+
 
         ActionBar a=getSupportActionBar();
         if(a!=null)

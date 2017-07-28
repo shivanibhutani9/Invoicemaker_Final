@@ -299,7 +299,7 @@ Uri logopath=null;
                       tax_invoice1 in = new tax_invoice1(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
                       pd.hide();
-                      startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+                      startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()).putExtra("from","genrate"));
                   } else if (type.contains("Inter")) {
                       tax_invoice2 in = new tax_invoice2(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
@@ -746,6 +746,8 @@ Uri logopath=null;
             mp.put("Amount",amount);
             mp.put("place_of_supply","india");
 
+            file=new File(Environment.getExternalStorageDirectory()+ File.separator+invoice.getText().toString()+".pdf");
+            mp.put("filepath",file.getPath());
             db.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoiceid).child("Details").setValue(mp, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {

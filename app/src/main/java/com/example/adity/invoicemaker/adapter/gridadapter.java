@@ -12,14 +12,15 @@ import com.example.adity.invoicemaker.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class gridadapter extends ArrayAdapter<String> {
 
     private final Activity context;
-    private final String[] itemname;
-    private final String[] imgid;
+    private final ArrayList itemname;
+    private final ArrayList imgid;
 
-    public gridadapter(Activity context, String[] itemname, String[] imgid) {
+    public gridadapter(Activity context, ArrayList itemname,ArrayList imgid) {
         super(context, R.layout.explorerlist, itemname);
         // TODO Auto-generated constructor stub
 
@@ -35,9 +36,9 @@ public class gridadapter extends ArrayAdapter<String> {
 
         ImageView imageView = (ImageView) rowView.findViewById(R.id.sign);
         TextView extratxt = (TextView) rowView.findViewById(R.id.filename);
-        File f=new File(imgid[position]);
+        File f=new File(imgid.get(position).toString());
         Picasso.with(context).load(f).into(imageView);
-        extratxt.setText(itemname[position]);
+        extratxt.setText(itemname.get(position).toString());
         return rowView;
 
     }

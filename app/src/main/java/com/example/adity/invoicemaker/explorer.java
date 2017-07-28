@@ -16,11 +16,12 @@ import android.widget.Toast;
 import com.example.adity.invoicemaker.adapter.gridadapter;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class explorer extends AppCompatActivity  {
 
-    String [] signs;
-    String [] img;
+    ArrayList signs=new ArrayList();
+   ArrayList img=new ArrayList();
     GridView gridView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +41,11 @@ public class explorer extends AppCompatActivity  {
                 {
                     File lst[] = f.listFiles();
 
-                    signs =  new String[lst.length];
-                    img=new String [lst.length];
+
                     int i = 0;
                     for (File f2 : lst) {
-                        signs[i] = f2.getName();
-                        img[i]=f2.getPath();
+                        signs.add(f2.getName());
+                        img.add(f2.getPath());
                         i++;
                     }
                     gridadapter Gridadapter=new gridadapter(explorer.this,signs,img);
@@ -72,7 +72,7 @@ public class explorer extends AppCompatActivity  {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent();
-                i.putExtra("image", img[position]);
+                i.putExtra("image", img.get(position).toString());
                 setResult(99, i);
                 finish();
             }

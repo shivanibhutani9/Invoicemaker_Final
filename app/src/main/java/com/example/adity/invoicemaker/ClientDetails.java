@@ -37,6 +37,8 @@ public class ClientDetails extends AppCompatActivity {
     HashMap<String,Integer> hash=new HashMap<>();
     ArrayList<String> str=new ArrayList<String>();
 
+    ArrayList<String> states=new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,12 +130,12 @@ public class ClientDetails extends AppCompatActivity {
                 {   addline2.setError("Please enter the Address");
                     addline2.requestFocus();
                 }
-                else if(country.isEmpty() || country.toLowerCase().contains("test"))
+                else if(country.isEmpty() || country.toLowerCase().contains("test") || (obj.string.indexOf(country)==-1))
                 {
                   Country.setError("Please enter the Country");
                     Country.requestFocus();
                 }
-                else if(st.isEmpty() || st.toLowerCase().contains("test"))
+                else if(st.isEmpty() || st.toLowerCase().contains("test")||(states.indexOf(st)==-1))
                 {   STATE.setError("Please enter the State");
                     STATE.requestFocus();
                 }
@@ -225,7 +227,6 @@ ProgressDialog p;
 
         @Override
         protected void onPostExecute(String result) {
-            ArrayList<String> states=new ArrayList<>();
             try {
                 states = NetworkResponse.parseJSONStates(result);
             } catch (Exception e) {

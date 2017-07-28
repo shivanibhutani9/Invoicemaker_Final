@@ -20,6 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -54,6 +55,7 @@ public class InvoiceListFragment extends Fragment {
     private OnListFragmentInteractionListener mListener;
     private Paint p = new Paint();
     private View VIEW;
+    String f_path;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -83,7 +85,7 @@ public class InvoiceListFragment extends Fragment {
             Context context = view.getContext();
             recyclerView = (RecyclerView)view.findViewById(R.id.fragment_invoice);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            adapter=new MyInvoiceRecyclerViewAdapter(mValues, mListener);
+            adapter=new MyInvoiceRecyclerViewAdapter(getActivity(),mValues, mListener);
             recyclerView.setAdapter(adapter);
         }
 
@@ -112,6 +114,22 @@ public class InvoiceListFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), typesofinvoice.class));
+            }
+        });
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
             }
         });
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
@@ -250,7 +268,7 @@ public class InvoiceListFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot invoice:dataSnapshot.getChildren())
                 {
-                     invoiceno=invoice.getKey();
+                    invoiceno=invoice.getKey();
                     for(DataSnapshot ds:invoice.getChildren())
                     {
                         if(ds.getKey().equals("Details"))
@@ -268,6 +286,10 @@ public class InvoiceListFragment extends Fragment {
                                 if(details.getKey().equals("Date_of_Invoice"))
                                 {
                                     inv_date=details.getValue(String.class);
+                                }
+                                if(details.getKey().equals("filepath"))
+                                {
+                                    f_path=details.getValue(String.class);
                                 }
 
                             }

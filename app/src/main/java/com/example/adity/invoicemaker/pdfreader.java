@@ -74,21 +74,42 @@ public class pdfreader extends AppCompatActivity {
 
 
     private void openPDF() throws IOException {
-      File file = new File(Environment.getExternalStorageDirectory()+ File.separator+getIntent().getStringExtra("inv")+"temp.pdf");
-        imageView.fromFile(file);
-        imageView.fromFile(file)
-                .defaultPage(1)
-                .showMinimap(false)
-                .enableSwipe(true)
-                .swipeVertical(true)
-                .load();
+
+        if(getIntent().getStringExtra("from").equals("genrate")) {
+            File file = new File(Environment.getExternalStorageDirectory() + File.separator + getIntent().getStringExtra("inv") + "temp.pdf");
+            imageView.fromFile(file);
+            imageView.fromFile(file)
+                    .defaultPage(1)
+                    .showMinimap(false)
+                    .enableSwipe(true)
+                    .swipeVertical(true)
+                    .load();
+        }
+        else {
+            File file = new File(Environment.getExternalStorageDirectory() + File.separator + getIntent().getStringExtra("inv") + ".pdf");
+            if(file.exists()) {
+                imageView.fromFile(file);
+                imageView.fromFile(file)
+                        .defaultPage(1)
+                        .showMinimap(false)
+                        .enableSwipe(true)
+                        .swipeVertical(true)
+                        .load();
+            }
+            else
+            {
+                Toast.makeText(this, "File Not Found", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        File file = new File(Environment.getExternalStorageDirectory()+ File.separator+getIntent().getStringExtra("inv")+"temp.pdf");
+        if(getIntent().getStringExtra("from").equals("generate")) {
+            File file = new File(Environment.getExternalStorageDirectory() + File.separator + getIntent().getStringExtra("inv") + "temp.pdf");
             file.delete();
+        }
     }
 
     @Nullable

@@ -37,6 +37,7 @@ public class VendorEDIT extends AppCompatActivity {
     NetworkResponse.ObjectCountry obj;
     HashMap<String,Integer> hash=new HashMap<>();
     ArrayList<String> str=new ArrayList<String>();
+    ArrayList<String> states=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +144,12 @@ public class VendorEDIT extends AppCompatActivity {
                 {   addline2.setError("Please enter the Address");
                     addline2.requestFocus();
                 }
-                else if(st.isEmpty() || validate(st))
+                else if(Country.isEmpty() || Country.toLowerCase().contains("test")||( obj.string.indexOf(Country)==-1))
+                {
+                    country.setError("Please enter the Country");
+                    country.requestFocus();
+                }
+                else if(st.isEmpty() || validate(st)||(states.indexOf(st)==-1))
                 {   state.setError("Please enter the State");
                     state.requestFocus();
                 }
@@ -239,7 +245,7 @@ ProgressDialog p=new ProgressDialog(VendorEDIT.this);
 
         @Override
         protected void onPostExecute(String result) {
-            ArrayList<String> states=new ArrayList<>();
+
             try {
                 states = NetworkResponse.parseJSONStates(result);
             } catch (Exception e) {

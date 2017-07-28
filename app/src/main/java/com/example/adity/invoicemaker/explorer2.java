@@ -22,13 +22,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class explorer2 extends AppCompatActivity  {
 
-    String [] signs;
-    String [] img;
+    ArrayList signs=new ArrayList();
+    ArrayList img=new ArrayList();
     GridView gridView;
+    gridadapter Gridadapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,15 +50,13 @@ public class explorer2 extends AppCompatActivity  {
                 {
                     File lst[] = f.listFiles();
 
-                    signs =  new String[lst.length];
-                    img=new String [lst.length];
                     int i = 0;
                     for (File f2 : lst) {
-                        signs[i] = f2.getName();
-                        img[i]=f2.getPath();
+                        signs.add(f2.getName());
+                        img.add(f2.getPath());
                         i++;
                     }
-                    gridadapter Gridadapter=new gridadapter(explorer2.this,signs,img);
+              Gridadapter  =new gridadapter(explorer2.this,signs,img);
                     gridView.setAdapter(Gridadapter);
 
 
@@ -82,6 +83,7 @@ public class explorer2 extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(explorer2.this,Signature_Activity.class).putExtra("from","exp2"));
+                Gridadapter.notifyDataSetChanged();
             }
         });
 
@@ -113,7 +115,7 @@ public class explorer2 extends AppCompatActivity  {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             int index = info.position;
 
-            mp.put("Default",img[index]);
+            mp.put("Default",img.get(index).toString());
             db.setValue(mp, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
@@ -126,10 +128,11 @@ public class explorer2 extends AppCompatActivity  {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             int index = info.position;
 
-            File f=new File(img[index]);
+            File f=new File(img.get(index).toString());
             f.delete();
-
-
+            img.remove(index);
+            signs.remove(index);
+            Gridadapter.notifyDataSetChanged();
 
         }else{
             return false;
