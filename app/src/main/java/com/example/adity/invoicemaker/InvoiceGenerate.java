@@ -60,7 +60,7 @@ import java.util.Map;
 
 public class InvoiceGenerate extends AppCompatActivity {
  static TextView dateString;
-Uri logopath=null;
+ Uri logopath=null;
     int ADD_SEAL=99,ADD_STAMP=101;
     ProgressDialog pd;
     String bank,ifsccode,accholder,accno;
