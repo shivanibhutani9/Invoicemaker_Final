@@ -55,7 +55,7 @@ public class signup extends AppCompatActivity {
                     email.requestFocus();
 
                 }
-                else if (pwd.isEmpty()) {
+                else if (pwd.isEmpty()||pwd.length()<6) {
                     pass.setError("please Enter a valid Password");
                     pass.requestFocus();
 
