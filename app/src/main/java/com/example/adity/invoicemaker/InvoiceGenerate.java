@@ -92,18 +92,24 @@ public class InvoiceGenerate extends AppCompatActivity {
     TextView noclient,noitem,uploadSign,uploadStamp;
     LinearLayout clients;
     ProgressDialog po;
+    TextView ifsccode_details,bankname_details,accno_details;
+    LinearLayout payment_details;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invoice_gen);
         dateString=(TextView)findViewById(R.id.textdate);
-        bank_details=(TextView)findViewById(R.id.bank);
+        payment_details=(LinearLayout)findViewById(R.id.paymentDETAILS);
+        bank_details=(TextView)findViewById(R.id.accholder_details);
         image=(ImageView)findViewById(R.id.SEAL);
         cal=(ImageButton)findViewById(R.id.calendar);
         type=getIntent().getExtras().getString("type");
         uploadSign=(TextView)findViewById(R.id.uploadSign);
         uploadStamp=(TextView)findViewById(R.id.uploadStamp);
         noitem=(TextView)findViewById(R.id.noitem);
+        ifsccode_details=(TextView)findViewById(R.id.ifsc_details);
+        accno_details=(TextView)findViewById(R.id.accno_details);
+        bankname_details=(TextView)findViewById(R.id.banknamedetails);
         clients=(LinearLayout)findViewById(R.id.clients);
          noclient=(TextView)findViewById(R.id.noclient);
         stamp=(ImageView)findViewById(R.id.STAMP);
@@ -203,7 +209,7 @@ public class InvoiceGenerate extends AppCompatActivity {
         });
 
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        bank_details.setOnClickListener(new View.OnClickListener() {
+        payment_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(getApplicationContext(),AccPaymentDetailsActivity.class);
@@ -554,8 +560,6 @@ public class InvoiceGenerate extends AppCompatActivity {
           //  Toast.makeText(this, path.toString(), Toast.LENGTH_SHORT).show();
             Picasso.with(getApplicationContext()).load(f).memoryPolicy(MemoryPolicy.NO_CACHE).into(image);
 
-
-
         }
             if (resultCode == 1) {
                 bank = data.getStringExtra("bank_name");
@@ -563,7 +567,9 @@ public class InvoiceGenerate extends AppCompatActivity {
                 accholder = data.getStringExtra("account_holder");
                 accno = data.getStringExtra("account_number");
                 bank_details.setText(accholder);
-
+                ifsccode_details.setText(ifsccode);
+                accno_details.setText(accno);
+                bankname_details.setText(bank);
             }
            else if (resultCode == 2) {
 
