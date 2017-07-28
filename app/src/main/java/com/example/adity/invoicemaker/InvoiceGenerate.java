@@ -18,6 +18,7 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -117,7 +118,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                 showDatePickerDialog();
             }
         });
-        adapter=new listadapt(InvoiceGenerate.this,items,type);
+        adapter=new listadapt(InvoiceGenerate.this,items,type,invoice.getText().toString());
         pd  =new ProgressDialog(InvoiceGenerate.this);
         pd.setMessage("please wait ....");
         pd.show();
@@ -233,10 +234,10 @@ public class InvoiceGenerate extends AppCompatActivity {
 
                 }
 
-                                               @Override
-                                               public void onCancelled(DatabaseError databaseError) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                                               }
+            }
         });
 
                     DatabaseReference db1=FirebaseDatabase.getInstance().getReference("Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -353,6 +354,8 @@ public class InvoiceGenerate extends AppCompatActivity {
 
          invoice=(TextView) findViewById(R.id.invoiceid);
         rv= (RecyclerView)findViewById(R.id.itemlist);
+
+
 
 
         rv.setLayoutManager(new LinearLayoutManager(InvoiceGenerate.this));

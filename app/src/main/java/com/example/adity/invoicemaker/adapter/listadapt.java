@@ -1,14 +1,20 @@
 package com.example.adity.invoicemaker.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.adity.invoicemaker.Edits.ItemEdit;
 import com.example.adity.invoicemaker.R;
+import com.example.adity.invoicemaker.pdfreader;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -20,10 +26,12 @@ public class listadapt extends RecyclerView.Adapter<listadapt.ViewHolder> {
     public  Context mContext;
     ArrayList<String[]> objects;
     String type;
-    public listadapt(Context mContext, ArrayList<String[]> objects, String type){
+    String invoiceno;
+    public listadapt(Context mContext, ArrayList<String[]> objects, String type,String invono){
         this.mContext=mContext;
         this.objects=objects;
         this.type=type;
+        this.invoiceno=invono;
     }
 
     @Override
@@ -33,7 +41,7 @@ public class listadapt extends RecyclerView.Adapter<listadapt.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         if(type.contains("Intra")||type.contains("Receipt")||type.contains("Payment")||type.contains("Debit")||type.contains("Credit")) {
             String[] a = objects.get(position);
@@ -62,12 +70,24 @@ public class listadapt extends RecyclerView.Adapter<listadapt.ViewHolder> {
             holder.amt.setText(a[5]);
         }
 
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.startActivity(new Intent(mContext, ItemEdit.class).putExtra("invoiceno",invoiceno).putExtra("itemno",position).putExtra("type",type));
+            }
+            //    }
+        });
+
+
     }
 
     @Override
     public int getItemCount() {
         return objects.size();
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView description,hsn,Unit_cost,quantity,amt;

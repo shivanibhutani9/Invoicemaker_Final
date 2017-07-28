@@ -44,7 +44,7 @@ public class PersonalEdit extends AppCompatActivity {
         address2=(EditText)findViewById(R.id.Address2);
         address3=(EditText)findViewById(R.id.Address3);
 
-          db= FirebaseDatabase.getInstance().getReference("Users/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+        db= FirebaseDatabase.getInstance().getReference("Users/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         db.addValueEventListener(new ValueEventListener() {
             @Override

@@ -72,7 +72,7 @@
             android:parentActivityName=".Fragments.NavigationDrawer" />
         <activity
             android:name=".Login.OTPCheck"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Vendor_Details"
             android:label="@string/title_activity_vendor__details"
@@ -87,10 +87,9 @@
         <activity
             android:name=".persondetails"
             android:parentActivityName=".Fragments.NavigationDrawer" />
-
-        <activity android:name=".Edits.PersonalEdit"
-            android:parentActivityName=".persondetails"/>
-
+        <activity
+            android:name=".Edits.PersonalEdit"
+            android:parentActivityName=".persondetails" />
         <activity
             android:name=".Edits.VendorEDIT"
             android:screenOrientation="portrait" />
@@ -102,14 +101,15 @@
         <activity
             android:name=".Signature_Activity"
             android:parentActivityName=".InvoiceGenerate" />
-        <activity android:name=".explorer"
-            android:parentActivityName=".InvoiceGenerate"></activity>
-
-        <activity android:name=".Credentials"
-            android:parentActivityName=".Fragments.NavigationDrawer"></activity>
-
-        <activity android:name=".explorer2"
-            android:parentActivityName=".Credentials"></activity>
+        <activity
+            android:name=".explorer"
+            android:parentActivityName=".InvoiceGenerate" />
+        <activity
+            android:name=".Credentials"
+            android:parentActivityName=".Fragments.NavigationDrawer" />
+        <activity
+            android:name=".explorer2"
+            android:parentActivityName=".Credentials" />
     </application>
 
 </manifest>
