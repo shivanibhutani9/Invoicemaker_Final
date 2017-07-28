@@ -426,9 +426,9 @@ Uri logopath=null;
 
                                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-                                                startActivity(new Intent(InvoiceGenerate.this, NavigationDrawer.class));
-
-                                            }
+                                                  startActivity(new Intent(InvoiceGenerate.this, NavigationDrawer.class));
+                                                   finish();
+                                                }
                                         })
                                         .create();
                                 BackToInvoice.show();

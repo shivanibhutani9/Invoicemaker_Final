@@ -39,6 +39,7 @@ public class NavigationDrawer extends AppCompatActivity
     ProgressDialog pd;
     android.support.v4.app.Fragment fragment;
     TextView name,email;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,9 +101,7 @@ public class NavigationDrawer extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-        else {
-
-
+     else {
             if (doubleBackToExitPressedOnce) {
                 super.onBackPressed();
                 return;
@@ -207,11 +206,11 @@ public class NavigationDrawer extends AppCompatActivity
                     hasInvoice=false;
                 if(!hasInvoice) {
                     fragment = new invoice_fragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).addToBackStack("Invoice").commit();
                 }
                 else {
                     fragment = new InvoiceListFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).addToBackStack("InvoiceGen").commit();
 
                 }
                 pd.hide();

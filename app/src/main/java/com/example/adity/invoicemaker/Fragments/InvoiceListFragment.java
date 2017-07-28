@@ -225,12 +225,12 @@ public class InvoiceListFragment extends Fragment {
 
     }
 
-    @Override
+/*    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
-
+*/
 
 
     /**
@@ -295,8 +295,6 @@ public class InvoiceListFragment extends Fragment {
                             }
                         }
                     }
-
-
 
 
 
