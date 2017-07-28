@@ -124,8 +124,8 @@ public class VendorEDIT extends AppCompatActivity {
                 {phone.setError("Please enter the Phone number");
                     phone.requestFocus();
                 }
-                else if(Email.isEmpty() || validate(Email))
-                { email.setError("Please enter the Email");
+                else if(Email.isEmpty() || validate(Email)||!Email.contains("@")||!Email.contains("."))
+                { email.setError("Please enter the valid Email");
                     email.requestFocus();
                 }
                 else if(gstin.isEmpty() || validate(gstin))

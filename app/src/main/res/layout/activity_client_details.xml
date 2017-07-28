@@ -75,7 +75,8 @@
                     android:padding="5dp"
                     android:id="@+id/clientphone"
                     android:textSize="15sp"
-                    android:gravity="right"/>
+                    android:gravity="right"
+                    android:maxLength="15"/>
 
 
             </LinearLayout>

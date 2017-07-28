@@ -123,8 +123,8 @@ public class PersonalEdit extends AppCompatActivity {
                 {phone.setError("Please enter the Phone number");
                     phone.requestFocus();
                 }
-                else if(em.isEmpty() || validate(em))
-                { email.setError("Please enter the Email");
+                else if(em.isEmpty() || validate(em) || !em.contains("@")||!em.contains("."))
+                { email.setError("Please enter the valid Email");
                     email.requestFocus();
                 }
                 else if(gin.isEmpty() || validate(gin))

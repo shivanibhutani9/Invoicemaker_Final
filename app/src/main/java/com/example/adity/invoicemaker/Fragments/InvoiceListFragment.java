@@ -145,7 +145,7 @@ public class InvoiceListFragment extends Fragment {
                 ObjectInv obj=mValues.get(pos);
 
                 if(direction==ItemTouchHelper.RIGHT)
-               {AlertDialog DeletionDialogBox =new AlertDialog.Builder(getActivity())
+               { AlertDialog DeletionDialogBox =new AlertDialog.Builder(getActivity())
                         //set message, title, and icon
                         .setTitle("Delete")
                         .setMessage("Do you really want to delete the following invoice?\n\n"+"\t\tInvoice Number -"+obj.inv_no+"\n\t\tVendor Name -"

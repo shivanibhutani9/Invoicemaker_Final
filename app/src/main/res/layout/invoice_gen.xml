@@ -11,6 +11,7 @@
         <include layout="@layout/invoicedetails" />
         <include layout="@layout/vendordetails"/>
         <include layout="@layout/itemdetails_invoice"/>
+        <include layout="@layout/paymentdetails_invoice"/>
         <include layout="@layout/comapnycredentials_invoice"/>
        <LinearLayout
             android:layout_width="match_parent"
@@ -19,8 +20,7 @@
            android:layout_marginTop="10dp"
             android:padding="5dp"
             android:layout_below="@+id/linearLayout10"
-            android:id="@+id/linearLayout8"
-            >
+            android:id="@+id/linearLayout8">
          <!--   <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
