@@ -110,7 +110,7 @@ public class ClientDetails extends AppCompatActivity {
                 {phone.setError("Please enter the Phone number");
                     phone.requestFocus();
                 }
-                else if(Email.isEmpty() || Email.toLowerCase().contains("test"))
+                else if(Email.isEmpty() || !Email.contains("@")||!Email.contains(".")|| Email.toLowerCase().contains("test"))
                 { email.setError("Please enter the Email");
                     email.requestFocus();
                 }
