@@ -2,7 +2,7 @@
 
 <LinearLayout android:layout_width="match_parent"
     android:layout_marginTop="5dp"
-    android:layout_height="wrap_content"
+    android:layout_height="50dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
         <LinearLayout
@@ -11,6 +11,7 @@
             android:layout_height="wrap_content">
         <TextView
             android:layout_width="75dp"
+            android:gravity="center_vertical"
             android:layout_height="wrap_content"
             android:id="@+id/description"
             />
@@ -21,6 +22,7 @@
             android:layout_height="wrap_content">
                <TextView
                    android:layout_width="70dp"
+                   android:gravity="center_vertical"
                    android:layout_height="wrap_content"
                    android:id="@+id/hsn"/>
 
@@ -34,6 +36,7 @@
                 <TextView
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:id="@+id/Unit_cost"/>
                 </LinearLayout>
 
@@ -45,6 +48,7 @@
 
                 <TextView
                     android:layout_width="70dp"
+                    android:gravity="center_vertical"
                     android:layout_height="wrap_content"
                     android:id="@+id/quantity"/>
                 </LinearLayout>
@@ -58,6 +62,7 @@
                 <TextView
                     android:layout_width="70dp"
                     android:id="@+id/amt"
+                    android:gravity="center_vertical"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>

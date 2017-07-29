@@ -26,12 +26,11 @@ public class listadapt extends RecyclerView.Adapter<listadapt.ViewHolder> {
     public  Context mContext;
     ArrayList<String[]> objects;
     String type;
-    String invoiceno;
-    public listadapt(Context mContext, ArrayList<String[]> objects, String type,String invono){
+    public listadapt(Context mContext, ArrayList<String[]> objects, String type){
         this.mContext=mContext;
         this.objects=objects;
         this.type=type;
-        this.invoiceno=invono;
+
     }
 
     @Override
@@ -69,15 +68,6 @@ public class listadapt extends RecyclerView.Adapter<listadapt.ViewHolder> {
 
             holder.amt.setText(a[5]);
         }
-
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext, ItemEdit.class).putExtra("invoiceno",invoiceno).putExtra("itemno",position).putExtra("type",type));
-            }
-            //    }
-        });
 
 
     }

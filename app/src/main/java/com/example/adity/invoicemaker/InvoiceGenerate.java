@@ -7,6 +7,12 @@ import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -28,6 +35,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.adity.invoicemaker.Edits.ItemEdit;
+import com.example.adity.invoicemaker.Fragments.InvoiceListFragment;
 import com.example.adity.invoicemaker.Fragments.NavigationDrawer;
 import com.example.adity.invoicemaker.adapter.listadapt;
 import com.example.adity.invoicemaker.bank_activity.AccPaymentDetailsActivity;
@@ -57,16 +66,19 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.adity.invoicemaker.Fragments.InvoiceListFragment.drawableToBitmap;
 
 
 public class InvoiceGenerate extends AppCompatActivity {
  static TextView dateString;
- Uri logopath=null;
+    private Paint p = new Paint();
+    Uri logopath=null;
     int ADD_SEAL=99,ADD_STAMP=101;
     ProgressDialog pd;
     String bank,ifsccode,accholder,accno;
     String currentDate;
     String type;
+    int position_of_item;
     String state,zip;
     String description,HSNcode,unitcost,quantity,amount;
     String c,ad,cp,user_gst,user_pan,user_phone;
@@ -93,7 +105,7 @@ public class InvoiceGenerate extends AppCompatActivity {
     TextView noclient,noitem,uploadSign,uploadStamp;
     LinearLayout clients;
     ProgressDialog po;
-    TextView ifsccode_details,bankname_details,accno_details;
+    TextView ifsccode_details,bankname_details,accno_details,swipe;
     LinearLayout payment_details;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +128,9 @@ public class InvoiceGenerate extends AppCompatActivity {
         stamp=(ImageView)findViewById(R.id.STAMP);
         items=new ArrayList<>();
         GST=new ArrayList<>();
+        invoice=(TextView) findViewById(R.id.invoiceid);
+        swipe=(TextView)findViewById(R.id.swipe);
+        swipe.setVisibility(View.GONE);
 
         in="";
         cal.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +139,6 @@ public class InvoiceGenerate extends AppCompatActivity {
                 showDatePickerDialog();
             }
         });
-        adapter=new listadapt(InvoiceGenerate.this,items,type,invoice.getText().toString());
         pd  =new ProgressDialog(InvoiceGenerate.this);
         pd.setMessage("please wait ....");
         pd.show();
@@ -139,6 +153,8 @@ public class InvoiceGenerate extends AppCompatActivity {
                 noclient.setVisibility(View.VISIBLE);
         }
 
+
+        //To get the default sign given by user
         DatabaseReference db=FirebaseDatabase.getInstance().getReference("defaultsign/");
         db.addListenerForSingleValueEvent(new ValueEventListener()
         {
@@ -170,7 +186,7 @@ public class InvoiceGenerate extends AppCompatActivity {
         });
 
 
-
+        //TO decode set Invoice Id
         db=FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -185,15 +201,13 @@ public class InvoiceGenerate extends AppCompatActivity {
                         l++;
                     }
 
-
                         in = in.substring(3);
                         int o = Integer.parseInt(in);
                         o++;
                         DecimalFormat format = new DecimalFormat("000");
                         in = format.format(o);
-                        invoice.setText("INV"+in);
-
-
+                    in="INV"+in;
+                        invoice.setText(in);
 
                     pd.hide();
                 }
@@ -210,6 +224,10 @@ public class InvoiceGenerate extends AppCompatActivity {
         });
 
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
+        //Intent for Payment details
         payment_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -222,10 +240,11 @@ public class InvoiceGenerate extends AppCompatActivity {
         });
 
         subtotal=(TextView)findViewById(R.id.subtotal);
-
         Discount1=(TextView)findViewById(R.id.discount1);
-
         total=(TextView)findViewById(R.id.total);
+
+
+        //To get company logo
         DatabaseReference db2=FirebaseDatabase.getInstance().getReference("CompanyLogo/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/Companylogo");
         db2.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -246,7 +265,11 @@ public class InvoiceGenerate extends AppCompatActivity {
             }
         });
 
-                    DatabaseReference db1=FirebaseDatabase.getInstance().getReference("Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+
+
+    //to get user details
+        DatabaseReference db1=FirebaseDatabase.getInstance().getReference("Users/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
         db1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -274,7 +297,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                     if(ds.getKey().equals("Pan"))
                         user_pan =ds.getValue(String.class);
 
-                    if(ds.getKey().equals("Mobile Number"))
+                    if(ds.getKey().equals("Mobile number"))
                         user_phone =ds.getValue(String.class);
 
                 }
@@ -290,7 +313,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
 
 
-
+    // To preview the invoice
         Button preview=(Button)findViewById(R.id.previewbutton);
         preview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -357,15 +380,131 @@ public class InvoiceGenerate extends AppCompatActivity {
 
 
 
-
-         invoice=(TextView) findViewById(R.id.invoiceid);
+        adapter=new listadapt(InvoiceGenerate.this,items,type);
         rv= (RecyclerView)findViewById(R.id.itemlist);
-
-
-
-
         rv.setLayoutManager(new LinearLayoutManager(InvoiceGenerate.this));
         rv.setAdapter(adapter);
+
+
+        //to delete or edit item
+        ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.RIGHT |ItemTouchHelper.LEFT){
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+
+                return false;
+            }
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                final int pos=viewHolder.getAdapterPosition();
+                position_of_item=pos;
+                if(direction==ItemTouchHelper.RIGHT)
+                {
+                    AlertDialog DeletionDialogBox =new AlertDialog.Builder(InvoiceGenerate.this)
+                        //set message, title, and icon
+                        .setTitle("Delete")
+                        .setMessage("Do you really want to delete the Item")
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                //your deleting code
+
+                                String item[];
+                                if (type.contains("Intra") || type.contains("Debit") || type.contains("Credit") || type.contains("Receipt") || type.contains("Payment")) {
+                                     item=items.get(pos);
+                                    sub=sub-Double.parseDouble(item[6]);
+                                }
+                                else if (type.contains("Inter") || type.contains("Export")) {
+                                    item=items.get(pos);
+                                    sub=sub-Double.parseDouble(item[5]);
+                                }
+                                subtotal.setText("₹ "+sub.toString());
+                                sub=Math.ceil(sub) ;
+
+                                convert con=new convert();
+
+                                if(sub<1000)
+                                {
+                                    num_to_words=con.convertLessThanOneThousand(sub.intValue());
+                                }
+                                else
+                                {
+                                    num_to_words=con.convert(sub.longValue());
+                                }
+
+                                total.setText("₹"+sub.toString());
+
+                                items.remove(pos);
+                              DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+invoice.getText().toString()+"/Items/"+"Item "+(pos+1));
+                                db1.removeValue();
+                                adapter.notifyDataSetChanged();
+                                Toast.makeText(InvoiceGenerate.this, "DELETED", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+
+                        })
+
+                        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                adapter.notifyDataSetChanged();
+                                dialog.dismiss();
+
+                            }
+                        })
+                        .create();
+                    DeletionDialogBox.show();
+                }
+                else
+                {
+
+                    Intent intent=new Intent(InvoiceGenerate.this, ItemEdit.class);
+                    intent.putExtra("invoiceno",invoice.getText().toString());
+                    intent.putExtra("itemno",""+(pos+1));
+                    intent.putExtra("type",type);
+                    startActivityForResult(intent,2);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+                Bitmap icon;
+                if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
+
+                    View itemView = viewHolder.itemView;
+                    float height = (float) itemView.getBottom() - (float) itemView.getTop();
+                    float width = height / 3;
+
+                    if(dX<0){
+                        p.setColor(Color.parseColor("#388E3C"));
+                        RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(),(float) itemView.getRight(), (float) itemView.getBottom());
+                        c.drawRect(background,p);
+                        Drawable d=getResources().getDrawable(R.drawable.ic_edit_white);
+                        icon = drawableToBitmap(d);
+                        RectF icon_dest = new RectF((float) itemView.getRight() - 2*width ,(float) itemView.getTop() + width,(float) itemView.getRight() - width,(float)itemView.getBottom() - width);
+                        c.drawBitmap(icon,null,icon_dest,p);
+                    }
+                    else
+                    {
+                        p.setColor(Color.parseColor("#D32F2F"));
+                        RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX,(float) itemView.getBottom());
+                        c.drawRect(background,p);
+                        Drawable d=getResources().getDrawable(R.drawable.ic_delete_white);
+                        icon = drawableToBitmap(d);
+                        //icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_menu_send);
+                        RectF icon_dest = new RectF((float) itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width);
+                        c.drawBitmap(icon,null,icon_dest,p);
+
+                    }
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        };
+        ItemTouchHelper helper = new ItemTouchHelper(callback);
+        helper.attachToRecyclerView(rv);
+
+
+
 
          dis=(TextView)findViewById(R.id.discount);
         dis.setOnClickListener(new View.OnClickListener() {
@@ -462,8 +601,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                 PopupMenu popup = new PopupMenu(InvoiceGenerate.this, image);
 
                 popup.getMenuInflater().inflate(R.menu.popup, popup.getMenu());
-               // image.invalidate();
-                //registering popup with OnMenuItemClickListener
+
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                        switch(item.getItemId())
@@ -497,6 +635,10 @@ public class InvoiceGenerate extends AppCompatActivity {
             }
         });
     }
+
+
+
+
 
 
     public static class DatePickerFragment extends DialogFragment implements
@@ -533,6 +675,9 @@ public class InvoiceGenerate extends AppCompatActivity {
 
 
     }
+
+
+
     private static String setDateString(int dayOfMonth, int monthOfYear, int year) {
 
         // Increment monthOfYear for Calendar/Date -> Time Format setting
@@ -548,6 +693,9 @@ public class InvoiceGenerate extends AppCompatActivity {
         String s= day + "/" + mon + "/" + year;
         return s;
     }
+
+
+
     private void showDatePickerDialog() {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(), "datePicker");
@@ -555,7 +703,6 @@ public class InvoiceGenerate extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
         if(resultCode==99)
         {   uploadSign.setVisibility(View.GONE);
             File f=new File(data.getStringExtra("image"));
@@ -564,30 +711,27 @@ public class InvoiceGenerate extends AppCompatActivity {
             Picasso.with(getApplicationContext()).load(f).memoryPolicy(MemoryPolicy.NO_CACHE).into(image);
 
         }
-            if (resultCode == 1) {
-                bank = data.getStringExtra("bank_name");
-                ifsccode = data.getStringExtra("ifsc_code");
-                accholder = data.getStringExtra("account_holder");
-                accno = data.getStringExtra("account_number");
-                bank_details.setText(accholder);
-                ifsccode_details.setText(ifsccode);
-                accno_details.setText(accno);
-                bankname_details.setText(bank);
+
+        if (resultCode == 1) {
+            bank = data.getStringExtra("bank_name");
+            ifsccode = data.getStringExtra("ifsc_code");
+            accholder = data.getStringExtra("account_holder");
+            accno = data.getStringExtra("account_number");
+            bank_details.setText(accholder);
+            ifsccode_details.setText(ifsccode);
+            accno_details.setText(accno);
+            bankname_details.setText(bank);
             }
-           else if (resultCode == 2) {
+        else if (resultCode == 2) {
 
-                description = data.getStringExtra("description");
-                HSNcode = data.getStringExtra("HSNcode");
-                unitcost = data.getStringExtra("unitcost");
-                quantity = data.getStringExtra("quantity");
-                amount = data.getStringExtra("amount");
-
-                Double d=Math.ceil(Double.parseDouble(amount));
-                amount=d.toString();
-
-
-                String [] gstcost=new String[2];
-
+            description = data.getStringExtra("description");
+            HSNcode = data.getStringExtra("HSNcode");
+            unitcost = data.getStringExtra("unitcost");
+            quantity = data.getStringExtra("quantity");
+            amount = data.getStringExtra("amount");
+            Double d=Math.ceil(Double.parseDouble(amount));
+            amount=d.toString();
+            String [] gstcost=new String[2];
                 if(type.contains("Intra")||type.contains("Debit")||type.contains("Credit")||type.contains("Receipt")||type.contains("Payment"))
                 {
                    sgst=data.getStringExtra("Sgst");
@@ -602,19 +746,43 @@ public class InvoiceGenerate extends AppCompatActivity {
                     gstcost[0]=data.getStringExtra("Igstcost");
                 }
 
+
+                if(data.getStringExtra("from").equals("Additem"))
                 GST.add(gstcost);
 
+                else
+                    {
+                        GST.set(position_of_item,gstcost);
+                    }
 
-                if(type.contains("Intra")||type.contains("Debit")||type.contains("Credit")||type.contains("Receipt")||type.contains("Payment"))
-                items.add(new String[]{description, HSNcode,sgst,cgst, unitcost, quantity, amount});
-                else if(type.contains("Inter")||type.contains("Export"))
-                    items.add(new String[]{description, HSNcode,igst, unitcost, quantity, amount});
+
+                if (type.contains("Intra") || type.contains("Debit") || type.contains("Credit") || type.contains("Receipt") || type.contains("Payment")) {
+
+                    if(data.getStringExtra("from").equals("Additem")) {
+                        items.add(new String[]{description, HSNcode, sgst, cgst, unitcost, quantity, amount});
+                    }
+                    else
+                        items.set(position_of_item,new String[]{description, HSNcode, sgst, cgst, unitcost, quantity, amount});
+                }
+                else if (type.contains("Inter") || type.contains("Export")) {
+                    if(data.getStringExtra("from").equals("Additem")) {
+                        items.add(new String[]{description, HSNcode, igst, unitcost, quantity, amount});
+                    }
+                    else
+                        items.set(position_of_item,new String[]{description, HSNcode, igst, unitcost, quantity, amount});
+                }
+
 
 
                 adapter.notifyDataSetChanged();
                 if(adapter.getItemCount()>0)
                 {
                     noitem.setVisibility(View.GONE);
+                    swipe.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    swipe.setVisibility(View.GONE);
                 }
                 String invoiceid = invoice.getText().toString();
 
@@ -651,18 +819,18 @@ public class InvoiceGenerate extends AppCompatActivity {
 
                 total.setText("₹"+sub.toString());
 
+                if(data.getStringExtra("from").equals("Additem")) {
+                    db.child("Items").child("Item " + i).setValue(mp);
+                    i++;
+                }
+                else
+                    db.child("Items").child("Item " +(position_of_item+1)).setValue(mp);
 
-                db.child("Items").child("Item " + i).setValue(mp, new DatabaseReference.CompletionListener() {
-                    @Override
-                    public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
 
-                    }
-                });
-
-                i++;
                 mp.clear();
 
             }
+
             else if (resultCode == 3) {
                 Name = data.getStringExtra("name");
                 Phone = data.getStringExtra("phone");
@@ -697,29 +865,18 @@ public class InvoiceGenerate extends AppCompatActivity {
                 tot=sub-discount;
                 total.setText("₹"+tot.toString());
 
-
-            }
-
-            /*else if (requestCode == ADD_SEAL) {
-            try {
-                switch (resultCode) {
-
-                    case  Activity.RESULT_OK:
-                        uploadSign.setVisibility(View.GONE);
-                        //path=(data.getData());
-                        path=Uri.parse(GetURI.getPath(this,data.getData()));
-                        Picasso.with(this).load(data.getData()).into(image);
-                        //path=Uri.parse(getRealPathFromURI(data.getData()));
-                        //Toast.makeText(this, path.toString(), Toast.LENGTH_SHORT).show();
-                        break;
-                        case  Activity.RESULT_CANCELED:
-                         Log.e("", "Selecting picture cancelled");
-                            break;
+                convert con=new convert();
+                if(tot<1000)
+                {
+                    num_to_words=con.convertLessThanOneThousand(sub.intValue());
                 }
-            } catch (Exception e) {
-                Log.e("", "Exception in onActivityResult : " + e.getMessage());
+                else
+                {
+                    num_to_words=con.convert(sub.longValue());
+                }
+
             }
-        }*/
+
             else if (requestCode == ADD_STAMP) {
                 try {
                     switch (resultCode) {
@@ -729,9 +886,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                             //path=(data.getData());
                             StampPath=Uri.parse(GetURI.getPath(this,data.getData()));
                             Picasso.with(this).load(data.getData()).into(stamp);
-                            //path=Uri.parse(getRealPathFromURI(data.getData()));
-                            //Toast.makeText(this, path.toString(), Toast.LENGTH_SHORT).show();
-                            break;
+                           break;
                         case  Activity.RESULT_CANCELED:
                             Log.e("", "Selecting picture cancelled");
                             break;
@@ -741,28 +896,28 @@ public class InvoiceGenerate extends AppCompatActivity {
                 }
             }
     }
+
+
+
+
+
+
+
         public void uploadInvoice()
         {
 
              db= FirebaseDatabase.getInstance().getReference("Invoice");
 
-
             String invoiceid=invoice.getText().toString();
 
             mp.put("Date_of_Invoice",dateString.getText().toString());
-         //   mp.put("Invoice_ID",invoiceid);
             mp.put("VendorName",Name);
             mp.put("Amount",amount);
             mp.put("place_of_supply","india");
 
             file=new File(Environment.getExternalStorageDirectory()+ File.separator+invoice.getText().toString()+".pdf");
             mp.put("filepath",file.getPath());
-            db.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoiceid).child("Details").setValue(mp, new DatabaseReference.CompletionListener() {
-                @Override
-                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-
-                }
-            });
+            db.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoiceid).child("Details").setValue(mp);
         }
 
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.adity.invoicemaker.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,7 +34,7 @@ public class ItemEdit extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_edit);
+        setContentView(R.layout.activity_add_item);
 
         descrip = (EditText) findViewById(R.id.description);
         HSN = (EditText) findViewById(R.id.HSNcode);
@@ -45,6 +46,7 @@ public class ItemEdit extends AppCompatActivity {
 
         Invoiceno=getIntent().getStringExtra("invoiceno");
         itemno=getIntent().getStringExtra("itemno");
+
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -66,7 +68,7 @@ public class ItemEdit extends AppCompatActivity {
 
         db= FirebaseDatabase.getInstance().getReference("Invoice/"+ FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+Invoiceno+"/Items/Item "+itemno);
 
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds:dataSnapshot.getChildren())
@@ -208,6 +210,7 @@ public class ItemEdit extends AppCompatActivity {
                     i.putExtra("unitcost", unitcost);
                     i.putExtra("quantity", quantity);
                     i.putExtra("amount", l.toString());
+                    i.putExtra("from","edit");
                     setResult(2, i);
 
                     finish();

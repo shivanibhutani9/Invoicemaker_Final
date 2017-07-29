@@ -141,6 +141,7 @@ public class AddItem extends AppCompatActivity {
                     i.putExtra("unitcost", unitcost);
                     i.putExtra("quantity", quantity);
                     i.putExtra("amount", l.toString());
+                    i.putExtra("from","Additem");
                     setResult(2, i);
 
                     finish();
