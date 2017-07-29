@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center"
         android:ems="10"
+        android:maxLength="6"
         android:hint="Enter the OTP"
         android:inputType="number" />
 <LinearLayout

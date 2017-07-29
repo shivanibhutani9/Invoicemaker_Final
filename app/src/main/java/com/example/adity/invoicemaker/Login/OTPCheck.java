@@ -72,7 +72,7 @@ String sms="";
             @Override
             public void onSmsCatch(String message) {
                 String code = parseCode(message);//Parse verification code
-                Toast.makeText(OTPCheck.this,message, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(OTPCheck.this,message, Toast.LENGTH_SHORT).show();
                 editText.setText(code);//set code in PersonalEdit text
             }
         });
@@ -86,19 +86,22 @@ String sms="";
             @Override
             public void onClick(View view) {
 
+                if(editText.getText().toString().isEmpty())
+                {
+                    editText.setError("Please enter the OTP");
+                }else {
+                    try {
+                        urlverify = new URL("http://2factor.in/API/V1/5229354a-66c9-11e7-94da-0200cd936042/SMS/VERIFY/" + Details + "/" + editText.getText().toString());
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
 
-               try {
-                    urlverify=new URL("http://2factor.in/API/V1/5229354a-66c9-11e7-94da-0200cd936042/SMS/VERIFY/" + Details + "/" + editText.getText().toString());
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
+                    if (test.equals("Success")) {
+                        new OTPVerificationThread().execute();
+
+                    }
+
                 }
-
-                 if(test.equals("Success")) {
-                 new OTPVerificationThread().execute();
-
-              }
-
-
             }
         });
         }
@@ -145,7 +148,7 @@ String sms="";
         protected void onPostExecute(String result) {
             // do something with result
 
-            if (result== null) {
+            if (result==null) {
                 Toast.makeText(OTPCheck.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
             }  else {
                 try {
@@ -158,7 +161,7 @@ String sms="";
                 }
 
                 if (Details1.equals("OTP Matched")) {
-                    Toast.makeText(getApplicationContext(), "VERIFIED", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getApplicationContext(), "VERIFIED", Toast.LENGTH_SHORT).show();
 
                     pd=new ProgressDialog(OTPCheck.this);
                     pd.setMessage("Registering User");
@@ -229,10 +232,6 @@ String sms="";
                         }
                     });
 
-                }else if(Details1.equals("OTP Expired")){
-                   // new SendOTP().execute();
-                    Toast.makeText(OTPCheck.this, Details1, Toast.LENGTH_SHORT).show();
-
                 }
                 else {
                     Toast.makeText(OTPCheck.this, "Not Matched", Toast.LENGTH_SHORT).show();
@@ -274,7 +273,7 @@ String sms="";
                 }
                 if(test.equals("Success"))
                 {
-                    Toast.makeText(OTPCheck.this, "OTP Sent", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(OTPCheck.this, "OTP Sent", Toast.LENGTH_SHORT).show();
                 }
 
 

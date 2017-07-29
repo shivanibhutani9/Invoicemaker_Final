@@ -73,17 +73,33 @@ public class NetworkResponse{
     public static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
-            InputStream in = urlConnection.getInputStream();
+            int code=urlConnection.getResponseCode();
+            if (code < HttpURLConnection.HTTP_BAD_REQUEST) {
+                InputStream in = urlConnection.getInputStream();
 
-            Scanner scanner = new Scanner(in);
-            scanner.useDelimiter("\\A");
+                Scanner scanner = new Scanner(in);
+                scanner.useDelimiter("\\A");
 
-            boolean hasInput = scanner.hasNext();
-            if (hasInput) {
-                return scanner.next();
+                boolean hasInput = scanner.hasNext();
+                if (hasInput) {
+                    return scanner.next();
+                } else {
+                    return null;
+                }
             } else {
-                return null;
+                InputStream in = urlConnection.getErrorStream();
+
+                Scanner scanner = new Scanner(in);
+                scanner.useDelimiter("\\A");
+
+                boolean hasInput = scanner.hasNext();
+                if (hasInput) {
+                    return scanner.next();
+                } else {
+                    return null;
+                }
             }
+
         } finally {
             urlConnection.disconnect();
         }

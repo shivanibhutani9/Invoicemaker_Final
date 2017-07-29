@@ -78,8 +78,8 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final int pos=viewHolder.getAdapterPosition();
                 ObjectAcc obj=arrayList.get(pos);
-              if(direction== ItemTouchHelper.RIGHT){
-                AlertDialog DeletionDialogBox =new AlertDialog.Builder(AccPaymentDetailsActivity.this)
+                 if(direction== ItemTouchHelper.RIGHT){
+                 AlertDialog DeletionDialogBox =new AlertDialog.Builder(AccPaymentDetailsActivity.this)
                         //set message, title, and icon
                         .setTitle("Delete")
                         .setMessage("Do you really want to delete the following bank details?\n\n"+"\t\tAccount Holder -"+obj.accname+"\n\t\tAccount Number -"
@@ -260,11 +260,11 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
 
     }
 
-    @Override
+    /*@Override
     public Intent getSupportParentActivityIntent() {
         onBackPressed();
         return null;
-    }
+    }*/
 }
 
 
