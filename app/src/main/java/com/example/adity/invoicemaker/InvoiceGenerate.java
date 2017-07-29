@@ -795,13 +795,13 @@ public class InvoiceGenerate extends AppCompatActivity {
                     mp.put("Sgst", sgst);
                     mp.put("Cgst", cgst);
                 }
+
+
                 if(type.contains("Inter")||type.contains("Export"))
                 mp.put("Igst",igst);
-
                 mp.put("unit cost", unitcost);
                 mp.put("quantity", quantity);
                 mp.put("amount", amount);
-
                 sub=sub+Double.parseDouble(amount);
                 subtotal.setText("₹ "+sub.toString());
                 sub=Math.ceil(sub) ;
@@ -912,7 +912,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
             mp.put("Date_of_Invoice",dateString.getText().toString());
             mp.put("VendorName",Name);
-            mp.put("Amount",amount);
+            mp.put("Amount",total.getText().toString());
             mp.put("place_of_supply","india");
 
             file=new File(Environment.getExternalStorageDirectory()+ File.separator+invoice.getText().toString()+".pdf");
