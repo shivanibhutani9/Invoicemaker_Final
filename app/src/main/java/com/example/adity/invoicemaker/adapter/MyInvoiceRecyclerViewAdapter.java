@@ -27,6 +27,13 @@ public class MyInvoiceRecyclerViewAdapter extends RecyclerView.Adapter<MyInvoice
     private final ArrayList<InvoiceListFragment.ObjectInv> mValues;
     private final OnListFragmentInteractionListener mListener;
 
+    /**
+     * List adapter for all saved invoices
+     *
+     * @param c
+     * @param items
+     * @param listener
+     */
     public MyInvoiceRecyclerViewAdapter(Context c ,ArrayList<InvoiceListFragment.ObjectInv> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;

@@ -39,6 +39,12 @@ public class listadapt extends RecyclerView.Adapter<listadapt.ViewHolder> {
         return new ViewHolder(V);
     }
 
+    /**
+     * list of items adapter which is being showed when user enter new items in invoice generator
+     *
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
