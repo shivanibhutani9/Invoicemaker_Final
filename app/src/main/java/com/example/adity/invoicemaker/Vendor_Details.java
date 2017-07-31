@@ -293,6 +293,7 @@ public class Vendor_Details extends AppCompatActivity implements com.example.adi
 
 
                 pd.hide();
+                pd.dismiss();
 
             }
 

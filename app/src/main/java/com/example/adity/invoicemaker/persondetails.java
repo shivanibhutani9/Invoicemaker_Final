@@ -108,6 +108,7 @@ public class persondetails extends AppCompatActivity {
                 gst.setText(""+gs);
 
                 pd.hide();
+                pd.dismiss();
             }
 
             @Override

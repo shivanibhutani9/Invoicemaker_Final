@@ -109,6 +109,7 @@ public class ItemEdit extends AppCompatActivity {
 
                 }
                 pd.hide();
+                pd.dismiss();
             }
 
             @Override
