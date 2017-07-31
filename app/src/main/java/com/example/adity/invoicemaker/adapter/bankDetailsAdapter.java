@@ -54,13 +54,11 @@ public class bankDetailsAdapter extends RecyclerView.Adapter<bankDetailsAdapter.
         this.onItemTouchListener = itemClickListener;
     }
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-      public TextView Acc_name,Acc_no,bankName,ifsc;
+      public TextView Acc_no,bankName;
         public ViewHolder(View itemView) {
             super(itemView);
-          //  Acc_name=(TextView)itemView.findViewById(R.id.ac_name);
             Acc_no=(TextView)itemView.findViewById(R.id.ac_no);
             bankName=(TextView)itemView.findViewById(R.id.bname);
-           // ifsc=(TextView)itemView.findViewById(R.id.ifsc_code);
             itemView.setOnClickListener(this);
 
         }

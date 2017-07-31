@@ -90,14 +90,13 @@ public class tax_invoice1 {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image= Image.getInstance(stream.toByteArray());
-                image.scaleToFit(50, 50);
-            }
+               }
             if(stamp!=null) {
                 Bitmap bmp = BitmapFactory.decodeFile(stamp.toString());
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image2= Image.getInstance(stream.toByteArray());
-                image2.scaleToFit(50, 50);
+
             }
             if(logopath!=null)
             {
@@ -106,6 +105,7 @@ public class tax_invoice1 {
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image3= Image.getInstance(stream.toByteArray());
                 image3.scaleToFit(50, 50);
+
             }
 
             //  innertable.setWidths(new int[]{40});
@@ -281,6 +281,7 @@ public class tax_invoice1 {
             innertable2.addCell(cell1);
 
             cell1 = new PdfPCell(new Phrase("Name: "+client_com));
+            cell1.setHorizontalAlignment(Element.ALIGN_LEFT);
             //cell.setBorder(Rectangle.NO_BORDER);
             cell1.setPaddingLeft(20);
             innertable2.addCell(cell1);
@@ -494,6 +495,7 @@ public class tax_invoice1 {
             //InputStream ims=new FileInputStream(path.getPath());
 
             PdfPTable innertable7 = new PdfPTable(3);
+
             innertable7.setWidthPercentage(100);
             //innertable6.setWidths(new int[]{20,20,20});
             PdfPTable nested3 = new PdfPTable(1);
@@ -506,7 +508,12 @@ public class tax_invoice1 {
           //  PdfPCell cell7 = new PdfPCell(new Phrase("Common Seal"));
             PdfPTable nested5 = new PdfPTable(1);
             if(stamp!=null)
-            {  nested5.addCell(image2);}
+            {   PdfPCell cell55=new PdfPCell(image2);
+                cell55.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell55.setFixedHeight(150);
+                nested5.addCell(cell55);
+
+            }
             else
             {
                 nested5.addCell("");
@@ -521,7 +528,9 @@ public class tax_invoice1 {
             innertable7.addCell(cell7);
             */PdfPTable nested4 = new PdfPTable(1);
             if(path!=null)
-            {  nested4.addCell(image);}
+            {    PdfPCell cell65=new PdfPCell(image);
+               cell65.setFixedHeight(150);
+             nested4.addCell(cell65);}
             else
             {
                 nested4.addCell("");
