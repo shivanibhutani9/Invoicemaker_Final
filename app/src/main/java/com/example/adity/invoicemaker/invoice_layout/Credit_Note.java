@@ -89,7 +89,7 @@ public class Credit_Note {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image= Image.getInstance(stream.toByteArray());
-                image.scaleToFit(50, 50);
+                image.scaleToFit(30,30);
             }
             if(stamp!=null) {
                 Bitmap bmp = BitmapFactory.decodeFile(stamp.toString());
@@ -400,14 +400,14 @@ public class Credit_Note {
            }
             doc.add(innertable5);
 
-            PdfPTable t = new PdfPTable(9);
+            PdfPTable t = new PdfPTable(2);
             t.setWidthPercentage(100);
-            t.setWidths(new int[]{14, 7, 7, 7, 7, 5, 5, 5, 5});
+            t.setWidths(new int[]{50,50});
             PdfPCell ce = new PdfPCell(new Phrase("Total"));
             t.addCell(ce);
             ce = new PdfPCell(new Phrase(""+total));
             t.addCell(ce);
-            ce = new PdfPCell(new Phrase(""));
+          /*  ce = new PdfPCell(new Phrase(""));
             t.addCell(ce);
             ce = new PdfPCell(new Phrase("0"));
             t.addCell(ce);
@@ -422,7 +422,7 @@ public class Credit_Note {
             ce = new PdfPCell(new Phrase("0"));
             t.addCell(ce);
             ce = new PdfPCell(new Phrase("0"));
-            t.addCell(ce);
+            t.addCell(ce);*/
             doc.add(t);
 
 
@@ -454,7 +454,7 @@ public class Credit_Note {
 
             }
 
-           // innertable6.addCell(nesthousing);
+
             PdfPTable nested2 = new PdfPTable(1);
             nested2.addCell(""+subtot);
             nested2.addCell(""+subtotalcgst);
