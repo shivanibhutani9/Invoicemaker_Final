@@ -30,8 +30,7 @@
             android:layout_width="wrap_content"
             android:padding="5dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="end">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -42,10 +41,10 @@
                 android:textColor="#000"
                 android:focusableInTouchMode="true" />
             <TextView
+                android:layout_marginLeft="50dp"
                 android:paddingLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
                 android:text="INV000"
                 android:textSize="18sp"
                 android:id="@+id/invoiceid"
@@ -56,7 +55,6 @@
         android:layout_width="wrap_content"
         android:padding="5dp"
         android:layout_height="35dp"
-        android:layout_gravity="end"
         android:orientation="horizontal">
 
         <TextView
@@ -68,6 +66,7 @@
             android:textColor="#000"
             android:focusableInTouchMode="true" />
         <ImageButton
+            android:layout_marginLeft="50dp"
             android:id="@+id/calendar"
             android:paddingLeft="5dp"
             android:layout_width="wrap_content"
