@@ -97,7 +97,6 @@
             android:name=".Edits.BankEdit"
             android:parentActivityName=".bank_activity.AccPaymentDetailsActivity" />
         <activity android:name=".Edits.ItemEdit" />
-        <activity android:name=".CanvasSign" />
         <activity
             android:name=".Signature_Activity"
             android:parentActivityName=".InvoiceGenerate" />
