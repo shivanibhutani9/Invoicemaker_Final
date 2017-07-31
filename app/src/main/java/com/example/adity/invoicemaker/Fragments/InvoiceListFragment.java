@@ -127,7 +127,7 @@ public class InvoiceListFragment extends Fragment {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final int pos=viewHolder.getAdapterPosition();
-                ObjectInv obj=mValues.get(pos);
+                final ObjectInv obj=mValues.get(pos);
 
                 if(direction==ItemTouchHelper.RIGHT)
                { AlertDialog DeletionDialogBox =new AlertDialog.Builder(getActivity())
@@ -142,6 +142,8 @@ public class InvoiceListFragment extends Fragment {
                                 mValues.remove(pos);
                                 adapter.notifyDataSetChanged();
                                 Toast.makeText(getActivity(), "DELETED", Toast.LENGTH_SHORT).show();
+                                DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+obj.inv_no);
+                                db1.removeValue();
 
                                 dialog.dismiss();
                             }

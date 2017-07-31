@@ -62,9 +62,7 @@ public class Vendor_Details extends AppCompatActivity implements com.example.adi
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         arrayList=new ArrayList<>();
         rv= (RecyclerView)findViewById(R.id.vendor_list);
-
         adapter =new Vendor_Adapter(this,arrayList,onItemTouchListener);
-
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
 
@@ -84,7 +82,7 @@ public class Vendor_Details extends AppCompatActivity implements com.example.adi
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final int pos = viewHolder.getAdapterPosition();
-                ObjectVendor obj = arrayList.get(pos);
+                final ObjectVendor obj = arrayList.get(pos);
                if(direction==ItemTouchHelper.RIGHT) {
 
                    AlertDialog DeletionDialogBox = new AlertDialog.Builder(Vendor_Details.this)
@@ -97,8 +95,11 @@ public class Vendor_Details extends AppCompatActivity implements com.example.adi
                                public void onClick(DialogInterface dialog, int whichButton) {
                                    //your deleting code
                                    arrayList.remove(pos);
+                                   arrayList.clear();
                                    adapter.notifyDataSetChanged();
-                                   Toast.makeText(Vendor_Details.this, "DELETED", Toast.LENGTH_SHORT).show();
+                                   DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Company/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+obj.v_name);
+                                   db1.removeValue();
+                                           Toast.makeText(Vendor_Details.this, "DELETED", Toast.LENGTH_SHORT).show();
 
                                    dialog.dismiss();
                                }

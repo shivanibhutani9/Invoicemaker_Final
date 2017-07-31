@@ -39,8 +39,10 @@ import android.widget.Toast;
 import com.example.adity.invoicemaker.Edits.ItemEdit;
 import com.example.adity.invoicemaker.Fragments.InvoiceListFragment;
 import com.example.adity.invoicemaker.Fragments.NavigationDrawer;
+import com.example.adity.invoicemaker.Fragments.invoice_fragment;
 import com.example.adity.invoicemaker.adapter.listadapt;
 import com.example.adity.invoicemaker.bank_activity.AccPaymentDetailsActivity;
+import com.example.adity.invoicemaker.bank_activity.BankDetails;
 import com.example.adity.invoicemaker.invoice_layout.Credit_Note;
 import com.example.adity.invoicemaker.invoice_layout.Debit_Note;
 import com.example.adity.invoicemaker.invoice_layout.Export_invoice;
@@ -72,6 +74,7 @@ import static com.example.adity.invoicemaker.Fragments.InvoiceListFragment.drawa
 
 public class InvoiceGenerate extends AppCompatActivity {
  static TextView dateString;
+    boolean hasvendor=false,haspaymentoption=false;
     private Paint p = new Paint();
     Uri logopath=null;
     int ADD_SEAL=99,ADD_STAMP=101;
@@ -211,14 +214,14 @@ public class InvoiceGenerate extends AppCompatActivity {
                     in="INV"+in;
                         invoice.setText(in);
 
-                    pd.hide();
-                    pd.dismiss();
+                  //  pd.hide();
+                   // pd.dismiss();
                 }
                 else
                 {
                     invoice.setText("INV000");
-                    pd.hide();
-                    pd.dismiss();
+                    //pd.hide();
+                   // pd.dismiss();
                 }
             }
             @Override
@@ -227,7 +230,51 @@ public class InvoiceGenerate extends AppCompatActivity {
             }
         });
 
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//forvendordetailsno
+        db = FirebaseDatabase.getInstance().getReference("Company/"+FirebaseAuth.getInstance().getCurrentUser().getUid());
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.getChildrenCount()==0)
+                {hasvendor=false;
+                }else
+                {
+                    hasvendor=true;
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //for paymentdetailsno
+        db= FirebaseDatabase.getInstance().getReference("Account Details/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.getChildrenCount()==0)
+                {haspaymentoption=false;
+                }else
+                {
+                    haspaymentoption=true;
+                }
+                pd.hide();
+                pd.dismiss();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
 
@@ -235,10 +282,17 @@ public class InvoiceGenerate extends AppCompatActivity {
         payment_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),AccPaymentDetailsActivity.class);
+               if(haspaymentoption)
+               { Intent intent=new Intent(getApplicationContext(),AccPaymentDetailsActivity.class);
                 //intent.putExtra("Type","VENDOR");
                 intent.putExtra("from","Invoice");
-                startActivityForResult(intent,1);
+                startActivityForResult(intent,1); }
+                else
+               {
+                   Intent intent=new Intent(getApplicationContext(),BankDetails.class);
+                   intent.putExtra("from","zero");
+                   startActivityForResult(intent,500); }
+
 
             }
         });
@@ -444,7 +498,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                                 total.setText("₹"+sub.toString());
 
                                 items.remove(pos);
-                              DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+invoice.getText().toString()+"/Items/"+"Item "+(pos+1));
+                               DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+invoice.getText().toString()+"/Items/"+"Item "+(pos+1));
                                 db1.removeValue();
                                 adapter.notifyDataSetChanged();
                                 Toast.makeText(InvoiceGenerate.this, "DELETED", Toast.LENGTH_SHORT).show();
@@ -540,10 +594,16 @@ public class InvoiceGenerate extends AppCompatActivity {
         ClientDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),Vendor_Details.class);
-                intent.putExtra("from","Invoice");
-                startActivityForResult(intent,3);
-
+               if(hasvendor) {
+                   Intent intent = new Intent(getApplicationContext(), Vendor_Details.class);
+                   intent.putExtra("from", "Invoice");
+                   startActivityForResult(intent, 3);
+               }
+               else{
+                   Intent intent=new Intent(getApplicationContext(),ClientDetails.class);
+                   intent.putExtra("from","zero");
+                   startActivityForResult(intent,501);
+               }
             }
         });
 
@@ -907,6 +967,31 @@ public class InvoiceGenerate extends AppCompatActivity {
                 noclient.setVisibility(View.GONE);
 
             }
+        else if (resultCode == 501) {
+            Name = data.getStringExtra("name");
+            Phone = data.getStringExtra("phone");
+            Email = data.getStringExtra("email");
+            Address = data.getStringExtra("address1")+"\n"+data.getStringExtra("address2")+"\n";
+            Gstin=data.getStringExtra("gstin");
+            Pan_no=data.getStringExtra("pan");
+            state=data.getStringExtra("State");
+            zip=data.getStringExtra("Zip");
+
+            TextView company,gst,pan;
+            company=(TextView)findViewById(R.id.com);
+            gst=(TextView)findViewById(R.id.gst);
+            pan=(TextView)findViewById(R.id.pan);
+
+            company.setText(Name);
+            gst.setText(Gstin);
+            pan.setText(Pan_no);
+
+
+            clients.setVisibility(View.VISIBLE);
+            noclient.setVisibility(View.GONE);
+            hasvendor=true;
+
+        }
 
         /**
          * it will get results from Discount.java
@@ -934,8 +1019,20 @@ public class InvoiceGenerate extends AppCompatActivity {
                 }
 
             }
+else if(resultCode==500)
+        {
+            bank = data.getStringExtra("bank_name");
+            ifsccode = data.getStringExtra("ifsc_code");
+            accholder = data.getStringExtra("account_holder");
+            accno = data.getStringExtra("account_number");
+            bank_details.setText(accholder);
+            ifsccode_details.setText(ifsccode);
+            accno_details.setText(accno);
+            bankname_details.setText(bank);
+            haspaymentoption=true;
+        }
 
-            else if (requestCode == ADD_STAMP) {
+        else if (requestCode == ADD_STAMP) {
                 try {
                     switch (resultCode) {
 

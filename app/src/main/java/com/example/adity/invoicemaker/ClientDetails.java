@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.adity.invoicemaker.bank_activity.BankDetails;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -167,6 +168,23 @@ public class ClientDetails extends AppCompatActivity {
                         }
                     });
 
+                    Bundle extras = ClientDetails.this.getIntent().getExtras();
+                    if(extras!=null) {
+                        String act = extras.getString("from");
+                        if (act.equals("zero")) {
+                            Intent i=new Intent();
+                            i.putExtra("name",Name);
+                            i.putExtra("phone",Phone);
+                            i.putExtra("email",Email);
+                            i.putExtra("address1",add1);
+                            i.putExtra("address2",add2);
+                            i.putExtra("State",st);
+                            i.putExtra("Zip",zp);
+                            i.putExtra("gstin",gstin);
+                            i.putExtra("pan",pan_no);
+                            i.putExtra("Country",country); setResult(501,i);
+                        }
+                    }
                     finish();
                 }
 

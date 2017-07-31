@@ -48,6 +48,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
     ProgressDialog pd;
     onItemTouchListener onItemTouchListener;
     private Paint p=new Paint();
+    int size;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +80,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final int pos=viewHolder.getAdapterPosition();
-                ObjectAcc obj=arrayList.get(pos);
+                final ObjectAcc obj=arrayList.get(pos);
                  if(direction== ItemTouchHelper.RIGHT){
                  AlertDialog DeletionDialogBox =new AlertDialog.Builder(AccPaymentDetailsActivity.this)
                         //set message, title, and icon
@@ -91,9 +92,16 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 //your deleting code
                                 arrayList.remove(pos);
+                                arrayList.clear();
                                 adapter.notifyDataSetChanged();
+                                DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Account Details/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+obj.bankname+"/"+obj.accno);
+                                db1.removeValue();
+                                /*if(arrayList.isEmpty())
+                                {
+                                    startActivity(new Intent(AccPaymentDetailsActivity.this,BankDetails.class));
+                                    finish();
+                                }*/
                                 Toast.makeText(AccPaymentDetailsActivity.this, "DELETED", Toast.LENGTH_SHORT).show();
-
                                 dialog.dismiss();
                             }
 
@@ -168,6 +176,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
             public void onClick(View view) {
                 arrayList.clear();
                 startActivity(new Intent(AccPaymentDetailsActivity.this,BankDetails.class));
+
               }
         });
 
@@ -239,7 +248,6 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
                             }
 
 
-
                         }
 
                     }
@@ -247,11 +255,11 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
                     arrayList.add(obj);
                     adapter.notifyDataSetChanged();
 
+
                 }
 
-
-
                 pd.hide();
+                pd.dismiss();
 
             }
 
@@ -277,6 +285,11 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }
 

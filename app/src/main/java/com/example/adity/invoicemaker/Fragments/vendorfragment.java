@@ -91,7 +91,7 @@ public class vendorfragment extends Fragment implements com.example.adity.invoic
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final int pos = viewHolder.getAdapterPosition();
-                Vendor_Details.ObjectVendor obj = arrayList.get(pos);
+                final Vendor_Details.ObjectVendor obj = arrayList.get(pos);
                 if(direction==ItemTouchHelper.RIGHT) {
 
                     AlertDialog DeletionDialogBox = new AlertDialog.Builder(getActivity())
@@ -105,6 +105,9 @@ public class vendorfragment extends Fragment implements com.example.adity.invoic
                                     //your deleting code
                                     arrayList.remove(pos);
                                     adapter.notifyDataSetChanged();
+                                    DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Company/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+obj.v_name);
+                                    db1.removeValue();
+
                                     Toast.makeText(getActivity(), "DELETED", Toast.LENGTH_SHORT).show();
 
                                     dialog.dismiss();
