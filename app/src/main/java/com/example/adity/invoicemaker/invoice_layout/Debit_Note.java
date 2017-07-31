@@ -278,7 +278,7 @@ public class Debit_Note {
             innertable2.addCell(cell1);
 
 
-            cell1 = new PdfPCell(new Phrase("Address: "+client_com));
+            cell1 = new PdfPCell(new Phrase("Address: "+client_add));
             //cell.setBorder(Rectangle.NO_BORDER);
             cell.setPaddingLeft(2);
 
