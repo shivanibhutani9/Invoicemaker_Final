@@ -392,14 +392,14 @@ public class Export_invoice {
             }
             doc.add(innertable5);
 
-            PdfPTable t = new PdfPTable(8);
+            PdfPTable t = new PdfPTable(2);
             t.setWidthPercentage(100);
-            t.setWidths(new int[]{14, 7, 7, 7, 7, 5, 5, 5});
+            t.setWidths(new int[]{50,50});
             PdfPCell ce = new PdfPCell(new Phrase("Total"));
             t.addCell(ce);
             ce = new PdfPCell(new Phrase(""+total));
             t.addCell(ce);
-            ce = new PdfPCell(new Phrase(""));
+         /*   ce = new PdfPCell(new Phrase(""));
             t.addCell(ce);
             ce = new PdfPCell(new Phrase("0"));
             t.addCell(ce);
@@ -414,7 +414,7 @@ public class Export_invoice {
             ce = new PdfPCell(new Phrase("0"));
             t.addCell(ce);
             ce = new PdfPCell(new Phrase("0"));
-            t.addCell(ce);
+            t.addCell(ce);*/
             doc.add(t);
 
 

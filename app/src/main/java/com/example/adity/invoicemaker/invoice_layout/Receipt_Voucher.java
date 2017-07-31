@@ -328,19 +328,19 @@ public class Receipt_Voucher {
             }
             doc.add(innertable5);
 
-            PdfPTable t = new PdfPTable(5);
+            PdfPTable t = new PdfPTable(2);
             t.setWidthPercentage(100);
-            t.setWidths(new int[]{14, 7, 7, 7, 7});
+            t.setWidths(new int[]{50,50});
             PdfPCell ce = new PdfPCell(new Phrase("Total"));
             t.addCell(ce);
             ce = new PdfPCell(new Phrase(""+total));
             t.addCell(ce);
-            ce = new PdfPCell(new Phrase("0"));
+            /*ce = new PdfPCell(new Phrase("0"));
             t.addCell(ce);
             ce = new PdfPCell(new Phrase("0"));
             t.addCell(ce);
             ce = new PdfPCell(new Phrase("0"));
-            t.addCell(ce);
+            t.addCell(ce);*/
             doc.add(t);
 
 
