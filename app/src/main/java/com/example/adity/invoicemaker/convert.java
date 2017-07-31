@@ -4,7 +4,10 @@ import java.text.DecimalFormat;
 
 /**
  * Created by adity on 7/26/2017.
+ *
+ * used to covert Numbers to words
  */
+
 
 public class convert {
 

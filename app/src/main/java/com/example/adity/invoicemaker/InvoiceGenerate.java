@@ -316,7 +316,10 @@ public class InvoiceGenerate extends AppCompatActivity {
         });
 
 
-
+/**
+ * method to show the preview of invoice
+ *
+ */
     // To preview the invoice
         Button preview=(Button)findViewById(R.id.previewbutton);
         preview.setOnClickListener(new View.OnClickListener() {
@@ -686,6 +689,14 @@ public class InvoiceGenerate extends AppCompatActivity {
 
     }
 
+    /**
+     * method to set date
+     *
+     * @param dayOfMonth
+     * @param monthOfYear
+     * @param year
+     * @return
+     */
 
 
     private static String setDateString(int dayOfMonth, int monthOfYear, int year) {
@@ -704,12 +715,25 @@ public class InvoiceGenerate extends AppCompatActivity {
         return s;
     }
 
-
+    /**
+     * method to show date
+     *
+     */
 
     private void showDatePickerDialog() {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(), "datePicker");
     }
+
+
+    /**\
+     *
+     * method to get result from other activities
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -721,7 +745,9 @@ public class InvoiceGenerate extends AppCompatActivity {
             Picasso.with(getApplicationContext()).load(f).memoryPolicy(MemoryPolicy.NO_CACHE).into(image);
 
         }
-
+/**
+ * it will get results from AccPaymentDetailsActivity.java
+ */
         if (resultCode == 1) {
             bank = data.getStringExtra("bank_name");
             ifsccode = data.getStringExtra("ifsc_code");
@@ -732,6 +758,10 @@ public class InvoiceGenerate extends AppCompatActivity {
             accno_details.setText(accno);
             bankname_details.setText(bank);
             }
+
+        /**
+         * it will get results from ItemEdit.java
+         */
         else if (resultCode == 2) {
 
             description = data.getStringExtra("description");
@@ -840,6 +870,9 @@ public class InvoiceGenerate extends AppCompatActivity {
                 mp.clear();
 
             }
+        /**
+         * it will get results from ClientDetails.java
+         */
 
             else if (resultCode == 3) {
                 Name = data.getStringExtra("name");
@@ -865,6 +898,11 @@ public class InvoiceGenerate extends AppCompatActivity {
                 noclient.setVisibility(View.GONE);
 
             }
+
+        /**
+         * it will get results from Discount.java
+         */
+
             else if(resultCode==5)
             {
                 discount=data.getExtras().getDouble("discount");
@@ -908,7 +946,11 @@ public class InvoiceGenerate extends AppCompatActivity {
             }
     }
 
-
+    /**
+     *
+     * Method to upload the details of invoice on firebase
+     *
+     */
 
 
 
@@ -931,6 +973,10 @@ public class InvoiceGenerate extends AppCompatActivity {
             db.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoiceid).child("Details").setValue(mp);
         }
 
+    /**
+     *
+     * method to save the pdf in phone's external storage
+     */
 
     public void save()
     {
@@ -979,6 +1025,9 @@ boolean validate()
 }
 
 }
+
+
+
 
 
 

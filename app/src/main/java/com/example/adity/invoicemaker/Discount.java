@@ -22,6 +22,13 @@ public class Discount extends AppCompatActivity {
 
         Button save =(Button)findViewById(R.id.savedis);
         save.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             *
+             * it will send the result to InvoiceGenerate.java
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
 

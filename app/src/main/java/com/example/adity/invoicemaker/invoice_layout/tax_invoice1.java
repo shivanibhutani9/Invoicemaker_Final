@@ -529,6 +529,7 @@ public class tax_invoice1 {
             */PdfPTable nested4 = new PdfPTable(1);
             if(path!=null)
             {    PdfPCell cell65=new PdfPCell(image);
+                cell65.setHorizontalAlignment(Element.ALIGN_CENTER);
                cell65.setFixedHeight(150);
              nested4.addCell(cell65);}
             else

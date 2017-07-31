@@ -66,7 +66,14 @@ public class Export_invoice {
         this.user_phone=user_phone;
     }
 
-
+    /**
+     * method to create Export invoice pdf
+     *
+     * @param file
+     * @param path
+     * @param stamp
+     * @param logopath
+     */
     public void pdfcreate(File file, Uri path, Uri stamp,Uri logopath) {
 
         com.itextpdf.text.Document doc = new com.itextpdf.text.Document(PageSize.A4, 0f, 0f, 0f, 0f);
@@ -86,14 +93,14 @@ public class Export_invoice {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image= Image.getInstance(stream.toByteArray());
-                image.scaleToFit(50, 50);
+             //   image.scaleToFit(50, 50);
             }
             if(stamp!=null) {
                 Bitmap bmp = BitmapFactory.decodeFile(stamp.toString());
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image2= Image.getInstance(stream.toByteArray());
-                image2.scaleToFit(50, 50);
+             //   image2.scaleToFit(50, 50);
             }
             File logo=new File(logopath.toString());
             if(logopath!=null&&logo.exists())
@@ -475,10 +482,16 @@ public class Export_invoice {
             nested3.addCell("Bank IFSC"+ifsc);
             nested3.addCell("Terms And Conditions");
             PdfPCell nesthousing3 = new PdfPCell(nested3);
+            nesthousing3.setFixedHeight(150);
             innertable7.addCell(nesthousing3);
             PdfPTable nested5 = new PdfPTable(1);
             if(stamp!=null)
-            {  nested5.addCell(image2);}
+            {   PdfPCell cell55=new PdfPCell(image2);
+                cell55.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell55.setFixedHeight(150);
+                nested5.addCell(cell55);
+
+            }
             else
             {
                 nested5.addCell("");
@@ -488,7 +501,15 @@ public class Export_invoice {
 
             innertable7.addCell(nesthousing5);
             PdfPTable nested4 = new PdfPTable(1);
-            nested4.addCell(image);
+            if(path!=null)
+            {    PdfPCell cell65=new PdfPCell(image);
+                cell65.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell65.setFixedHeight(150);
+                nested4.addCell(cell65);}
+            else
+            {
+                nested4.addCell("");
+            }
             nested4.addCell("Authorised Signatory");
             PdfPCell nesthousing4 = new PdfPCell(nested4);
 

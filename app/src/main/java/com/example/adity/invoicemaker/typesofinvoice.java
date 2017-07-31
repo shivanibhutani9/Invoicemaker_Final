@@ -23,8 +23,10 @@ public class typesofinvoice extends AppCompatActivity {
         setContentView(R.layout.activity_typesofinvoice);
 
 
-
-
+/**
+ *
+ * List of all invoices
+ */
         INTERESTS=new ArrayList<>();
 
         HashMap<String, String> data1 = new HashMap<>();

@@ -66,7 +66,15 @@ public class Receipt_Voucher {
         this.user_phone=user_phone;
     }
 
-
+    /**
+     *
+     * method to create Receipt Voucher invoice type pdf
+     *
+     * @param f
+     * @param path
+     * @param stamp
+     * @param logopath
+     */
 
 
     public void pdfcreate(File f, Uri path, Uri stamp,Uri logopath) {
@@ -89,14 +97,14 @@ public class Receipt_Voucher {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image= Image.getInstance(stream.toByteArray());
-                image.scaleToFit(50, 50);
+            //    image.scaleToFit(50, 50);
             }
             if(stamp!=null) {
                 Bitmap bmp = BitmapFactory.decodeFile(stamp.toString());
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image2= Image.getInstance(stream.toByteArray());
-                image2.scaleToFit(50, 50);
+             //   image2.scaleToFit(50, 50);
             }
             File logo=new File(logopath.toString());
             if(logopath!=null&&logo.exists())
@@ -368,14 +376,27 @@ public class Receipt_Voucher {
             innertable7.setWidthPercentage(100);
             //innertable6.setWidths(new int[]{20,20,20});
             PdfPTable nested4 = new PdfPTable(1);
-            nested4.addCell(image);
+            if(path!=null)
+            {    PdfPCell cell65=new PdfPCell(image);
+                cell65.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell65.setFixedHeight(150);
+                nested4.addCell(cell65);}
+            else
+            {
+                nested4.addCell("");
+            }
             nested4.addCell("Authorised Signatory");
             PdfPCell nesthousing4 = new PdfPCell(nested4);
 
             innertable7.addCell(nesthousing4);
             PdfPTable nested5 = new PdfPTable(1);
             if(stamp!=null)
-            {  nested5.addCell(image2);}
+            {   PdfPCell cell55=new PdfPCell(image2);
+                cell55.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell55.setFixedHeight(150);
+                nested5.addCell(cell55);
+
+            }
             else
             {
                 nested5.addCell("");
@@ -393,6 +414,7 @@ public class Receipt_Voucher {
             nested.addCell("Total Amount After Tax");
             nested.addCell("GST on Reverse Charge");
             PdfPCell nesthousing = new PdfPCell(nested);
+            nesthousing.setFixedHeight(150);
 
             innertable7.addCell(nesthousing);
             PdfPTable nested2 = new PdfPTable(1);
@@ -416,6 +438,7 @@ public class Receipt_Voucher {
             nested2.addCell(""+total);
             nested2.addCell("0");
             PdfPCell nesthousing2 = new PdfPCell(nested2);
+            nesthousing2.setFixedHeight(150);
             innertable7.addCell(nesthousing2);
 
             doc.add(innertable7);

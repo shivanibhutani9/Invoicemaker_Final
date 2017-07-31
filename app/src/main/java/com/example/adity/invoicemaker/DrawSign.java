@@ -21,6 +21,12 @@ public class DrawSign extends View{
     private Paint drawPaint;
     private Path path = new Path();
 
+    /**
+     * method to create sign
+     *
+     * @param context
+     * @param attrs
+     */
     public DrawSign(Context context, AttributeSet attrs) {
         super(context, attrs);
         setFocusable(true);
@@ -28,7 +34,10 @@ public class DrawSign extends View{
         setupPaint();
     }
 
-
+    /**
+     *
+     * method to set paint for sign
+     */
     private void setupPaint() {
         // Setup paint with color and stroke styles
         drawPaint = new Paint();
@@ -40,7 +49,11 @@ public class DrawSign extends View{
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
 
     }
-public void clear()
+
+    /**
+     * method to clear screen
+     */
+    public void clear()
 {
     path.reset();
     postInvalidate();

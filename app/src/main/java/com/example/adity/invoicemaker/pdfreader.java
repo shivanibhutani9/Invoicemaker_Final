@@ -67,7 +67,7 @@ public class pdfreader extends AppCompatActivity {
     }
 
     /**
-     * method to show the stored PDF in app
+     * method to Preview the pdf which is generated
      *
      */
 
@@ -102,6 +102,11 @@ public class pdfreader extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * this method will delete the file after previewing it
+     */
+
 
     @Override
     public void onBackPressed() {
