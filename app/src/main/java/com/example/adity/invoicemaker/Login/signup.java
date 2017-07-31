@@ -12,6 +12,9 @@ import com.example.adity.invoicemaker.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class signup extends AppCompatActivity {
 
     EditText fn,email,pass,repass,phone;
@@ -50,7 +53,7 @@ public class signup extends AppCompatActivity {
                     fn.setError("Enter a valid name");
                     fn.requestFocus();
                 }
-                else if ( (em.isEmpty()) || !(em.contains("@")) || !(em.contains("."))) {
+                else if (em.isEmpty()||!em.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+")) {
                     email.setError("Enter  valid Email");
                     email.requestFocus();
 
@@ -81,7 +84,6 @@ public class signup extends AppCompatActivity {
 
 
     }
-
     @Override
     public void onBackPressed() {
         startActivity(new Intent(signup.this,MainActivity.class));

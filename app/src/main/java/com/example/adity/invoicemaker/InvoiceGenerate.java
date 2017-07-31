@@ -873,6 +873,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
 
                 tot=sub-discount;
+                tot=Math.ceil(tot) ;
                 total.setText("₹"+tot.toString());
 
                 convert con=new convert();

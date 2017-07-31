@@ -90,7 +90,8 @@ public class tax_invoice1 {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image= Image.getInstance(stream.toByteArray());
-                image.scaleToFit(50, 50);
+              //  image.scaleToFit(50, 50);
+                image.scaleAbsolute(50,50);
             }
             if(stamp!=null) {
                 Bitmap bmp = BitmapFactory.decodeFile(stamp.toString());
@@ -99,13 +100,14 @@ public class tax_invoice1 {
                 image2= Image.getInstance(stream.toByteArray());
                 image2.scaleToFit(50, 50);
             }
-            if(logopath!=null)
+            File logo=new File(logopath.toString());
+            if(logopath!=null&&logo.exists())
             {
                 Bitmap bmp = BitmapFactory.decodeFile(logopath.toString());
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image3= Image.getInstance(stream.toByteArray());
-                image3.scaleToFit(50, 50);
+               image3.scaleToFit(50, 50);
             }
 
             //  innertable.setWidths(new int[]{40});
@@ -125,7 +127,8 @@ public class tax_invoice1 {
 
 // column 3
 
-            if(logopath!=null)
+
+            if(logopath!=null&&logo.exists())
             {  cell=new PdfPCell(image3);}
             else
             {

@@ -94,8 +94,8 @@ public class Debit_Note {
                 image2= Image.getInstance(stream.toByteArray());
                 image2.scaleToFit(50, 50);
             }
-            if(logopath!=null)
-            {
+            File logo=new File(logopath.toString());
+            if(logopath!=null&&logo.exists())            {
                 Bitmap bmp = BitmapFactory.decodeFile(logopath.toString());
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
@@ -120,7 +120,7 @@ public class Debit_Note {
 
 // column 3
 
-            if(logopath!=null)
+            if(logopath!=null&&logo.exists())
             {
                 cell=new PdfPCell(image3);
             }
