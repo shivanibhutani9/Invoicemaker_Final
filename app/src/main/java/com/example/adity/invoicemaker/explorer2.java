@@ -82,11 +82,20 @@ public class explorer2 extends AppCompatActivity  {
         flo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(explorer2.this,Signature_Activity.class).putExtra("from","exp2"));
+                startActivityForResult((new Intent(explorer2.this,Signature_Activity.class).putExtra("from","exp2")),120);
                 Gridadapter.notifyDataSetChanged();
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        File file=new File(data.getStringExtra("image"));
+        signs.add(file.getName());
+        img.add(file.getPath());
+        Gridadapter.notifyDataSetChanged();
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Nullable

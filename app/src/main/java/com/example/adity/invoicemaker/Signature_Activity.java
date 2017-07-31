@@ -207,8 +207,9 @@ public class Signature_Activity extends AppCompatActivity {
             fout.close();
 
             if(getIntent().getStringExtra("from").equals("exp2"))
-            {
-                super.onBackPressed();
+            {     Intent i = new Intent();
+                i.putExtra("image", file.getPath());
+                setResult(120,i);
                 finish();
             }
             else {

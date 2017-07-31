@@ -18,10 +18,10 @@ import java.util.ArrayList;
  */
 
 public class bankDetailsAdapter extends RecyclerView.Adapter<bankDetailsAdapter.ViewHolder> {
-   public  Context mContext;
+    public Context mContext;
     public onItemTouchListener onItemTouchListener;
     public ArrayList<AccPaymentDetailsActivity.ObjectAcc> objects;
-   public bankDetailsAdapter(Context mContext, ArrayList<AccPaymentDetailsActivity.ObjectAcc> objects, onItemTouchListener listener
+    public bankDetailsAdapter(Context mContext, ArrayList<AccPaymentDetailsActivity.ObjectAcc> objects, onItemTouchListener listener
     ){
         this.mContext=mContext;
         this.objects=objects;
@@ -41,10 +41,6 @@ public class bankDetailsAdapter extends RecyclerView.Adapter<bankDetailsAdapter.
         holder.bankName.setText(obj.bankname);
 
         holder.Acc_no.setText(obj.accno);
-
-//        holder.Acc_name.setText(obj.accname);
-
-  //      holder.ifsc.setText(obj.ifsc_code);
 
     }
 

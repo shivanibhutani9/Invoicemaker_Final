@@ -972,11 +972,6 @@ public class InvoiceGenerate extends AppCompatActivity {
 
     }
 
-
-
-
-
-
 boolean validate()
 {
     return ((noclient.getVisibility()== View.GONE )||( noitem.getVisibility()== View.GONE));
