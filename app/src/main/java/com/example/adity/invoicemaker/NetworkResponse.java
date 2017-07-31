@@ -30,10 +30,12 @@ import java.util.Scanner;
 
 public class NetworkResponse{
 
+    static private String username="shivanibh";
+    static private String API_Key="5229354a-66c9-11e7-94da-0200cd936042";
     public static URL buildUrlCountry() {
         URL url = null;
         try {
-            url = new URL("http://api.geonames.org/countryInfoJSON?formatted=true&lang=en&style=full&username=shivanibh");
+            url = new URL("http://api.geonames.org/countryInfoJSON?formatted=true&lang=en&style=full&username="+username);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -44,7 +46,7 @@ public class NetworkResponse{
     public static URL buildUrlState(Integer id) {
         URL url = null;
         try {
-            url = new URL("http://api.geonames.org/childrenJSON?geonameId="+id.toString()+"&username=shivanibh");
+            url = new URL("http://api.geonames.org/childrenJSON?geonameId="+id.toString()+"&username="+username);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -55,7 +57,7 @@ public class NetworkResponse{
     public static URL buildUrl(String phonenumber) {
         URL url = null;
         try {
-            url = new URL("http://2factor.in/API/V1/5229354a-66c9-11e7-94da-0200cd936042/SMS/"+phonenumber+"/AUTOGEN");
+            url = new URL("http://2factor.in/API/V1/"+API_Key+"/SMS/"+phonenumber+"/AUTOGEN");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

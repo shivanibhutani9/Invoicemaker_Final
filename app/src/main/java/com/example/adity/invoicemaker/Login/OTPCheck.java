@@ -55,6 +55,7 @@ String sms="";
     FirebaseAuth mAuth=FirebaseAuth.getInstance();
     Map<String,String> mp=new HashMap<>();
     SmsVerifyCatcher smsVerifyCatcher;
+    private String API_Key="5229354a-66c9-11e7-94da-0200cd936042";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +92,7 @@ String sms="";
                     editText.setError("Please enter the OTP");
                 }else {
                     try {
-                        urlverify = new URL("http://2factor.in/API/V1/5229354a-66c9-11e7-94da-0200cd936042/SMS/VERIFY/" + Details + "/" + editText.getText().toString());
+                        urlverify = new URL("http://2factor.in/API/V1/"+API_Key+"/SMS/VERIFY/" + Details + "/" + editText.getText().toString());
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
