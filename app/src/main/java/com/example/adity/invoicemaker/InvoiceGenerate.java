@@ -619,12 +619,21 @@ public class InvoiceGenerate extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                        switch(item.getItemId())
                        {
+                           /**
+                            *
+                            * used to upload previous signatures
+                            */
                            case R.id.upload:
                                Intent intent = new Intent(InvoiceGenerate.this,explorer.class);
                               /* intent.setType("image/*");
                                intent.setAction(Intent.ACTION_GET_CONTENT);*/
                                startActivityForResult(intent,99);
                                break;
+
+                           /**
+                            *
+                            * used to create new signature
+                            */
                            case R.id.draw:
 
                                startActivityForResult(new Intent(InvoiceGenerate.this,Signature_Activity.class).putExtra("from",""),99);

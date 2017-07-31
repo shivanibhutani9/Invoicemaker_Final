@@ -25,6 +25,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ *
+ * this shows all the previous signature which is created by user
+ */
 public class explorer2 extends AppCompatActivity  {
 
     ArrayList signs=new ArrayList();

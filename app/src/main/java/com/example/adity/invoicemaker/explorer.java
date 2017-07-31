@@ -18,6 +18,11 @@ import com.example.adity.invoicemaker.adapter.gridadapter;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ *
+ * this shows all the previous signature which is created by user
+ */
+
 public class explorer extends AppCompatActivity  {
 
     ArrayList signs=new ArrayList();

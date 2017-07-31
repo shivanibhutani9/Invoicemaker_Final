@@ -38,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
         pass=(EditText)findViewById(R.id.pass);
         signin=(Button)findViewById(R.id.signin);
         forgot=(TextView) findViewById(R.id.forgot);
+
+        /**
+         *
+         * this is for permissions
+         */
         int permissionCheck1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int permissionCheck2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
         int permissionCheck3 = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS);

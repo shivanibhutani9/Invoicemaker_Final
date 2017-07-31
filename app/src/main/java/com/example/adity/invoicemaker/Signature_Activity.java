@@ -53,6 +53,10 @@ public class Signature_Activity extends AppCompatActivity {
         preview=(Button)findViewById(R.id.previewSignature);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Create Signature");
+        /**
+         *
+         * for permissions
+         */
 
         int permissionCheck1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int permissionCheck2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
