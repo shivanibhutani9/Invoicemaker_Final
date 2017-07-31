@@ -19,7 +19,6 @@ public class DrawSign extends View{
     // defines paint and canvas
     int paintColor = Color.BLACK;
     private Paint drawPaint;
-    // stores next circle
     private Path path = new Path();
 
     public DrawSign(Context context, AttributeSet attrs) {
@@ -42,7 +41,8 @@ public class DrawSign extends View{
 
     }
 public void clear()
-{   path.reset();
+{
+    path.reset();
     postInvalidate();
 
 
