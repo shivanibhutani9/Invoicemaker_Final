@@ -206,11 +206,11 @@ public class NavigationDrawer extends AppCompatActivity
                     hasInvoice=false;
                 if(!hasInvoice) {
                     fragment = new invoice_fragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).addToBackStack("Invoice").commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
                 }
                 else {
                     fragment = new InvoiceListFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).addToBackStack("InvoiceGen").commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
 
                 }
                 pd.hide();

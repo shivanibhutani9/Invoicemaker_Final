@@ -170,8 +170,9 @@ public class InvoiceListFragment extends Fragment {
 
                             }
                         })
-                        .create();
-                DeletionDialogBox.show();
+                       .create();
+                DeletionDialogBox.setCanceledOnTouchOutside(false);
+                   DeletionDialogBox.show();
             }
             else
                {

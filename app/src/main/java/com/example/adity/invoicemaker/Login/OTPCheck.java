@@ -40,7 +40,7 @@ import java.util.regex.Pattern;
 
 
 public class OTPCheck extends AppCompatActivity{
-   // private static final int GITHUB_SEARCH_LOADER = 22;
+
 
 String sms="";
     EditText editText;

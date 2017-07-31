@@ -12,7 +12,6 @@
         <include layout="@layout/vendordetails"/>
         <include layout="@layout/itemdetails_invoice"/>
         <include layout="@layout/paymentdetails_invoice"/>
-        <include layout="@layout/paymentdetails_invoice"/>
         <include layout="@layout/comapnycredentials_invoice"/>
        <LinearLayout
             android:layout_width="match_parent"

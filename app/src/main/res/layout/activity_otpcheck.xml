@@ -8,15 +8,6 @@
 
     tools:context="com.example.adity.invoicemaker.Login.OTPCheck">
 
-
-    <!--  <TextView
-        android:layout_width="264dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/textResult"
-        android:text="RESULT"
-        android:layout_gravity="top|left"/>
--->
-
     <EditText
         android:layout_marginTop="150dp"
         android:id="@+id/OTP"
@@ -34,15 +25,16 @@
     android:weightSum="2"
     android:layout_margin="20dp">
 
-      <Button
-          android:layout_weight="1"
-        android:layout_marginTop="20dp"
+    <Button
         android:id="@+id/submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/button"
+        android:elevation="2dp"
         android:text="Submit"
-          android:textColor="#fff"
-        android:background="@drawable/button"/>
+        android:textColor="#fff" />
 
     <Button
         android:id="@+id/resend"
@@ -52,6 +44,7 @@
         android:layout_marginTop="20dp"
         android:layout_weight="1"
         android:background="@drawable/button"
+        android:elevation="2dp"
         android:text="Resend OTP"
         android:textColor="#fff" />
 

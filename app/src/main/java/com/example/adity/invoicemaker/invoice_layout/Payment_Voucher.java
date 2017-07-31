@@ -100,7 +100,7 @@ public class Payment_Voucher {
                 image3= Image.getInstance(stream.toByteArray());
                 image3.scaleToFit(50, 50);
             }
-            innertable.setWidths(new int[]{40});
+            //innertable.setWidths(new int[]{40});
 
             PdfPCell cell=new PdfPCell();
             cell.setBorder(Rectangle.NO_BORDER);

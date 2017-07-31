@@ -16,6 +16,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -105,6 +107,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
                             }
                         })
                         .create();
+                     DeletionDialogBox.setCanceledOnTouchOutside(false);
                 DeletionDialogBox.show();}
                 else{
                   Intent i=new Intent(AccPaymentDetailsActivity.this,BankEdit.class);
@@ -260,11 +263,21 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
 
     }
 
-    /*@Override
-    public Intent getSupportParentActivityIntent() {
-        onBackPressed();
-        return null;
-    }*/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        if(id==android.R.id.home) {
+         super.onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
 
 

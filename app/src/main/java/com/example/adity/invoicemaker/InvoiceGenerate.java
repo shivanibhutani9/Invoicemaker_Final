@@ -19,6 +19,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -88,7 +89,7 @@ public class InvoiceGenerate extends AppCompatActivity {
     TextView subtotal, dis,Discount1,total;
     Double sub=0.0,discount=0.0,tot=0.0;
     TextView bank_details;
-    LinearLayout l,ClientDetails;
+    LinearLayout l; CardView ClientDetails;
     File file;
     String num_to_words="";
     DatabaseReference db;
@@ -141,6 +142,7 @@ public class InvoiceGenerate extends AppCompatActivity {
         });
         pd  =new ProgressDialog(InvoiceGenerate.this);
         pd.setMessage("please wait ....");
+        pd.setCanceledOnTouchOutside(false);
         pd.show();
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -169,7 +171,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                             {
                                 File file4 = new File(ds1.getValue(String.class));
                                 if(file4.exists())
-                                {
+                                {   path=Uri.parse(file4.getPath());
                                     uploadSign.setVisibility(View.GONE);
                                     Picasso.with(getApplicationContext()).load(file4).memoryPolicy(MemoryPolicy.NO_CACHE).into(image);
                                 }
@@ -334,39 +336,39 @@ public class InvoiceGenerate extends AppCompatActivity {
                       tax_invoice2 in = new tax_invoice2(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
                       pd.hide();
-                      startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+                      startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()).putExtra("from","genrate"));
                   }
-                  if (type.contains("Credit")) {
+                 else if (type.contains("Credit")) {
                       Credit_Note in = new Credit_Note(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
                       pd.hide();
 
-                      startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+                      startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()).putExtra("from","genrate"));
                   }
-                  if (type.contains("Debit")) {
+                 else if (type.contains("Debit")) {
                       Debit_Note in = new Debit_Note(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
                       pd.hide();
 
-                      startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+                      startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()).putExtra("from","genrate"));
                   } else if (type.contains("Receipt")) {
                       Receipt_Voucher in = new Receipt_Voucher(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
                       pd.hide();
 
-                      startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+                      startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()).putExtra("from","genrate"));
                   } else if (type.contains("Payment")) {
                       Payment_Voucher in = new Payment_Voucher(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
                       pd.hide();
-
-                      startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+                       pd.dismiss();
+                      startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()).putExtra("from","genrate"));
                   } else if (type.contains("Export")) {
                       Export_invoice in = new Export_invoice(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
                       pd.hide();
 
-                      startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()));
+                      startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()).putExtra("from","genrate"));
 
                   }
               }
@@ -452,6 +454,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                             }
                         })
                         .create();
+                    DeletionDialogBox.setCanceledOnTouchOutside(false);
                     DeletionDialogBox.show();
                 }
                 else
@@ -526,7 +529,7 @@ public class InvoiceGenerate extends AppCompatActivity {
             }
         });
 
-         ClientDetails =(LinearLayout) findViewById(R.id.linearLayout3);
+         ClientDetails =(CardView) findViewById(R.id.vendordetails_invoice);
         ClientDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -562,7 +565,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                                 AlertDialog BackToInvoice =new AlertDialog.Builder(InvoiceGenerate.this)
                                         //set message, title, and icon
                                         .setTitle("Successful")
-                                        .setMessage("Do you want to further PersonalEdit the invoice?")
+                                        .setMessage("Do you want to further edit the invoice?")
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                                             public void onClick(DialogInterface dialog, int whichButton) {
@@ -579,6 +582,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                                                 }
                                         })
                                         .create();
+                                BackToInvoice.setCanceledOnTouchOutside(false);
                                 BackToInvoice.show();
                             }
                         }, 2000);

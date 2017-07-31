@@ -287,15 +287,19 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/L2"
             android:background="#ffff"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:padding="25dp"
+            android:gravity="center_horizontal">
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonclient"
                 android:layout_below="@+id/L2"
-                android:padding="5dp"
+                android:textColor="#fff"
+                android:background="@drawable/button"
                 android:selectAllOnFocus="true"
-                android:text="Save"/>
+                android:text="Save"
+                android:textStyle="bold"/>
 
         </LinearLayout>
     </RelativeLayout>

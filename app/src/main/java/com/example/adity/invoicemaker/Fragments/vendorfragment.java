@@ -120,6 +120,7 @@ public class vendorfragment extends Fragment implements com.example.adity.invoic
                                 }
                             })
                             .create();
+                    DeletionDialogBox.setCanceledOnTouchOutside(false);
                     DeletionDialogBox.show();
                 }
                 else

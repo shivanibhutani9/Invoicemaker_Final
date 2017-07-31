@@ -108,6 +108,7 @@ public class Vendor_Details extends AppCompatActivity implements com.example.adi
                                }
                            })
                            .create();
+                   DeletionDialogBox.setCanceledOnTouchOutside(false);
                    DeletionDialogBox.show();
                }
             else
