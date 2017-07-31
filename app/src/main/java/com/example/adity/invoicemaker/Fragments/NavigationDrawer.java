@@ -57,7 +57,7 @@ public class NavigationDrawer extends AppCompatActivity
 
         pd=new ProgressDialog(this);
         pd.setMessage("Please wait..");
-       pd.show();
+        pd.show();
         chkval();
 
         setSupportActionBar(toolbar);
