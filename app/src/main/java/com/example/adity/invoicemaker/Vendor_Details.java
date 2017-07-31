@@ -37,6 +37,11 @@ import java.util.ArrayList;
 
 import static com.example.adity.invoicemaker.Fragments.InvoiceListFragment.drawableToBitmap;
 
+/**
+ *
+ * for list of vendors in recycler view
+ */
+
 public class Vendor_Details extends AppCompatActivity implements com.example.adity.invoicemaker.Listener.onItemTouchListener {
 
 
