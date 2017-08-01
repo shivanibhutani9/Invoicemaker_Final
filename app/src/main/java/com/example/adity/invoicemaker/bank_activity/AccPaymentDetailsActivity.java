@@ -249,11 +249,11 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
 
 
                         }
-
+                        ObjectAcc obj=new ObjectAcc(accname,bname,accnum,ifsc);
+                        arrayList.add(obj);
+                        adapter.notifyDataSetChanged();
                     }
-                    ObjectAcc obj=new ObjectAcc(accname,bname,accnum,ifsc);
-                    arrayList.add(obj);
-                    adapter.notifyDataSetChanged();
+
 
 
                 }
