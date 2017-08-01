@@ -72,6 +72,7 @@
             android:parentActivityName=".Fragments.NavigationDrawer" />
         <activity
             android:name=".Login.OTPCheck"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Vendor_Details"

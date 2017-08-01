@@ -96,11 +96,6 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
                                 adapter.notifyDataSetChanged();
                                 DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Account Details/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+obj.bankname+"/"+obj.accno);
                                 db1.removeValue();
-                                /*if(arrayList.isEmpty())
-                                {
-                                    startActivity(new Intent(AccPaymentDetailsActivity.this,BankDetails.class));
-                                    finish();
-                                }*/
                                 Toast.makeText(AccPaymentDetailsActivity.this, "DELETED", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
                             }
@@ -250,10 +245,11 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
 
                         }
 
+                        ObjectAcc obj=new ObjectAcc(accname,bname,accnum,ifsc);
+                        arrayList.add(obj);
+                        adapter.notifyDataSetChanged();
+
                     }
-                    ObjectAcc obj=new ObjectAcc(accname,bname,accnum,ifsc);
-                    arrayList.add(obj);
-                    adapter.notifyDataSetChanged();
 
 
                 }
