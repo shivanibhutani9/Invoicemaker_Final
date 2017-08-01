@@ -45,10 +45,7 @@ public class NavigationDrawer extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        pd=new ProgressDialog(this);
-        pd.setMessage("Please wait..");
-        pd.show();
-        chkval();
+
         int permissionCheck1 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
         int permissionCheck2 = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE);
 
@@ -58,6 +55,10 @@ public class NavigationDrawer extends AppCompatActivity
                     },123);
         }
 
+        pd=new ProgressDialog(this);
+        pd.setMessage("Please wait..");
+        pd.show();
+        chkval();
 
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -93,8 +94,6 @@ public class NavigationDrawer extends AppCompatActivity
 
 
     }
-
-
 
     @Override
     public void onBackPressed() {
@@ -225,6 +224,8 @@ public class NavigationDrawer extends AppCompatActivity
         });
 
 
+
     }
+
 
 }

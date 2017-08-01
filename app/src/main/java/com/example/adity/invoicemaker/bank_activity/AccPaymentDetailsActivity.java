@@ -287,10 +287,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+
 }
 
 

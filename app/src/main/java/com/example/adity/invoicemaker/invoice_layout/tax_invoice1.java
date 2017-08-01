@@ -98,7 +98,8 @@ public class tax_invoice1 {
                 image2= Image.getInstance(stream.toByteArray());
 
             }
-            if(logopath!=null)
+            File logo=new File(logopath.toString());
+            if(logopath!=null&&logo.exists())
             {
                 Bitmap bmp = BitmapFactory.decodeFile(logopath.toString());
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -125,7 +126,7 @@ public class tax_invoice1 {
 
 // column 3
 
-            if(logopath!=null)
+            if(logopath!=null&&logo.exists())
             {  cell=new PdfPCell(image3);}
             else
             {

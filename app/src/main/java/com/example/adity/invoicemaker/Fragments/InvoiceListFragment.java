@@ -144,7 +144,6 @@ public class InvoiceListFragment extends Fragment {
                                 Toast.makeText(getActivity(), "DELETED", Toast.LENGTH_SHORT).show();
                                 DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+obj.inv_no);
                                 db1.removeValue();
-
                                 dialog.dismiss();
                             }
 
