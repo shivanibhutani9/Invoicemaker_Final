@@ -21,6 +21,13 @@ public class bankDetailsAdapter extends RecyclerView.Adapter<bankDetailsAdapter.
     public Context mContext;
     public onItemTouchListener onItemTouchListener;
     public ArrayList<AccPaymentDetailsActivity.ObjectAcc> objects;
+
+    /**
+     * for payment details
+     * @param mContext
+     * @param objects
+     * @param listener
+     */
     public bankDetailsAdapter(Context mContext, ArrayList<AccPaymentDetailsActivity.ObjectAcc> objects, onItemTouchListener listener
     ){
         this.mContext=mContext;

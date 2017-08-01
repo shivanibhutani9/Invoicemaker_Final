@@ -37,7 +37,9 @@ import java.util.ArrayList;
 
 import static com.example.adity.invoicemaker.Fragments.InvoiceListFragment.drawableToBitmap;
 
-
+/**
+ * Payment Details in profile & invoice
+ */
 public class AccPaymentDetailsActivity extends AppCompatActivity implements com.example.adity.invoicemaker.Listener.onItemTouchListener {
 
     bankDetailsAdapter adapter;

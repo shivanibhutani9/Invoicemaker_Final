@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +22,6 @@ import com.google.firebase.database.ValueEventListener;
 public class ItemEdit extends AppCompatActivity {
 
     EditText descrip,HSN,cost,quant,sgst,cgst,igst;
-    TextView amt;
     Double Cost;
     Double sg,cg,ig;
     Integer quanti;
@@ -118,19 +118,6 @@ public class ItemEdit extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         Button save = (Button) findViewById(R.id.save);
 
 
@@ -220,18 +207,13 @@ public class ItemEdit extends AppCompatActivity {
         });
 
     }
-        @Override
-        public Intent getSupportParentActivityIntent() {
-            //String from = getIntent().getExtras().getString("from");
-            Intent newIntent = null;
-       /* if(from.equals("Invoice")){
-            newIntent = new Intent(this, InvoiceGenerate.class);
-        }else if(from.equals("profile")){
-            //newIntent = new Intent(this,NavigationDrawer.class);
-            onBackPressed();
-        }*/
-            onBackPressed();
 
+
+
+    @Override
+        public Intent getSupportParentActivityIntent() {
+            Intent newIntent = null;
+            onBackPressed();
             return newIntent;
         }
         boolean validate(String s)

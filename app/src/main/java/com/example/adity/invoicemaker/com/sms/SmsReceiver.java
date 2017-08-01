@@ -48,9 +48,12 @@ class SmsReceiver extends BroadcastReceiver {
                     SmsMessage currentMessage = getIncomingMessage(pdusObj[i], bundle);
                     String phoneNumber = currentMessage.getDisplayOriginatingAddress();
 
+
+                    //for filter in name/number
                     if (!phoneNumber.contains("TFCTOR")) {
                         return;
                     }
+                    //for filter in message body
                     String message = currentMessage.getDisplayMessageBody();
                     if (filter != null && !message.matches(filter)) {
                         return;

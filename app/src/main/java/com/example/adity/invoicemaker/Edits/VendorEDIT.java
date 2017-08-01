@@ -83,9 +83,9 @@ public class VendorEDIT extends AppCompatActivity {
                     if(!(s.equals("")||s.contains("test"))) {
                         if(s.equals("New Delhi"))
                         {  s="NCT";}
+                        //id of country
                         Integer id = obj.hash.get(s);
                         if(id!=null)
-                        //Toast.makeText(VendorEDIT.this, id.toString(), Toast.LENGTH_SHORT).show();
                         {State = NetworkResponse.buildUrlState(id);
                          new BackGroundState().execute();}
                     }
@@ -189,7 +189,7 @@ public class VendorEDIT extends AppCompatActivity {
 
     }
     public class BackGround extends AsyncTask<Void, Void, String> {
-ProgressDialog p=new ProgressDialog(VendorEDIT.this);
+   ProgressDialog p=new ProgressDialog(VendorEDIT.this);
 
         @Override
         protected void onPreExecute() {

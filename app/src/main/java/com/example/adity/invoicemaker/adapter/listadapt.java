@@ -21,7 +21,9 @@ import java.util.ArrayList;
  * Created by adity on 7/13/2017.
  */
 
-
+/**
+ * for items added in invoice
+ */
 public class listadapt extends RecyclerView.Adapter<listadapt.ViewHolder> {
     public  Context mContext;
     ArrayList<String[]> objects;

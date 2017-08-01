@@ -101,7 +101,9 @@ public class Payment_Voucher {
                 image2= Image.getInstance(stream.toByteArray());
               //  image2.scaleToFit(50, 50);
             }
-            File logo=new File(logopath.toString());
+            File logo=null;
+            if(logopath!=null)
+                logo=new File(logopath.toString());
             if(logopath!=null&&logo.exists())
             {
                 Bitmap bmp = BitmapFactory.decodeFile(logopath.toString());

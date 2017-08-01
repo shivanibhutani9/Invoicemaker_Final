@@ -22,6 +22,8 @@ import java.util.ArrayList;
  * {@link RecyclerView.Adapter} that can display a {@link } and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  */
+
+
 public class MyInvoiceRecyclerViewAdapter extends RecyclerView.Adapter<MyInvoiceRecyclerViewAdapter.ViewHolder> {
     private final Context mContext;
     private final ArrayList<InvoiceListFragment.ObjectInv> mValues;
@@ -68,7 +70,6 @@ public class MyInvoiceRecyclerViewAdapter extends RecyclerView.Adapter<MyInvoice
                 {
                     Toast.makeText(mContext, "File not Found", Toast.LENGTH_SHORT).show();
                 }
-                 //   mListener.onListFragmentInteraction(obj);
                 }
         //    }
         });

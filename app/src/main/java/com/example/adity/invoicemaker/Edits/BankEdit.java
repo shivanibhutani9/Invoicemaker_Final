@@ -22,8 +22,6 @@ public class BankEdit extends AppCompatActivity {
     EditText bankname,ifsc,accholdername,accnumber;
     String bank,ifsccode,accholder,accno;
     Map<String,String> mp;
-    DatabaseReference db;
-    String bnam,isf,accn,acch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +84,7 @@ public class BankEdit extends AppCompatActivity {
 
 
         }
+        //validating "test"
         boolean validate(String s)
         {
             return s.toLowerCase().contains("test");

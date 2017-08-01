@@ -54,7 +54,6 @@ public class InvoiceListFragment extends Fragment {
     String invoiceno,vname,amount,inv_date;
     private OnListFragmentInteractionListener mListener;
     private Paint p = new Paint();
-    private View VIEW;
     String f_path;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -93,17 +92,6 @@ public class InvoiceListFragment extends Fragment {
     }
 
 
-  /*  @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
-*/
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -161,16 +149,8 @@ public class InvoiceListFragment extends Fragment {
                    DeletionDialogBox.show();
             }
             else
-               {
-                  /* Intent i=new Intent(getActivity(),InvoiceEdit.class);
-                   i.putExtra("amount",obj.inv_amt);
-                   i.putExtra("date",obj.inv_date);
-                   i.putExtra("no",obj.inv_no);
-                   i.putExtra("vname",obj.inv_vname);
-                   startActivity(i);*/
-                   adapter.notifyDataSetChanged();
-                //   Toast.makeText(getActivity(), "EDITINGGG", Toast.LENGTH_SHORT).show();
-               }
+               { adapter.notifyDataSetChanged();
+                }
             }
             @Override
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
@@ -198,7 +178,6 @@ public class InvoiceListFragment extends Fragment {
                         c.drawRect(background,p);
                         Drawable d=getResources().getDrawable(R.drawable.ic_delete_white);
                         icon = drawableToBitmap(d);
-                        //icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_menu_send);
                         RectF icon_dest = new RectF((float) itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width);
                         c.drawBitmap(icon,null,icon_dest,p);
 
@@ -212,12 +191,6 @@ public class InvoiceListFragment extends Fragment {
 
     }
 
-/*    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-*/
 
 
     /**

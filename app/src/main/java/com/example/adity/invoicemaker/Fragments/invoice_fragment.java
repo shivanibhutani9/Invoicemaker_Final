@@ -18,7 +18,7 @@ import com.example.adity.invoicemaker.typesofinvoice;
  */
 
 public class invoice_fragment extends Fragment {
-    EditText name,email,msg;
+
     public invoice_fragment() {
 
 

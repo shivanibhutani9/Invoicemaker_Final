@@ -21,6 +21,13 @@ public class Vendor_Adapter extends RecyclerView.Adapter<Vendor_Adapter.ViewHold
     public  Context mContext;
     private com.example.adity.invoicemaker.Listener.onItemTouchListener onItemTouchListener;
     ArrayList<Vendor_Details.ObjectVendor> objects;
+
+    /**
+     * for vendor list
+     * @param mContext
+     * @param objects
+     * @param listener
+     */
     public Vendor_Adapter(Context mContext, ArrayList<Vendor_Details.ObjectVendor> objects, onItemTouchListener listener)
     {
         this.mContext=mContext;
@@ -42,9 +49,6 @@ public class Vendor_Adapter extends RecyclerView.Adapter<Vendor_Adapter.ViewHold
 
         holder.email.setText(obj.v_email);
 
-//        holder.gstin.setText(obj.v_gstin);
-
-//        holder.pan.setText(obj.v_pan);
 
     }
 
@@ -63,8 +67,6 @@ public class Vendor_Adapter extends RecyclerView.Adapter<Vendor_Adapter.ViewHold
             super(itemView);
             name=(TextView)itemView.findViewById(R.id.v_name);
            email=(TextView)itemView.findViewById(R.id.v_email);
-          // gstin=(TextView)itemView.findViewById(R.id.v_gstin);
-         //  pan=(TextView)itemView.findViewById(R.id.v_pan);
             itemView.setOnClickListener(this);
 
         }

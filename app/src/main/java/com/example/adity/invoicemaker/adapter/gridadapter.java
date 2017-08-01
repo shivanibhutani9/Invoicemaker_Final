@@ -20,6 +20,12 @@ public class gridadapter extends ArrayAdapter<String> {
     private final ArrayList itemname;
     private final ArrayList imgid;
 
+    /**
+     * for signature explorer
+     * @param context
+     * @param itemname
+     * @param imgid
+     */
     public gridadapter(Activity context, ArrayList itemname,ArrayList imgid) {
         super(context, R.layout.explorerlist, itemname);
         // TODO Auto-generated constructor stub

@@ -98,7 +98,10 @@ public class tax_invoice1 {
                 image2= Image.getInstance(stream.toByteArray());
 
             }
-            File logo=new File(logopath.toString());
+            File logo=null;
+            if(logopath!=null)
+             logo=new File(logopath.toString());
+
             if(logopath!=null&&logo.exists())
             {
                 Bitmap bmp = BitmapFactory.decodeFile(logopath.toString());

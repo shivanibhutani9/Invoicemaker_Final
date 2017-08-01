@@ -10,12 +10,19 @@ import android.widget.TextView;
 
 import com.example.adity.invoicemaker.R;
 
+
 public class CustomListAdapter extends ArrayAdapter<String> {
 
     private final Activity context;
     private final String[] itemname;
     private final Integer[] imgid;
 
+    /**
+     * for list in profile
+     * @param context
+     * @param itemname
+     * @param imgid
+     */
     public CustomListAdapter(Activity context, String[] itemname, Integer[] imgid) {
         super(context, R.layout.profilelist, itemname);
         // TODO Auto-generated constructor stub
