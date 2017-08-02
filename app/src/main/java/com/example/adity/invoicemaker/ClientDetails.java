@@ -160,7 +160,6 @@ public class ClientDetails extends AppCompatActivity {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                             pd.hide();
-                            pd.dismiss();
                         }
                     });
 

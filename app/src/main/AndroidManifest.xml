@@ -72,8 +72,8 @@
             android:parentActivityName=".Fragments.NavigationDrawer" />
         <activity
             android:name=".Login.OTPCheck"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Vendor_Details"
             android:label="@string/title_activity_vendor__details"
@@ -107,9 +107,7 @@
         <activity
             android:name=".Credentials"
             android:parentActivityName=".Fragments.NavigationDrawer" />
-        <activity
-            android:name=".explorer2"
-            android:parentActivityName=".Credentials" />
+        <activity android:name=".Stampfrag"></activity>
     </application>
 
 </manifest>

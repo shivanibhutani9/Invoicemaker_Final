@@ -34,7 +34,7 @@ public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Boolean doubleBackToExitPressedOnce=false;
     ImageView image;
-    static  boolean hasInvoice=true;
+    boolean hasInvoice=true;
     DatabaseReference db;
     ProgressDialog pd;
     android.support.v4.app.Fragment fragment;
@@ -192,11 +192,11 @@ public class NavigationDrawer extends AppCompatActivity
                     hasInvoice=false;
                 if(!hasInvoice) {
                     fragment = new invoice_fragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commitAllowingStateLoss();
                 }
                 else {
                     fragment = new InvoiceListFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commitAllowingStateLoss();
 
                 }
                 pd.hide();

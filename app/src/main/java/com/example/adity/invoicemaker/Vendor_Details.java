@@ -20,6 +20,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.adity.invoicemaker.Edits.VendorEDIT;
@@ -44,7 +46,7 @@ import static com.example.adity.invoicemaker.Fragments.InvoiceListFragment.drawa
 
 public class Vendor_Details extends AppCompatActivity implements com.example.adity.invoicemaker.Listener.onItemTouchListener {
 
-
+    Button addvendor;
     Vendor_Adapter adapter;
     RecyclerView rv;
     FloatingActionButton fab;
@@ -52,6 +54,7 @@ public class Vendor_Details extends AppCompatActivity implements com.example.adi
     String name,email,gstin,pan,add1,add2,zip,state,number,country;
     ProgressDialog pd;
     onItemTouchListener onItemTouchListener;
+    FrameLayout zerovendor;
     private Paint p=new Paint();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,18 +63,24 @@ public class Vendor_Details extends AppCompatActivity implements com.example.adi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        zerovendor=(FrameLayout)findViewById(R.id.novendordetails);
         arrayList=new ArrayList<>();
         rv= (RecyclerView)findViewById(R.id.vendor_list);
         adapter =new Vendor_Adapter(this,arrayList,onItemTouchListener);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
-
+        addvendor=(Button)findViewById(R.id.createvendor);
         pd=new ProgressDialog(this);
         pd.setMessage("Please Wait ...");
         pd.show();
-        Read();
+       // Read();
         adapter.setClickListener(this);
-
+        addvendor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Vendor_Details.this,ClientDetails.class));
+            }
+        });
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.RIGHT|ItemTouchHelper.LEFT ){
             @Override
@@ -95,13 +104,13 @@ public class Vendor_Details extends AppCompatActivity implements com.example.adi
                                public void onClick(DialogInterface dialog, int whichButton) {
                                    //your deleting code
                                    arrayList.remove(pos);
-                                   arrayList.clear();
+                                   //arrayList.clear();
                                    adapter.notifyDataSetChanged();
+                                   chklayout();
                                    DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Company/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+obj.v_name);
                                    db1.removeValue();
                                            Toast.makeText(Vendor_Details.this, "DELETED", Toast.LENGTH_SHORT).show();
-
-                                   dialog.dismiss();
+                                    dialog.dismiss();
                                }
 
                            })
@@ -242,7 +251,7 @@ public class Vendor_Details extends AppCompatActivity implements com.example.adi
         DatabaseReference db= FirebaseDatabase.getInstance().getReference("Company/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
 
 
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot Company:dataSnapshot.getChildren())
@@ -297,7 +306,7 @@ public class Vendor_Details extends AppCompatActivity implements com.example.adi
                 }
 
 
-
+                chklayout();
                 pd.hide();
                 pd.dismiss();
 
@@ -317,6 +326,27 @@ public class Vendor_Details extends AppCompatActivity implements com.example.adi
         return null;
     }
 
+    void chklayout()
+    {
+        if(arrayList.isEmpty())
+        {
+            rv.setVisibility(View.GONE);
+            fab.setVisibility(View.GONE);
+            zerovendor.setVisibility(View.VISIBLE);
+        }
+        else{
+            rv.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.VISIBLE);
+            zerovendor.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        arrayList.clear();
+        Read();
+    }
 }
 
 

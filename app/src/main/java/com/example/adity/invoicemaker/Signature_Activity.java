@@ -228,10 +228,13 @@ public class Signature_Activity extends AppCompatActivity {
     }
 
 
-
+    @Nullable
     @Override
-    public void onBackPressed() {
+    public Intent getSupportParentActivityIntent() {
         super.onBackPressed();
+        return null;
+
     }
+
 }
 

@@ -44,7 +44,7 @@ public class persondetails extends AppCompatActivity {
 
         DatabaseReference db= FirebaseDatabase.getInstance().getReference("Users/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds:dataSnapshot.getChildren())

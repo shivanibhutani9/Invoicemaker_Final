@@ -26,7 +26,6 @@ import com.example.adity.invoicemaker.bank_activity.AccPaymentDetailsActivity;
 import com.example.adity.invoicemaker.Login.MainActivity;
 import com.example.adity.invoicemaker.R;
 import com.example.adity.invoicemaker.adapter.CustomListAdapter;
-import com.example.adity.invoicemaker.explorer2;
 import com.example.adity.invoicemaker.persondetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -159,7 +158,7 @@ public class profile extends Fragment {
                 }
                 else if(position==5)
                 {
-                   // changeemail();
+                    changeemail();
                 }
                 else if(position==6)
                 {
@@ -216,6 +215,26 @@ public class profile extends Fragment {
         }
     }
 
+
+    public void changeemail()
+    {
+        pd.setMessage("sending Email");
+        pd.show();
+        user.updateEmail(user.getEmail()).addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    pd.hide();
+                    pd.dismiss();
+                    Toast.makeText(getActivity(), "Email Sent", Toast.LENGTH_SHORT).show();
+
+                }
+                else
+                    Toast.makeText(getActivity(), ""+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
 
 

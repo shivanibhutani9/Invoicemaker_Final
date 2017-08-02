@@ -133,6 +133,10 @@ public class InvoiceListFragment extends Fragment {
                                 DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+obj.inv_no);
                                 db1.removeValue();
                                 dialog.dismiss();
+                                if(mValues.isEmpty())
+                                {
+                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,new invoice_fragment()).commitAllowingStateLoss();
+                                }
                             }
 
                         })

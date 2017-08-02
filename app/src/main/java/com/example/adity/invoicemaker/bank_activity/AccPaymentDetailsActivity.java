@@ -223,7 +223,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
         DatabaseReference db= FirebaseDatabase.getInstance().getReference("Account Details/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
 
 
-        db.addValueEventListener(new ValueEventListener() {
+        db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot bank:dataSnapshot.getChildren())
