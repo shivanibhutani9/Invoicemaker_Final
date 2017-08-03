@@ -121,6 +121,10 @@ public class pdfreader extends AppCompatActivity {
     @Override
     public Intent getSupportParentActivityIntent() {
         onBackPressed();
+        if(getIntent().getStringExtra("from").equals("generate")) {
+            File file = new File(Environment.getExternalStorageDirectory() + File.separator + getIntent().getStringExtra("inv") + "temp.pdf");
+            file.delete();
+        }
         return null;
 
     }
