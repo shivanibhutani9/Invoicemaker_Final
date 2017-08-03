@@ -38,9 +38,9 @@ import java.util.HashMap;
 
 /**
  *
- * this shows all the previous signature which is created by user
+ * this shows all the previous stamps created by user
  */
-public class Stampfrag extends Fragment implements View.OnCreateContextMenuListener{
+public class Stampfrag extends Fragment{
 
     ArrayList stamps=new ArrayList();
     ArrayList img=new ArrayList();
@@ -54,7 +54,7 @@ public class Stampfrag extends Fragment implements View.OnCreateContextMenuListe
         View view = inflater.inflate(R.layout.activity_stampfrag, container, false);
         rv=(RecyclerView)view.findViewById(R.id.horizontal_recycler_view);
         flo=(FloatingActionButton)view.findViewById(R.id.floatb);
-        Gridadapter  = new gridadapter2(getActivity(),stamps,img);
+        Gridadapter  = new gridadapter2(getActivity(),stamps,img,"Stamp");
         LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(horizontalLayoutManagaer);
         rv.setAdapter(Gridadapter);
@@ -152,43 +152,6 @@ public class Stampfrag extends Fragment implements View.OnCreateContextMenuListe
     }
 
 
-
-    @Override
-    public void onCreateContextMenu(android.view.ContextMenu menu, View v, android.view.ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        menu.setHeaderTitle("Select option");
-        menu.add(0,v.getId(),0,"Make Default");
-        menu.add(0,v.getId(),0,"Delete");
-
-    }
-
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item){
-        if(item.getTitle()=="Make Default"){
-            DatabaseReference db=FirebaseDatabase.getInstance().getReference("defaultsign/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
-            HashMap<String,String>mp=new HashMap<>();
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            int index = info.position;
-
-            mp.put("Default",img.get(index).toString());
-            db.setValue(mp);
-        }
-        else if(item.getTitle()=="Delete")
-        {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            int index = info.position;
-            File f=new File(img.get(index).toString());
-            f.delete();
-            img.remove(index);
-            stamps.remove(index);
-            Gridadapter.notifyDataSetChanged();
-        }
-        else{
-            return false;
-        }
-        return true;
-    }
 
     private void copyFile(File sourceFile, File destFile){
         if (!sourceFile.exists()) {

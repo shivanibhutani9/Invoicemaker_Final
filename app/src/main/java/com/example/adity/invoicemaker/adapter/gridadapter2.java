@@ -30,7 +30,8 @@ public class gridadapter2 extends RecyclerView.Adapter<gridadapter2.MyViewHolder
     private Context context;
     private ArrayList signs;
     private ArrayList img;
-    private int index;
+    private String type;
+    // public int index;
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView textView;
@@ -44,11 +45,12 @@ public class gridadapter2 extends RecyclerView.Adapter<gridadapter2.MyViewHolder
         }
     }
 
-    public gridadapter2(Context context,ArrayList signs,ArrayList img)
+    public gridadapter2(Context context,ArrayList signs,ArrayList img,String type)
     {
         this.context=context;
         this.signs=signs;
         this.img=img;
+        this.type=type;
     }
 
     @Override
@@ -60,8 +62,8 @@ public class gridadapter2 extends RecyclerView.Adapter<gridadapter2.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(gridadapter2.MyViewHolder holder, int position) {
-        index=position;
+    public void onBindViewHolder(gridadapter2.MyViewHolder holder, final int position) {
+
         holder.textView.setText(""+signs.get(position));
         File f=new File(img.get(position).toString());
         Picasso.with(context).load(f).into(holder.imageView);
@@ -73,12 +75,18 @@ public class gridadapter2 extends RecyclerView.Adapter<gridadapter2.MyViewHolder
                 contextMenu.add(0,view.getId(),0,"Make Default").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        DatabaseReference db= FirebaseDatabase.getInstance().getReference("defaultsign/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        DatabaseReference db=null;
+                       if (type.equals("Sign")) {
+                            db = FirebaseDatabase.getInstance().getReference("defaultsign/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+                       }else
+                       {
+                           db = FirebaseDatabase.getInstance().getReference("defaultstamp/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+                       }
                         HashMap<String,String> mp=new HashMap<>();
                        // AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
 
-                        mp.put("Default",img.get(index).toString());
+                        mp.put("Default",img.get(position).toString());
                         db.setValue(mp);
                         return true;
                     }
@@ -86,11 +94,11 @@ public class gridadapter2 extends RecyclerView.Adapter<gridadapter2.MyViewHolder
                 contextMenu.add(0,view.getId(),0,"Delete").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        File f=new File(img.get(index).toString());
+                        File f=new File(img.get(position).toString());
                         f.delete();
-                        img.remove(index);
-                        signs.remove(index);
-                       notifyDataSetChanged();
+                        img.remove(position);
+                        signs.remove(position);
+                        notifyDataSetChanged();
                         return true;
                     }
                 });

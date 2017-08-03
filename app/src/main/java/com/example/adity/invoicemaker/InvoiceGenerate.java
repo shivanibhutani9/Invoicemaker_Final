@@ -191,6 +191,36 @@ public class InvoiceGenerate extends AppCompatActivity {
             }
         });
 
+//to get default stamp
+         db=FirebaseDatabase.getInstance().getReference("defaultstamp/");
+        db.addListenerForSingleValueEvent(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (ds.getKey().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                    {
+                        for(DataSnapshot ds1:ds.getChildren()) {
+                            if (ds1.getKey().equals("Default"))
+                            {
+                                File file4 = new File(ds1.getValue(String.class));
+                                if(file4.exists())
+                                {   StampPath=Uri.parse(file4.getPath());
+                                    uploadStamp.setVisibility(View.GONE);
+                                    Picasso.with(getApplicationContext()).load(file4).memoryPolicy(MemoryPolicy.NO_CACHE).into(stamp);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         //TO decode set Invoice Id
         db=FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid());

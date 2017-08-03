@@ -31,7 +31,7 @@ import java.util.HashMap;
  *
  * this shows all the previous signature which is created by user
  */
-public class Signaturefrag extends Fragment implements View.OnCreateContextMenuListener{
+public class Signaturefrag extends Fragment {
 
     ArrayList signs=new ArrayList();
     ArrayList img=new ArrayList();
@@ -45,7 +45,7 @@ public class Signaturefrag extends Fragment implements View.OnCreateContextMenuL
         View view = inflater.inflate(R.layout.signature_frag, container, false);
         rv=(RecyclerView)view.findViewById(R.id.horizontal_recycler_view);
         flo=(FloatingActionButton)view.findViewById(R.id.floatb);
-        Gridadapter  = new gridadapter2(getActivity(),signs,img);
+        Gridadapter  = new gridadapter2(getActivity(),signs,img,"Sign");
         LinearLayoutManager horizontalLayoutManagaer = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(horizontalLayoutManagaer);
         rv.setAdapter(Gridadapter);
@@ -94,7 +94,7 @@ public class Signaturefrag extends Fragment implements View.OnCreateContextMenuL
                             android.Manifest.permission.READ_EXTERNAL_STORAGE},123);
         }
 
-        registerForContextMenu(rv);
+        //registerForContextMenu(rv);
 
 
         flo.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +131,7 @@ public class Signaturefrag extends Fragment implements View.OnCreateContextMenuL
     }
 
 
-
+/*
     @Override
     public void onCreateContextMenu(android.view.ContextMenu menu, View v, android.view.ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -168,5 +168,5 @@ public class Signaturefrag extends Fragment implements View.OnCreateContextMenuL
         }
         return true;
     }
-
+*/
 }
