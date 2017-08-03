@@ -94,14 +94,14 @@ public class tax_invoice2 {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image= Image.getInstance(stream.toByteArray());
-               // image.scaleToFit(50, 50);
+                image.scaleToFit(100,100);
             }
             if(stamp!=null) {
                 Bitmap bmp = BitmapFactory.decodeFile(stamp.toString());
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image2= Image.getInstance(stream.toByteArray());
-              //  image2.scaleToFit(50, 50);
+                image2.scaleToFit(100,100);
             }
             File logo=null;
             if(logopath!=null)
@@ -329,9 +329,6 @@ public class tax_invoice2 {
             PdfPCell cell5 = new PdfPCell(new Phrase("S.no"));
             cell5.setBackgroundColor(BaseColor.LIGHT_GRAY);
             innertable5.addCell(cell5);
-
-
-
                 cell5 = new PdfPCell(new Phrase("Product Description"));
                 cell5.setBackgroundColor(BaseColor.LIGHT_GRAY);
                 innertable5.addCell(cell5);
@@ -383,7 +380,7 @@ public class tax_invoice2 {
                 cell5 = new PdfPCell(new Phrase(item[3]));
                 innertable5.addCell(cell5);
 
-                innertable5.addCell(cell5);
+           //     innertable5.addCell(cell5);
                 am = Double.parseDouble(item[3]) * Double.parseDouble(item[4]);
                 subam = subam + am;
                 cell5 = new PdfPCell(new Phrase(am.toString()));
@@ -489,7 +486,7 @@ public class tax_invoice2 {
             if(stamp!=null)
             {   PdfPCell cell55=new PdfPCell(image2);
                 cell55.setHorizontalAlignment(Element.ALIGN_CENTER);
-                cell55.setFixedHeight(150);
+                //cell55.setFixedHeight(150);
                 nested5.addCell(cell55);
 
             }
@@ -506,7 +503,7 @@ public class tax_invoice2 {
             if(path!=null)
             {    PdfPCell cell65=new PdfPCell(image);
                 cell65.setHorizontalAlignment(Element.ALIGN_CENTER);
-                cell65.setFixedHeight(150);
+              //  cell65.setFixedHeight(150);
                 nested4.addCell(cell65);}
             else
             {

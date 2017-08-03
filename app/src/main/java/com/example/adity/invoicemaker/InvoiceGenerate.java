@@ -1055,8 +1055,7 @@ public class InvoiceGenerate extends AppCompatActivity {
             db.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoiceid).child("Details").setValue(mp);
 
 
-            //saving items
-           
+
 
 
 
