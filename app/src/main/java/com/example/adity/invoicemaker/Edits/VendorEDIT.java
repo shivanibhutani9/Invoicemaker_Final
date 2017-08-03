@@ -149,7 +149,7 @@ public class VendorEDIT extends AppCompatActivity {
                     country.setError("Please enter the Country");
                     country.requestFocus();
                 }
-                else if(st.isEmpty() || validate(st)||(states.indexOf(st)==-1))
+                else if(st.isEmpty() || validate(st)||validateState(st))
                 {   state.setError("Please enter the State");
                     state.requestFocus();
                 }
@@ -177,7 +177,7 @@ public class VendorEDIT extends AppCompatActivity {
                         @Override
                         public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                             pd.hide();
-                            pd.dismiss();
+
                         }
                     });
 
@@ -270,5 +270,10 @@ public class VendorEDIT extends AppCompatActivity {
     {
         return s.toLowerCase().contains("test");
     }
-
+    boolean validateState(String s){
+        if(!states.isEmpty())
+        { return  (states.indexOf(st)==-1);}
+        else
+            return false;
+    }
 }

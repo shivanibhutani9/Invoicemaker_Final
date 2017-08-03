@@ -201,7 +201,7 @@ public class NavigationDrawer extends AppCompatActivity
 
                 }
                 pd.hide();
-                pd.dismiss();
+
             }
 
             @Override

@@ -90,7 +90,7 @@ public class PersonalEdit extends AppCompatActivity {
                     }
                 }
                 pd.hide();
-                pd.dismiss();
+
             }
 
             @Override
