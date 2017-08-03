@@ -98,7 +98,7 @@ public class Credit_Note {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image= Image.getInstance(stream.toByteArray());
-             //   image.scaleToFit(30,30);
+               image.scaleToFit(100,100);
 
             }
             if(stamp!=null) {
@@ -106,17 +106,18 @@ public class Credit_Note {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image2= Image.getInstance(stream.toByteArray());
-             //   image2.scaleToFit(50, 50);
+                image2.scaleToFit(100, 100);
             }
             File logo=null;
             if(logopath!=null)
-                logo=new File(logopath.toString());
-            if(logopath!=null&&logo.exists())            {
+            {   logo=new File(logopath.toString());}
+            if(logopath!=null&&logo.exists())
+            {
                 Bitmap bmp = BitmapFactory.decodeFile(logopath.toString());
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.PNG, 10, stream);
                 image3= Image.getInstance(stream.toByteArray());
-                image3.scaleToFit(50, 50);
+                image3.scaleToFit(70,70);
             }
 
             PdfPCell cell=new PdfPCell();
@@ -499,8 +500,8 @@ public class Credit_Note {
             PdfPTable nested5 = new PdfPTable(1);
             if(stamp!=null)
             {   PdfPCell cell55=new PdfPCell(image2);
-                cell55.setHorizontalAlignment(Element.ALIGN_CENTER);
-                cell55.setFixedHeight(150);
+               cell55.setHorizontalAlignment(Element.ALIGN_CENTER);
+              //  cell55.setFixedHeight(150);
                 nested5.addCell(cell55);
 
             }
@@ -515,7 +516,7 @@ public class Credit_Note {
             if(path!=null)
             {    PdfPCell cell65=new PdfPCell(image);
                 cell65.setHorizontalAlignment(Element.ALIGN_CENTER);
-                cell65.setFixedHeight(150);
+               // cell65.setFixedHeight(150);
                 nested4.addCell(cell65);}
             else
             {
