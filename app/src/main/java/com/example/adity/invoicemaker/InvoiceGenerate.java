@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -892,7 +893,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                 String invoiceid = invoice.getText().toString();
 
 
-              /*  db = FirebaseDatabase.getInstance().getReference("Invoice").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoiceid);
+                db = FirebaseDatabase.getInstance().getReference("Invoice").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoiceid);
                 mp.put("Description", description);
                 mp.put("HSN code", HSNcode);
                 if(type.contains("Intra")||type.contains("Debit")||type.contains("Credit")||type.contains("Receipt")||type.contains("Payment"))
@@ -907,7 +908,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                 mp.put("unit cost", unitcost);
                 mp.put("quantity", quantity);
                 mp.put("amount", amount);
-                */
+
                  sub=sub+Double.parseDouble(amount);
                 subtotal.setText("₹ "+sub.toString());
                 sub=Math.ceil(sub) ;
@@ -925,7 +926,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
                 total.setText("₹"+sub.toString());
 
-                /*if(data.getStringExtra("from").equals("Additem")) {
+                if(data.getStringExtra("from").equals("Additem")) {
                     db.child("Items").child("Item " + i).setValue(mp);
                     i++;
                 }
@@ -934,7 +935,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
 
                 mp.clear();
-*/
+
             }
         /**
          * it will get results from ClientDetails.java
@@ -1016,6 +1017,15 @@ public class InvoiceGenerate extends AppCompatActivity {
                     Log.e("", "Exception in onActivityResult : " + e.getMessage());
                 }
             }
+    }
+
+    @Nullable
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        super.onBackPressed();
+        db = FirebaseDatabase.getInstance().getReference("Invoice").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoice.getText().toString()).child("Items");
+        db.removeValue();
+        return super.getSupportParentActivityIntent();
     }
 
     /**
