@@ -169,7 +169,7 @@ public class profile extends Fragment {
                         @Override
                         public void run() {
                             pd.hide();
-                            pd.dismiss();
+
                             auth.signOut();
                             startActivity(new Intent(getActivity(),MainActivity.class));
                             getActivity().finish();
@@ -225,7 +225,7 @@ public class profile extends Fragment {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     pd.hide();
-                    pd.dismiss();
+
                     Toast.makeText(getActivity(), "Email Sent", Toast.LENGTH_SHORT).show();
 
                 }
@@ -253,7 +253,7 @@ public class profile extends Fragment {
                         @Override
                         public void run() {
                             pd.hide();
-                            pd.dismiss();
+
                             auth.signOut();
                             startActivity(new Intent(getActivity(),MainActivity.class));
                             getActivity().finish();
@@ -291,7 +291,7 @@ public class profile extends Fragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             pd.hide();
-                            pd.dismiss();
+
                             Toast.makeText(getActivity(), "Email Sent", Toast.LENGTH_SHORT).show();
 
                         }

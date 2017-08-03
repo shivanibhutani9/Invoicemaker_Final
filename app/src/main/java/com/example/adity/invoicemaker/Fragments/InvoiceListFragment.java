@@ -268,7 +268,6 @@ public class InvoiceListFragment extends Fragment {
 
 
                 pd.hide();
-                pd.dismiss();
 
             }
 

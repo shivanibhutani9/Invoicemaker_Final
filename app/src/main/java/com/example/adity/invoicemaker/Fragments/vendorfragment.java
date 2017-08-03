@@ -332,7 +332,7 @@ public class vendorfragment extends Fragment implements com.example.adity.invoic
 
                 chklayout();
                 pd.hide();
-                pd.dismiss();
+
 
             }
 

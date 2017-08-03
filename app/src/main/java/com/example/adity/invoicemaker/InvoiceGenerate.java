@@ -717,9 +717,24 @@ public class InvoiceGenerate extends AppCompatActivity {
                             * used to create new signature
                             */
                            case R.id.draw:
+                               String root =Environment.getExternalStorageDirectory().getAbsolutePath();
+                               File f = new File(root+File.separator+"Signature");
+                               if (f.exists()) {
+                                   File lst[] = f.listFiles();
+                                   if (lst.length < 4) {
+                                       startActivityForResult(new Intent(InvoiceGenerate.this, Signature_Activity.class).putExtra("from", ""), 99);
+                                       image.postInvalidate();
+                                   }else{
+                                       Toast.makeText(InvoiceGenerate.this, "You cannot add more than 4 signatures.", Toast.LENGTH_SHORT).show();
+                                   }
+                               }
+                               else
+                               {
+                                   startActivityForResult(new Intent(InvoiceGenerate.this, Signature_Activity.class).putExtra("from", ""), 99);
+                                   image.postInvalidate();
 
-                               startActivityForResult(new Intent(InvoiceGenerate.this,Signature_Activity.class).putExtra("from",""),99);
-                               image.postInvalidate();
+                               }
+
                        }
                         return true;
                     }
