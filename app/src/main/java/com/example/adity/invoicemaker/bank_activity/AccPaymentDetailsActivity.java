@@ -67,9 +67,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
         pd=new ProgressDialog(this);
         pd.setMessage("Please Wait ...");
         pd.show();
-        Read();
         adapter.setClickListener(this);
-
 
 
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
@@ -94,8 +92,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 //your deleting code
                                 arrayList.remove(pos);
-                                arrayList.clear();
-                                adapter.notifyDataSetChanged();
+                                adapter.notifyItemRemoved(pos);
                                 DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Account Details/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+obj.bankname+"/"+obj.accno);
                                 db1.removeValue();
                                 Toast.makeText(AccPaymentDetailsActivity.this, "DELETED", Toast.LENGTH_SHORT).show();
@@ -257,7 +254,7 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
                 }
 
                 pd.hide();
-                pd.dismiss();
+
 
             }
 
@@ -285,6 +282,13 @@ public class AccPaymentDetailsActivity extends AppCompatActivity implements com.
         return super.onOptionsItemSelected(item);
     }
 
+
+
+        protected void onResume() {
+            super.onResume();
+            arrayList.clear();
+            Read();
+        }
 
 }
 

@@ -1,9 +1,11 @@
 package com.example.adity.invoicemaker.Fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
@@ -56,10 +58,9 @@ public class NavigationDrawer extends AppCompatActivity
         }
 
         pd=new ProgressDialog(this);
-        pd.setMessage("Please wait..");
-        pd.show();
-        chkval();
-
+            pd.setMessage("Please wait..");
+            pd.show();
+            chkval();
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -209,8 +210,9 @@ public class NavigationDrawer extends AppCompatActivity
             }
         });
 
-
-
     }
 
+
+
 }
+

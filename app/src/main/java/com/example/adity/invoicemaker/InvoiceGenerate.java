@@ -264,8 +264,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                     haspaymentoption=true;
                 }
                 pd.hide();
-                pd.dismiss();
-            }
+               }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -390,45 +389,39 @@ public class InvoiceGenerate extends AppCompatActivity {
                       tax_invoice1 in = new tax_invoice1(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
                       pd.hide();
-                      pd.dismiss();
+
                       startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()).putExtra("from","genrate"));
                   } else if (type.contains("Inter")) {
                       tax_invoice2 in = new tax_invoice2(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
                       pd.hide();
-                      pd.dismiss();
                       startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()).putExtra("from","genrate"));
                   }
                  else if (type.contains("Credit")) {
                       Credit_Note in = new Credit_Note(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
                       pd.hide();
-                      pd.dismiss();
                       startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()).putExtra("from","genrate"));
                   }
                  else if (type.contains("Debit")) {
                       Debit_Note in = new Debit_Note(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
                       pd.hide();
-                      pd.dismiss();
                       startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()).putExtra("from","genrate"));
                   } else if (type.contains("Receipt")) {
                       Receipt_Voucher in = new Receipt_Voucher(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
                       pd.hide();
-                      pd.dismiss();
                       startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()).putExtra("from","genrate"));
                   } else if (type.contains("Payment")) {
                       Payment_Voucher in = new Payment_Voucher(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
                       pd.hide();
-                       pd.dismiss();
                       startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()).putExtra("from","genrate"));
                   } else if (type.contains("Export")) {
                       Export_invoice in = new Export_invoice(num_to_words,invoice.getText().toString(), dateString.getText().toString(), companyname, ad, user_gst, cp, user_phone, Name, Address, state, zip, Gstin, items, GST, total.getText().toString(), accno, ifsccode);
                       in.pdfcreate(file, path,StampPath,logopath);
                       pd.hide();
-                      pd.dismiss();
                       startActivity(new Intent(InvoiceGenerate.this, pdfreader.class).putExtra("inv", invoice.getText().toString()).putExtra("from","genrate"));
 
                   }
@@ -498,7 +491,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                                 total.setText("₹"+sub.toString());
 
                                 items.remove(pos);
-                               DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+invoice.getText().toString()+"/Items/"+"Item "+(pos+1));
+                                DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Invoice/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+invoice.getText().toString()+"/Items/"+"Item "+(pos+1));
                                 db1.removeValue();
                                 adapter.notifyDataSetChanged();
                                 Toast.makeText(InvoiceGenerate.this, "DELETED", Toast.LENGTH_SHORT).show();
@@ -630,7 +623,6 @@ public class InvoiceGenerate extends AppCompatActivity {
                             public void run() {
 
                                 pd.hide();
-                                pd.dismiss();
                                 AlertDialog BackToInvoice =new AlertDialog.Builder(InvoiceGenerate.this)
                                         //set message, title, and icon
                                         .setTitle("Successful")
@@ -638,7 +630,6 @@ public class InvoiceGenerate extends AppCompatActivity {
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
                                             public void onClick(DialogInterface dialog, int whichButton) {
-                                                //your deleting code
                                                 dialog.dismiss();
                                             }
 
@@ -647,7 +638,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
                                                   startActivity(new Intent(InvoiceGenerate.this, NavigationDrawer.class));
-                                                   finish();
+                                                  finish();
                                                 }
                                         })
                                         .create();
@@ -826,12 +817,18 @@ public class InvoiceGenerate extends AppCompatActivity {
             ifsccode_details.setText(ifsccode);
             accno_details.setText(accno);
             bankname_details.setText(bank);
+
+            if(data.getStringExtra("Bank")!=null)
+            {
+                haspaymentoption=true;
             }
+
+        }
 
         /**
          * it will get results from ItemEdit.java
          */
-        else if (resultCode == 2) {
+        if (resultCode == 2) {
 
             description = data.getStringExtra("description");
             HSNcode = data.getStringExtra("HSNcode");
@@ -882,7 +879,6 @@ public class InvoiceGenerate extends AppCompatActivity {
                 }
 
 
-
                 adapter.notifyDataSetChanged();
                 if(adapter.getItemCount()>0)
                 {
@@ -896,7 +892,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                 String invoiceid = invoice.getText().toString();
 
 
-                db = FirebaseDatabase.getInstance().getReference("Invoice").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoiceid);
+              /*  db = FirebaseDatabase.getInstance().getReference("Invoice").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoiceid);
                 mp.put("Description", description);
                 mp.put("HSN code", HSNcode);
                 if(type.contains("Intra")||type.contains("Debit")||type.contains("Credit")||type.contains("Receipt")||type.contains("Payment"))
@@ -911,7 +907,8 @@ public class InvoiceGenerate extends AppCompatActivity {
                 mp.put("unit cost", unitcost);
                 mp.put("quantity", quantity);
                 mp.put("amount", amount);
-                sub=sub+Double.parseDouble(amount);
+                */
+                 sub=sub+Double.parseDouble(amount);
                 subtotal.setText("₹ "+sub.toString());
                 sub=Math.ceil(sub) ;
 
@@ -928,7 +925,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
                 total.setText("₹"+sub.toString());
 
-                if(data.getStringExtra("from").equals("Additem")) {
+                /*if(data.getStringExtra("from").equals("Additem")) {
                     db.child("Items").child("Item " + i).setValue(mp);
                     i++;
                 }
@@ -937,7 +934,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
 
                 mp.clear();
-
+*/
             }
         /**
          * it will get results from ClientDetails.java
@@ -965,33 +962,13 @@ public class InvoiceGenerate extends AppCompatActivity {
 
                 clients.setVisibility(View.VISIBLE);
                 noclient.setVisibility(View.GONE);
+            if(data.getStringExtra("Client")!=null)
+            {
+                hasvendor=true;
+            }
 
             }
-        else if (resultCode == 501) {
-            Name = data.getStringExtra("name");
-            Phone = data.getStringExtra("phone");
-            Email = data.getStringExtra("email");
-            Address = data.getStringExtra("address1")+"\n"+data.getStringExtra("address2")+"\n";
-            Gstin=data.getStringExtra("gstin");
-            Pan_no=data.getStringExtra("pan");
-            state=data.getStringExtra("State");
-            zip=data.getStringExtra("Zip");
 
-            TextView company,gst,pan;
-            company=(TextView)findViewById(R.id.com);
-            gst=(TextView)findViewById(R.id.gst);
-            pan=(TextView)findViewById(R.id.pan);
-
-            company.setText(Name);
-            gst.setText(Gstin);
-            pan.setText(Pan_no);
-
-
-            clients.setVisibility(View.VISIBLE);
-            noclient.setVisibility(View.GONE);
-            hasvendor=true;
-
-        }
 
         /**
          * it will get results from Discount.java
@@ -1019,18 +996,7 @@ public class InvoiceGenerate extends AppCompatActivity {
                 }
 
             }
-else if(resultCode==500)
-        {
-            bank = data.getStringExtra("bank_name");
-            ifsccode = data.getStringExtra("ifsc_code");
-            accholder = data.getStringExtra("account_holder");
-            accno = data.getStringExtra("account_number");
-            bank_details.setText(accholder);
-            ifsccode_details.setText(ifsccode);
-            accno_details.setText(accno);
-            bankname_details.setText(bank);
-            haspaymentoption=true;
-        }
+
 
         else if (requestCode == ADD_STAMP) {
                 try {
@@ -1077,6 +1043,15 @@ else if(resultCode==500)
             file=new File(Environment.getExternalStorageDirectory()+ File.separator+invoice.getText().toString()+".pdf");
             mp.put("filepath",file.getPath());
             db.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoiceid).child("Details").setValue(mp);
+
+
+            //saving items
+           
+
+
+
+
+
         }
 
     /**

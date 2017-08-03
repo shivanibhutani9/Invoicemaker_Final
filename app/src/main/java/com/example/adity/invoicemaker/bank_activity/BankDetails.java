@@ -84,7 +84,8 @@ public class BankDetails extends AppCompatActivity {
                             i.putExtra("ifsc_code",ifsccode);
                             i.putExtra("account_holder",accholder);
                             i.putExtra("account_number",accno);
-                            setResult(500,i);
+                            i.putExtra("Bank","1");
+                            setResult(1,i);
                         }
                     }
                         finish();

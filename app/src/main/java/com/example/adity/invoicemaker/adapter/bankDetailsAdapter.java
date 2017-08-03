@@ -18,10 +18,14 @@ import java.util.ArrayList;
  */
 
 public class bankDetailsAdapter extends RecyclerView.Adapter<bankDetailsAdapter.ViewHolder> {
+
+    private static final int TYPE_ITEM = 1;
+    private static final int TYPE_FOOTER = 2;
     public Context mContext;
     public onItemTouchListener onItemTouchListener;
     public ArrayList<AccPaymentDetailsActivity.ObjectAcc> objects;
 
+    private boolean mWithFooter=true;
     /**
      * for payment details
      * @param mContext
@@ -38,6 +42,7 @@ public class bankDetailsAdapter extends RecyclerView.Adapter<bankDetailsAdapter.
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View V = LayoutInflater.from(mContext).inflate(R.layout.bankitemdetail, parent, false);
+
         return new ViewHolder(V);
     }
 

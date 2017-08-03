@@ -78,7 +78,7 @@ public class ClientDetails extends AppCompatActivity {
                 }
             }
         });
-            Button save=(Button)findViewById(R.id.buttonclient) ;
+        Button save=(Button)findViewById(R.id.buttonclient) ;
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,7 +177,9 @@ public class ClientDetails extends AppCompatActivity {
                             i.putExtra("Zip",zp);
                             i.putExtra("gstin",gstin);
                             i.putExtra("pan",pan_no);
-                            i.putExtra("Country",country); setResult(501,i);
+                            i.putExtra("Country",country);
+                            i.putExtra("Client","1");
+                            setResult(3,i);
                         }
                     }
                     finish();

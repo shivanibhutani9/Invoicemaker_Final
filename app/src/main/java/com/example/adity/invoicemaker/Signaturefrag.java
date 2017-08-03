@@ -100,8 +100,14 @@ public class Signaturefrag extends Fragment implements View.OnCreateContextMenuL
         flo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult((new Intent(getActivity(),Signature_Activity.class).putExtra("from","exp2")),120);
-                Gridadapter.notifyDataSetChanged();
+                if(signs.size()<4)
+                {  startActivityForResult((new Intent(getActivity(),Signature_Activity.class).putExtra("from","exp2")),120);
+                Gridadapter.notifyDataSetChanged();}
+                else {
+                    Toast.makeText(getActivity(), "You cannot add more than 4 Signatures", Toast.LENGTH_SHORT).show();
+
+                }
+
             }
         });
 

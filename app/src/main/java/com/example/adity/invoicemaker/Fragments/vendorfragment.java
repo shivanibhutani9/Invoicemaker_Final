@@ -20,6 +20,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.adity.invoicemaker.ClientDetails;
@@ -38,7 +40,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class vendorfragment extends Fragment implements com.example.adity.invoicemaker.Listener.onItemTouchListener {
-
+    FrameLayout zerovendor;
+    Button addvendor;
     Vendor_Adapter adapter;
     RecyclerView rv;
     FloatingActionButton fab;
@@ -65,7 +68,8 @@ public class vendorfragment extends Fragment implements com.example.adity.invoic
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Vendors");
 
-
+        zerovendor=(FrameLayout)getActivity().findViewById(R.id.novendordetails);
+        addvendor=(Button)getActivity().findViewById(R.id.createvendor);
 
         arrayList=new ArrayList<>();
         rv= (RecyclerView)getActivity().findViewById(R.id.venlist);
@@ -80,6 +84,15 @@ public class vendorfragment extends Fragment implements com.example.adity.invoic
         pd.show();
 //        Read();
         adapter.setClickListener(this);
+
+        addvendor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arrayList.clear();
+                zerovendor.setVisibility(View.GONE);
+                startActivity(new Intent(getActivity(),ClientDetails.class));
+            }
+        });
 
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.RIGHT |ItemTouchHelper.LEFT){
@@ -105,6 +118,8 @@ public class vendorfragment extends Fragment implements com.example.adity.invoic
                                     //your deleting code
                                     arrayList.remove(pos);
                                     adapter.notifyDataSetChanged();
+                                    chklayout();
+
                                     DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Company/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+obj.v_name);
                                     db1.removeValue();
 
@@ -315,6 +330,7 @@ public class vendorfragment extends Fragment implements com.example.adity.invoic
 
 
 
+                chklayout();
                 pd.hide();
                 pd.dismiss();
 
@@ -328,6 +344,20 @@ public class vendorfragment extends Fragment implements com.example.adity.invoic
 
     }
 
+    void chklayout()
+    {
+        if(arrayList.isEmpty())
+        {
+            rv.setVisibility(View.GONE);
+            fab.setVisibility(View.GONE);
+            zerovendor.setVisibility(View.VISIBLE);
+        }
+        else{
+            rv.setVisibility(View.VISIBLE);
+            fab.setVisibility(View.VISIBLE);
+            zerovendor.setVisibility(View.GONE);
+        }
+    }
     @Override
     public void onResume() {
         super.onResume();

@@ -371,8 +371,8 @@ public class tax_invoice2 {
             for(int i=0;i<items.size();i++) {
                 String item[] = items.get(i);
                 String gsco[] = GST.get(i);
-
-                cell5 = new PdfPCell(new Phrase((i + 1)));
+                Integer sno=i+1;
+                cell5 = new PdfPCell(new Phrase(sno.toString()));
                 innertable5.addCell(cell5);
                 cell5 = new PdfPCell(new Phrase(item[0]));
                 innertable5.addCell(cell5);

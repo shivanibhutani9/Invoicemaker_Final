@@ -61,7 +61,6 @@ public class InvoiceListFragment extends Fragment {
      */
     public InvoiceListFragment() {
     mValues=new ArrayList<>();
-
     Read();
     }
 
@@ -135,7 +134,7 @@ public class InvoiceListFragment extends Fragment {
                                 dialog.dismiss();
                                 if(mValues.isEmpty())
                                 {
-                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,new invoice_fragment()).commitAllowingStateLoss();
+                                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,new invoice_fragment()).commit();
                                 }
                             }
 
@@ -222,10 +221,8 @@ public class InvoiceListFragment extends Fragment {
         }
     }
     public void Read()
-    {
+    {    mValues.clear();
         DatabaseReference db= FirebaseDatabase.getInstance().getReference("Invoice/"+ FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-
 
         db.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

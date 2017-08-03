@@ -110,10 +110,17 @@ public class Stampfrag extends Fragment implements View.OnCreateContextMenuListe
         flo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Select Picture"),123);
+
+             if(stamps.size()<4) {
+                 Intent intent = new Intent();
+                 intent.setType("image/*");
+                 intent.setAction(Intent.ACTION_GET_CONTENT);
+                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 123);
+             }
+            else {
+                 Toast.makeText(getActivity(), "You cannot add more than 4 Stamps", Toast.LENGTH_SHORT).show();
+
+             }
             }
         });
 

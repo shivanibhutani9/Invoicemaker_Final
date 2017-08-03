@@ -168,7 +168,7 @@ public class profile extends Fragment {
 
                         @Override
                         public void run() {
-                             pd.hide();
+                            pd.hide();
                             pd.dismiss();
                             auth.signOut();
                             startActivity(new Intent(getActivity(),MainActivity.class));

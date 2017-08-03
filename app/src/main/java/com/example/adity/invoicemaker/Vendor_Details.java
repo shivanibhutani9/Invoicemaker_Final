@@ -73,11 +73,12 @@ public class Vendor_Details extends AppCompatActivity implements com.example.adi
         pd=new ProgressDialog(this);
         pd.setMessage("Please Wait ...");
         pd.show();
-       // Read();
         adapter.setClickListener(this);
         addvendor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                arrayList.clear();
+                zerovendor.setVisibility(View.GONE);
                 startActivity(new Intent(Vendor_Details.this,ClientDetails.class));
             }
         });
@@ -104,12 +105,12 @@ public class Vendor_Details extends AppCompatActivity implements com.example.adi
                                public void onClick(DialogInterface dialog, int whichButton) {
                                    //your deleting code
                                    arrayList.remove(pos);
-                                   //arrayList.clear();
+
                                    adapter.notifyDataSetChanged();
                                    chklayout();
                                    DatabaseReference  db1 = FirebaseDatabase.getInstance().getReference("Company/"+FirebaseAuth.getInstance().getCurrentUser().getUid()+"/"+obj.v_name);
                                    db1.removeValue();
-                                           Toast.makeText(Vendor_Details.this, "DELETED", Toast.LENGTH_SHORT).show();
+                                   Toast.makeText(Vendor_Details.this, "DELETED", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                }
 
@@ -305,10 +306,9 @@ public class Vendor_Details extends AppCompatActivity implements com.example.adi
 
                 }
 
-
                 chklayout();
                 pd.hide();
-                pd.dismiss();
+
 
             }
 
