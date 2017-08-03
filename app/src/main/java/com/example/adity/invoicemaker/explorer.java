@@ -45,13 +45,11 @@ public class explorer extends AppCompatActivity  {
                 if (f.exists())
                 {
                     File lst[] = f.listFiles();
-
-
-                    int i = 0;
                     for (File f2 : lst) {
-                        signs.add(f2.getName());
-                        img.add(f2.getPath());
-                        i++;
+                        if(signs.size()<4) {
+                            signs.add(f2.getName());
+                            img.add(f2.getPath());
+                        }
                     }
                     gridadapter Gridadapter=new gridadapter(explorer.this,signs,img);
                     gridView.setAdapter(Gridadapter);

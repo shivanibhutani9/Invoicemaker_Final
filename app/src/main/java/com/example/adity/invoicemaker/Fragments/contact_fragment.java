@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.adity.invoicemaker.Mail;
 import com.example.adity.invoicemaker.R;
+import com.example.adity.invoicemaker.email_send.GMailSender;
 
 /**
  * Created by adity on 7/10/2017.
@@ -28,6 +30,7 @@ public class contact_fragment extends Fragment {
     EditText name,email,msg;
      String Subject="";
      String Message="";
+    String  personal_email="aditya01tache@gmail.com";
     public contact_fragment() {
     }
 
@@ -60,60 +63,32 @@ public class contact_fragment extends Fragment {
         Button send=(Button) getActivity().findViewById(R.id.send);
 
         send.setOnClickListener(new View.OnClickListener() {
-            @Override
+
+
+
             public void onClick(View v) {
 
-                new SendMail().execute("");
+                // TODO Auto-generated method stub
+
+                new Thread(new Runnable() {
+
+                    public void run() {
+
+                        try {
+                            GMailSender sender = new GMailSender(personal_email,"tache123");
 
 
+                         //   sender.addAttachment(Environment.getExternalStorageDirectory().getPath()+"/image.jpg");
+                            sender.sendMail("Query from "+name.getText().toString(), msg.getText().toString(),personal_email,email.getText().toString().trim());
+
+                        } catch (Exception e) {
+
+                            Toast.makeText(getActivity(),"Error",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }).start();
             }
         });
-
-
-
-
-
     }
-
-    private class SendMail extends AsyncTask<String, Integer, Void> {
-
-        private ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = ProgressDialog.show(getActivity(), "Please wait","", true, false);
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            progressDialog.dismiss();
-        }
-
-        protected Void doInBackground(String... params) {
-            Mail m = new Mail("aditya01tache@gmail.com", "tache123");
-
-            String[] toArr = {"adityasaxena1997@gmail.com"};
-            m.setTo(toArr);
-            m.setFrom("sssss");
-            m.setSubject("Query ");
-            m.setBody("sss");
-
-            try {
-                if(m.send()) {
-                    Toast.makeText(getActivity(), "Email was sent successfully.", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getActivity(), "Email was not sent.", Toast.LENGTH_LONG).show();
-                }
-            } catch(Exception e) {
-                Toast.makeText(getActivity(), "Email was not sent."+e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-            return null;
-        }
-    }
-
-
-
-
 }
+
