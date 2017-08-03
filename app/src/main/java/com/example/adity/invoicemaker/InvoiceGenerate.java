@@ -925,7 +925,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
                 total.setText("₹"+sub.toString());
 
-                /*if(data.getStringExtra("from").equals("Additem")) {
+                if(data.getStringExtra("from").equals("Additem")) {
                     db.child("Items").child("Item " + i).setValue(mp);
                     i++;
                 }
@@ -934,7 +934,7 @@ public class InvoiceGenerate extends AppCompatActivity {
 
 
                 mp.clear();
-*/
+
             }
         /**
          * it will get results from ClientDetails.java
@@ -1045,8 +1045,7 @@ public class InvoiceGenerate extends AppCompatActivity {
             db.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoiceid).child("Details").setValue(mp);
 
 
-            //saving items
-           
+
 
 
 
