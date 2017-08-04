@@ -38,7 +38,7 @@ public class NavigationDrawer extends AppCompatActivity
     ImageView image;
     boolean hasInvoice=true;
     DatabaseReference db;
-    ProgressDialog pd;
+    ProgressDialog progressdialog;
     android.support.v4.app.Fragment fragment;
     TextView name,email;
 
@@ -57,9 +57,9 @@ public class NavigationDrawer extends AppCompatActivity
                     },123);
         }
 
-        pd=new ProgressDialog(this);
-            pd.setMessage("Please wait..");
-            pd.show();
+        progressdialog=new ProgressDialog(this);
+            progressdialog.setMessage("Please wait..");
+            progressdialog.show();
             chkval();
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -200,7 +200,7 @@ public class NavigationDrawer extends AppCompatActivity
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, fragment).commitAllowingStateLoss();
 
                 }
-                pd.hide();
+                progressdialog.hide();
 
             }
 

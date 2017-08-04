@@ -291,4 +291,9 @@ public class InvoiceListFragment extends Fragment {
         return bitmap;
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        pd.dismiss();
+    }
 }

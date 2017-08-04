@@ -1073,6 +1073,13 @@ public class InvoiceGenerate extends AppCompatActivity {
         return super.getSupportParentActivityIntent();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        db = FirebaseDatabase.getInstance().getReference("Invoice").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(invoice.getText().toString()).child("Items");
+        db.removeValue();
+    }
+
     /**
      *
      * Method to upload the details of invoice on firebase

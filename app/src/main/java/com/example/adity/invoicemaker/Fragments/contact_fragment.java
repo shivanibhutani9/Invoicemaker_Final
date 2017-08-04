@@ -26,7 +26,7 @@ public class contact_fragment extends Fragment {
     EditText name,email,msg;
      String Subject="";
      String Message="";
-    ProgressDialog pd;
+    ProgressDialog pd1;
     String  personal_email="aditya01tache@gmail.com";
     public contact_fragment() {
     }
@@ -72,15 +72,15 @@ public class contact_fragment extends Fragment {
                     public void run() {
 
                         try {
-                             pd=new ProgressDialog(getActivity());
-                            pd.setMessage(" Sending Query ");
-                            pd.show();
+                             pd1=new ProgressDialog(getActivity());
+                            pd1.setMessage(" Sending Query ");
+                            pd1.show();
                             new Handler().postDelayed(new Runnable() {
 
                                 @Override
                                 public void run() {
-                                    pd.setMessage("Sent");
-                                    pd.hide();
+                                    pd1.setMessage("Sent");
+                                    pd1.hide();
 
 
                                 }
