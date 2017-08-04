@@ -90,7 +90,7 @@ public class contact_fragment extends Fragment {
 
 
                          //   sender.addAttachment(Environment.getExternalStorageDirectory().getPath()+"/image.jpg");
-                            sender.sendMail("Query from "+name.getText().toString(), msg.getText().toString(),personal_email,personal_email);
+                            sender.sendMail("Query from "+name.getText().toString()+"\n Email : "+email.getText().toString().trim(), msg.getText().toString(),personal_email,personal_email);
 
                         } catch (Exception e) {
 
