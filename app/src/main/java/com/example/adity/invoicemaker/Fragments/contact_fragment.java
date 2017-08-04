@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ public class contact_fragment extends Fragment {
      String Message="";
     ProgressDialog pd1;
     String  personal_email="aditya01tache@gmail.com";
+    Handler handler;
     public contact_fragment() {
     }
 
@@ -64,6 +66,9 @@ public class contact_fragment extends Fragment {
 
 
             public void onClick(View v) {
+                pd1 = new ProgressDialog(getActivity());
+                pd1.setMessage(" Sending Query ");
+                pd1.show();
 
                 // TODO Auto-generated method stub
 
@@ -72,32 +77,27 @@ public class contact_fragment extends Fragment {
                     public void run() {
 
                         try {
-                             pd1=new ProgressDialog(getActivity());
-                            pd1.setMessage(" Sending Query ");
-                            pd1.show();
-                            new Handler().postDelayed(new Runnable() {
-
-                                @Override
-                                public void run() {
-                                    pd1.setMessage("Sent");
-                                    pd1.hide();
 
 
-                                }
-                            }, 3000);
-
-                            GMailSender sender = new GMailSender(personal_email,"tache123");
+                            GMailSender sender = new GMailSender(personal_email, "tache123");
 
 
-                         //   sender.addAttachment(Environment.getExternalStorageDirectory().getPath()+"/image.jpg");
-                            sender.sendMail("Query from "+name.getText().toString()+"\n Email : "+email.getText().toString().trim(), msg.getText().toString(),personal_email,personal_email);
-
+                            //   sender.addAttachment(Environment.getExternalStorageDirectory().getPath()+"/image.jpg");
+                            sender.sendMail("Query from " + name.getText().toString() + "\n Email : " + email.getText().toString().trim(), msg.getText().toString(), personal_email, personal_email);
+                            handler.sendEmptyMessage(0);
                         } catch (Exception e) {
 
-                            Toast.makeText(getActivity(),"Error",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Error", Toast.LENGTH_LONG).show();
                         }
                     }
                 }).start();
+
+                handler = new Handler() {
+                    @Override
+                    public void handleMessage(android.os.Message msg) {
+                        pd1.dismiss();
+                    }
+                };
             }
         });
     }
