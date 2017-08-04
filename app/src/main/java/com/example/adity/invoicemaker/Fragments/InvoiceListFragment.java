@@ -60,8 +60,7 @@ public class InvoiceListFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public InvoiceListFragment() {
-    mValues=new ArrayList<>();
-    Read();
+
     }
 
     @Override
@@ -74,18 +73,6 @@ public class InvoiceListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_invoice_list, container, false);
-
-        pd=new ProgressDialog(getActivity());
-        pd.setMessage("Loading...");
-        pd.show();
-        // Set the adapter
-        if (view !=null) {
-            Context context = view.getContext();
-            recyclerView = (RecyclerView)view.findViewById(R.id.fragment_invoice);
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            adapter=new MyInvoiceRecyclerViewAdapter(getActivity(),mValues, mListener);
-            recyclerView.setAdapter(adapter);
-        }
 
         return view;
     }
@@ -103,6 +90,17 @@ public class InvoiceListFragment extends Fragment {
                 startActivity(new Intent(getActivity(), typesofinvoice.class));
             }
         });
+        recyclerView = (RecyclerView)view.findViewById(R.id.fragment_invoice);
+        mValues=new ArrayList<>();
+        adapter=new MyInvoiceRecyclerViewAdapter(getActivity(),mValues, mListener);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+
+        pd=new ProgressDialog(getActivity());
+        pd.setMessage("Loading...");
+        pd.show();
+        Read();
 
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.RIGHT ){
@@ -261,7 +259,8 @@ public class InvoiceListFragment extends Fragment {
 
                     ObjectInv obj=new ObjectInv(invoiceno,vname,amount,inv_date);
                     mValues.add(obj);
-                    adapter.notifyDataSetChanged();
+                    if(!mValues.isEmpty())
+                    {adapter.notifyDataSetChanged();}
 
                 }
 
