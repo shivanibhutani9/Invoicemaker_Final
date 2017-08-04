@@ -105,7 +105,7 @@ public class InvoiceListFragment extends Fragment {
         });
 
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.RIGHT |ItemTouchHelper.LEFT){
+                ItemTouchHelper.RIGHT ){
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
 

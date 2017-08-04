@@ -1,6 +1,9 @@
 package com.example.adity.invoicemaker.Fragments;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.adity.invoicemaker.Login.MainActivity;
 import com.example.adity.invoicemaker.R;
 import com.example.adity.invoicemaker.email_send.GMailSender;
 
@@ -22,6 +26,7 @@ public class contact_fragment extends Fragment {
     EditText name,email,msg;
      String Subject="";
      String Message="";
+    ProgressDialog pd;
     String  personal_email="aditya01tache@gmail.com";
     public contact_fragment() {
     }
@@ -67,6 +72,20 @@ public class contact_fragment extends Fragment {
                     public void run() {
 
                         try {
+                             pd=new ProgressDialog(getActivity());
+                            pd.setMessage(" Sending Query ");
+                            pd.show();
+                            new Handler().postDelayed(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    pd.setMessage("Sent");
+                                    pd.hide();
+
+
+                                }
+                            }, 3000);
+
                             GMailSender sender = new GMailSender(personal_email,"tache123");
 
 
