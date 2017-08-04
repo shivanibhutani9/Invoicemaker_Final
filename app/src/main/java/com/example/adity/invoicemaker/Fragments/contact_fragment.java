@@ -71,7 +71,7 @@ public class contact_fragment extends Fragment {
 
 
                          //   sender.addAttachment(Environment.getExternalStorageDirectory().getPath()+"/image.jpg");
-                            sender.sendMail("Query from "+name.getText().toString(), msg.getText().toString(),personal_email,email.getText().toString().trim());
+                            sender.sendMail("Query from "+name.getText().toString(), msg.getText().toString(),personal_email,personal_email);
 
                         } catch (Exception e) {
 
