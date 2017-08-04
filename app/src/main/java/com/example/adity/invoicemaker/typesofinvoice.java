@@ -1,6 +1,7 @@
 package com.example.adity.invoicemaker;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -86,5 +87,18 @@ public class typesofinvoice extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Nullable
+    @Override
+    public Intent getSupportParentActivityIntent() {
+        finish();
+        return super.getSupportParentActivityIntent();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
